@@ -18,11 +18,23 @@ jobs:
           if [ -f patch.py ]; then
             python patch.py
           fi
+      - name: Validate inline JavaScript
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          html = Path('index.html').read_text(encoding='utf-8')
+          m = re.search(r'<script>([\s\S]*?)</script>', html)
+          if not m:
+              raise SystemExit('No inline script found')
+          Path('/tmp/draftcenter.js').write_text(m.group(1), encoding='utf-8')
+          PY
+          node --check /tmp/draftcenter.js
       - name: Commit app update
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html
           git diff --cached --quiet && exit 0
-          git commit -m "Update DraftCenter settings and audio fades"
+          git commit -m "Update DraftCenter"
           git push
