@@ -3,18 +3,38 @@ from pathlib import Path
 p = Path('index.html')
 s = p.read_text(encoding='utf-8')
 
-old = '''  async function loadSharedSettings(){\n    const sources=[\n      ["GitHub Pages",SHARED_CONFIG_URL],\n      ["GitHub raw fallback",SHARED_CONFIG_FALLBACK_URL]\n    ];'''
-new = '''  async function loadSharedSettings(){\n    // Raw main is the source of truth. GitHub Pages can lag behind config.json\n    // while a Pages deployment is rebuilding, which previously made a newly\n    // saved draft appear to revert to the previous draft on reload.\n    const sources=[\n      ["GitHub raw",SHARED_CONFIG_FALLBACK_URL],\n      ["GitHub Pages fallback",SHARED_CONFIG_URL]\n    ];'''
 
-if old not in s:
-    raise SystemExit('shared config source order target not found')
-s = s.replace(old, new, 1)
+def rep(old, new, label):
+    global s
+    if old not in s:
+        raise SystemExit(f'{label}: target not found')
+    s = s.replace(old, new, 1)
 
-old2 = '''      if(reload)setTimeout(()=>location.reload(),900);'''
-new2 = '''      if(reload){\n        // Raw/main updates before the Pages deployment, so reload after a short\n        // commit-settle delay rather than waiting for GitHub Pages to rebuild.\n        setTimeout(()=>location.reload(),1400);\n      }'''
-if old2 not in s:
-    raise SystemExit('reload target not found')
-s = s.replace(old2, new2, 1)
+# The 20-second warning should be a brief bit of crowd impatience, not a long
+# soundtrack that carries into the pick. One short boo burst, then quiet before
+# the final 10-second countdown.
+rep(
+'''      // The warning is specifically booing. Rotate two verified CC0 boo clips
+      // and fade them before the final countdown takes over.
+      playTags(["crowd","boo"],.32,1,"warning","warning-boo",8500);''',
+'''      // Brief crowd impatience only: one low-level boo burst at 20 seconds,
+      // then quiet well before the final 10-second countdown.
+      playTags(["crowd","boo"],.26,1,"warning","warning-boo",2600);''',
+'brief 20-second boo'
+)
+
+# A pick is never itself a boo trigger. If the warning happens to still be
+# audible when the pick arrives, get it out almost immediately while keeping a
+# tiny fade so it does not click/pop.
+rep(
+'''        playPickStinger();
+        fadeOutAudioGroup("warning",420);
+        warningCrowdStarted=false;''',
+'''        playPickStinger();
+        fadeOutAudioGroup("warning",120);
+        warningCrowdStarted=false;''',
+'fast warning fade on pick'
+)
 
 p.write_text(s, encoding='utf-8')
-print('patched shared config source-of-truth ordering')
+print('restored restrained 20-second boo behavior')
