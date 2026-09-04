@@ -1,0 +1,137 @@
+v>
+<div id="settings">
+  <div class="settings-tabs">
+    <button class="settings-tab active" type="button" data-pane="draftPane">Draft</button>
+    <button class="settings-tab" type="button" data-pane="peoplePane">People</button>
+    <button class="settings-tab" type="button" data-pane="audioPane">Audio</button>
+  </div>
+
+  <section class="settings-pane active" id="draftPane">
+    <label>Draft URL or Draft ID
+      <input id="draftInput" autocomplete="off">
+    </label>
+    <div class="settings-grid">
+      <label>Roast level
+        <select id="roastLevel">
+          <option value="off">Off</option>
+          <option value="light">Light</option>
+          <option value="spicy" selected>Spicy</option>
+        </select>
+      </label>
+      <div></div>
+    </div>
+    <div class="settings-actions">
+      <button class="tool" id="applyDraft" type="button">Load draft</button>
+      <button class="tool" id="demoBtn" type="button">Demo ESPN graphics</button>
+    </div>
+  </section>
+
+  <section class="settings-pane" id="peoplePane">
+    <div class="people-help">
+      Sleeper identities load automatically. Broadcast name is what DraftCenter says in announcements; the board keeps Sleeper's original identity.
+      You can also mark each manager Absent or Auto-draft.
+    </div>
+    <div class="people-list" id="peopleList">
+      <div class="people-help">Waiting for Sleeper users…</div>
+    </div>
+    <div class="settings-actions">
+      <button class="tool" id="savePeople" type="button">Save people</button>
+    </div>
+  </section>
+
+  <section class="settings-pane" id="audioPane">
+    <div class="settings-grid">
+      <label>Sound volume
+        <input id="volumeInput" type="range" min="0" max="100" value="70" step="1">
+      </label>
+      <label>Audio status
+        <input id="audioState" value="off" readonly>
+      </label>
+    </div>
+    <div class="settings-actions">
+      <button class="tool" id="settingsSoundBtn" type="button">Enable / disable sound</button>
+      <button class="tool" id="settingsTestSound" type="button">Test real sounds</button>
+    </div>
+    <div class="settings-note">
+    Sounds use real CC0 recordings streamed from GitHub rather than generated beeps.
+    The People tab controls broadcast names, Absent status and Auto-draft status per Sleeper username.
+    The countdown has a non-repeating phrase bag and a physical click each second from 10 to 1.
+  </div>
+  </section>
+
+  <div class="settings-actions">
+    <button class="tool" id="closeSettings" type="button">Close</button>
+  </div>
+</div>
+
+<script>
+(() => {
+  "use strict";
+
+  const DEFAULT_DRAFT_ID = "1401712491624411136";
+  const API = "https://api.sleeper.app/v1";
+  const PICKS_MS = 300;
+  const DRAFT_MS = 1200;
+  const params = new URLSearchParams(location.search);
+
+  let draftId = (params.get("draft") || DEFAULT_DRAFT_ID).replace(/\D/g,"") || DEFAULT_DRAFT_ID;
+  let draft = null;
+  let picks = [];
+  let users = {};
+  let leagueUsers = {};
+  let lastPickCount = null;
+  let observedPickAt = null;
+  let picksBusy = false;
+  let draftBusy = false;
+  let eventQueue = [];
+  let activeEvent = null;
+  let activeUntil = 0;
+  let activePickNo = 0;
+  let currentLiveOrdinal = 1;
+  let lastLivePickKey = "";
+  let lastLivePickAt = Date.now();
+
+  // Broadcast pacing:
+  // - pick reveal: 5s, always interruptible by a newer pick
+  // - follow-up analysis can be deferred and revisited during a lull
+  const FOLLOWUP_MAX_AGE_MS = 45000;
+  const DEFERRED_MAX = 4;
+  const deferredStories = [];
+  let lastRenderedPickCount = -1;
+  let lastApiAt = 0;
+  let sleeperAdpById = {};
+  let adpRows = [];
+  let marketReady = false;
+  let marketSourceLabel = "Sleeper ADP unavailable";
+  let adpAttemptedFor = "";
+  let turnStartedAt = Date.now();
+  let observedPickTimes = [];
+  let alertedSlips = new Set();
+  let lastSlipStoryPick = -999;
+  const storyMemory = new Map();
+  let absentUsernames = new Set();
+  let autodraftUsernames = new Set();
+  let broadcastNames = {};
+  let roastLevel = "spicy";
+  const roastMemory = new Map();
+  let pressureShowing = false;
+
+  // Original procedural sports-broadcast sound engine.
+  // No ESPN audio or third-party sound samples are used.
+  let soundEnabled = false;
+  let masterVolume = 0.72;
+  let activeClipAudios = [];
+  let soundRecentIds = [];
+  let lastPressureSecond = null;
+  let zeroReactionPlayed = false;
+  let lastZeroPollAt = 0;
+  const SOUND_CATALOG = [{"id":"whistle_attention","tags":["whistle","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/256552__skiggz__attention-whistle.wav"},{"id":"whistle_frisko","tags":["whistle","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/417392__frisko28i__whiste.wav"},{"id":"whistle_male","tags":["whistle","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/132294__j_bond__male-whistle.wav"},{"id":"whistle_pfiff","tags":["whistle","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/19825__tommorawe__pfiff_whistle.wav"},{"id":"crowd_gasp1","tags":["crowd","gasp","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/232263__zerocarina__gasp.wav"},{"id":"crowd_gasp2","tags":["crowd","gasp","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/353924__dr_skitz__gasp.wav"},{"id":"crowd_aww1","tags":["crowd","aww","timeout"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/431134__quartetofantastico__aaww.wav"},{"id":"crowd_aww2","tags":["crowd","aww","timeout"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/752706__nox_sound__voice_crowd_small_expression_awww_stereo.wav"},{"id":"crowd_boo","tags":["crowd","boo","jeer","timeout"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/403060__valeriebbb96__boooh.wav"},{"id":"crowd_protest","tags":["crowd","boo","jeer","protest","timeout"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/271425__karymronda__protest02.wav"},{"id":"crowd_applause","tags":["crowd","applause","pick"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/277022__sandermotions__applause-1.wav"},{"id":"crowd_arena","tags":["crowd","arena","pick"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/113698__huubjeroen__goalloop.wav"},{"id":"clock_click","tags":["tick","clock"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/107806__j1987__metallicclick.wav"},{"id":"finger_click","tags":["tick","clock"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/151214__owlstorm__click-finger-snap.wav"}];
+  let lastSoundEventAt = 0;
+  let insightIndex = 0;
+  let insightSlides = [];
+  let lastInsightBuildPickCount = -1;
+  let pressureSoundStage = 0;
+  let pickSoundVariant = 0;
+  const soundHistory = [];
+
+  // Market/valu
