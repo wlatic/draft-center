@@ -1,0 +1,205 @@
+e claims now use Sleeper's format-specific ADP feed.
+  // If that feed cannot be reached by the browser, those claims are disabled.
+
+  const $ = id => document.getElementById(id);
+  const esc = v => String(v ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const initials = s => String(s||"").trim().split(/\s+/).filter(Boolean).map(x=>x[0]).join("").slice(0,2).toUpperCase() || "—";
+
+  const normalizeName = s => String(s||"")
+    .normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
+    .toLowerCase().replace(/['’.\-]/g," ").replace(/\b(jr|sr|ii|iii|iv)\b/g,"")
+    .replace(/[^a-z0-9]+/g," ").trim().replace(/\s+/g," ");
+
+  function adpFieldForDraft(){
+    const settings=draft?.settings||{};
+    if(Number(settings.slots_super_flex||0)>0 || Number(settings.slots_qb||0)>1) return "adp_2qb";
+    const scoring=String(draft?.metadata?.scoring_type||"").toLowerCase();
+    if(scoring.includes("half")) return "adp_half_ppr";
+    if(scoring.includes("ppr")) return "adp_ppr";
+    return "adp_std";
+  }
+
+  function adpScoringLabel(){
+    const f=adpFieldForDraft();
+    if(f==="adp_2qb") return "2QB ADP";
+    if(f==="adp_half_ppr") return "Half-PPR ADP";
+    if(f==="adp_ppr") return "PPR ADP";
+    return "Standard ADP";
+  }
+
+  function marketValue(p){
+    if(!marketReady)return null;
+    const rank=Number(sleeperAdpById[String(p?.player_id||"")]);
+    if(!Number.isFinite(rank) || rank<=0 || rank>=999)return null;
+    return {rank,label:"Sleeper ADP",source:adpScoringLabel()};
+  }
+
+
+  function cb(url){ return `${url}${url.includes("?")?"&":"?"}_tv=${Date.now()}_${Math.random().toString(36).slice(2)}`; }
+  async function apiGet(path){
+    const r = await fetch(cb(API+path),{cache:"no-store",credentials:"omit",headers:{"Accept":"application/json"}});
+    if(!r.ok) throw new Error(`Sleeper API ${r.status}`);
+    lastApiAt=Date.now();
+    return r.json();
+  }
+
+  function pickName(p){
+    const m=p?.metadata||{};
+    return [m.first_name,m.last_name].filter(Boolean).join(" ").trim() || m.full_name || p?.player_id || "Unknown";
+  }
+  function playerImg(p){ return p?.player_id ? `https://sleepercdn.com/content/nfl/players/${encodeURIComponent(p.player_id)}.jpg` : ""; }
+  function avatarImg(a,thumb=false){ return a ? `https://sleepercdn.com/avatars/${thumb?"thumbs/":""}${encodeURIComponent(a)}` : ""; }
+
+  function isForwardRound(round){
+    if((draft?.type||"snake")!=="snake") return true;
+    const reversal=Number(draft?.settings?.reversal_round||0);
+
+    if(!reversal || round<reversal){
+      return round%2===1;
+    }
+
+    // Sleeper 3rd-round reversal: the reversal round uses the SAME direction
+    // as the preceding round, then normal alternation resumes from there.
+    let forward=((reversal-1)%2===1);
+    if((round-reversal)%2===1) forward=!forward;
+    return forward;
+  }
+
+  function info(n){
+    const teams=Math.max(1,Number(draft?.settings?.teams||10));
+    const round=Math.floor((n-1)/teams)+1;
+    const pos=((n-1)%teams)+1;
+    const slot=isForwardRound(round)?pos:(teams-pos+1);
+    return {teams,round,pos,slot,label:`${round}.${String(pos).padStart(2,"0")}`};
+  }
+
+  function allDraftCells(){
+    const teams=Math.max(1,Number(draft?.settings?.teams||10));
+    const rounds=Math.max(1,Number(draft?.settings?.rounds||15));
+    const cells=[];
+    let ordinal=1;
+
+    for(let round=1;round<=rounds;round++){
+      for(let pos=1;pos<=teams;pos++){
+        const slot=isForwardRound(round)?pos:(teams-pos+1);
+        cells.push({
+          ordinal,
+          round,
+          pos,
+          slot,
+          label:`${round}.${String(pos).padStart(2,"0")}`,
+          key:`${round}:${slot}`
+        });
+        ordinal++;
+      }
+    }
+    return cells;
+  }
+
+  function pickCellKey(p){
+    return `${Number(p?.round||0)}:${Number(p?.draft_slot||0)}`;
+  }
+
+  function filledCellMap(){
+    return new Map(
+      picks
+        .filter(p=>Number(p?.round||0)>0 && Number(p?.draft_slot||0)>0)
+        .map(p=>[pickCellKey(p),p])
+    );
+  }
+
+  function liveProgress(){
+    const cells=allDraftCells();
+    const filled=filledCellMap();
+    const nextIndex=cells.findIndex(c=>!filled.has(c.key));
+    const idx=nextIndex<0?cells.length:nextIndex;
+    return {
+      cells,
+      filled,
+      nextCell:idx<cells.length?cells[idx]:null,
+      nextIndex:idx,
+      ordinal:idx+1,
+      complete:idx>=cells.length
+    };
+  }
+
+  function isKeeperPick(p){
+    return p?.is_keeper===true || Number(p?.is_keeper||0)===1 || String(p?.is_keeper||"").toLowerCase()==="true";
+  }
+
+  function livePicksOnly(){
+    return picks.filter(p=>!isKeeperPick(p));
+  }
+
+  function nextLiveCell(offset=0){
+    const progress=liveProgress();
+    if(progress.complete)return null;
+    return progress.cells[progress.nextIndex+offset]||null;
+  }
+
+  function cellForPick(p){
+    const key=pickCellKey(p);
+    return allDraftCells().find(c=>c.key===key)||null;
+  }
+
+  function formatCellLabel(p){
+    return cellForPick(p)?.label || `${Number(p?.round||0)}.${String(Number(p?.draft_slot||0)).padStart(2,"0")}`;
+  }
+
+
+  function userIdForSlot(slot){
+    const order=draft?.draft_order||{};
+    return Object.keys(order).find(uid=>Number(order[uid])===Number(slot))||null;
+  }
+
+  function managerForSlot(slot){
+    const uid=userIdForSlot(slot);
+    if(!uid) return {uid:null,display_name:`Team ${slot}`,team_name:null,avatar:null};
+    const u=users[uid]||{}, l=leagueUsers[uid]||{};
+    return {
+      uid,
+      display_name:u.display_name||l.display_name||u.username||l.username||`Team ${slot}`,
+      team_name:l?.metadata?.team_name||null,
+      avatar:l.avatar||u.avatar||null
+    };
+  }
+
+  function ownerForPick(p){
+    const uid=p?.picked_by ? String(p.picked_by) : null;
+    if(uid && (users[uid]||leagueUsers[uid])){
+      const u=users[uid]||{}, l=leagueUsers[uid]||{};
+      return {uid,display_name:u.display_name||l.display_name||u.username||l.username||"Unknown",team_name:l?.metadata?.team_name||null,avatar:l.avatar||u.avatar||null};
+    }
+    return managerForSlot(Number(p?.draft_slot||info(Number(p?.pick_no||1)).slot));
+  }
+
+
+  function managerUsername(m){
+    if(!m?.uid)return "";
+    const u=users[m.uid]||{}, l=leagueUsers[m.uid]||{};
+    return String(u.username||l.username||u.display_name||l.display_name||"").trim();
+  }
+
+  function broadcastName(m){
+    const username=managerUsername(m).toLowerCase();
+    const mapped=String(broadcastNames[username]||"").trim();
+    return mapped || managerTitle(m);
+  }
+
+  function isAutodraftManager(m){
+    const uname=managerUsername(m).toLowerCase();
+    const display=String(m?.display_name||"").toLowerCase();
+    return autodraftUsernames.has(uname)||autodraftUsernames.has(display);
+  }
+
+  function isAbsentManager(m){
+    const uname=managerUsername(m).toLowerCase();
+    const display=String(m?.display_name||"").toLowerCase();
+    return absentUsernames.has(uname) || absentUsernames.has(display);
+  }
+
+  function roastName(m){
+    return broadcastName(m);
+  }
+
+  const LI
