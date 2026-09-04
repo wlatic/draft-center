@@ -2570,9 +2570,12 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   }
 
   async function loadSharedSettings(){
+    // Raw main is the source of truth. GitHub Pages can lag behind config.json
+    // while a Pages deployment is rebuilding, which previously made a newly
+    // saved draft appear to revert to the previous draft on reload.
     const sources=[
-      ["GitHub Pages",SHARED_CONFIG_URL],
-      ["GitHub raw fallback",SHARED_CONFIG_FALLBACK_URL]
+      ["GitHub raw",SHARED_CONFIG_FALLBACK_URL],
+      ["GitHub Pages fallback",SHARED_CONFIG_URL]
     ];
 
     for(const [label,url] of sources){
@@ -2630,7 +2633,11 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
       if(state)state.textContent="Shared settings saved. Refresh another device to load them.";
       debugLog("CONFIG",`saved shared config: draft ${draftId}, ${Object.keys(broadcastNames).length} names, ${absentUsernames.size} absent, ${autodraftUsernames.size} auto`);
       updateSharedConfigSummary();
-      if(reload)setTimeout(()=>location.reload(),900);
+      if(reload){
+        // Raw/main updates before the Pages deployment, so reload after a short
+        // commit-settle delay rather than waiting for GitHub Pages to rebuild.
+        setTimeout(()=>location.reload(),1400);
+      }
       return true;
     }catch(e){
       if(state)state.textContent=e.message;
