@@ -1,0 +1,28 @@
+name: Apply DraftCenter patch
+
+on:
+  push:
+    paths:
+      - 'patch.py'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply patch
+        run: |
+          if [ -f patch.py ]; then
+            python patch.py
+          fi
+      - name: Commit app update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet && exit 0
+          git commit -m "Update DraftCenter settings and audio fades"
+          git push
