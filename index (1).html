@@ -1,0 +1,2273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Sleeper Draft Party TV</title>
+<style>
+:root{
+  --dash-h:28.5vh;
+  --bg:#061a3d;
+  --bg-deep:#020a18;
+  --panel:#07182f;
+  --line:rgba(78,142,222,.34);
+  --text:#f6fbff;
+  --muted:#8fa8c8;
+  --cyan:#56cfff;
+  --green:#58e2a5;
+
+  --qb:#ee9dca;
+  --rb:#55d1bb;
+  --wr:#58d0dc;
+  --te:#f0c266;
+  --k:#b6a2ed;
+  --def:#f5a45d;
+  --other:#a9c4d8;
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg-deep);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{min-width:900px}
+button,input{font:inherit}
+#app{height:100vh;display:grid;grid-template-rows:var(--dash-h) minmax(0,1fr);background:
+radial-gradient(circle at 52% -12%,rgba(28,104,220,.18),transparent 43%),
+linear-gradient(180deg,#020914 0%,#061b40 100%)}
+
+/* ---------- BROADCAST DASHBOARD ---------- */
+#dash{position:relative;z-index:3;display:grid;grid-template-columns:1.1fr 2fr 1.12fr 1.08fr 1.42fr;gap:9px;padding:11px 13px 10px;background:
+radial-gradient(circle at 50% -45%,rgba(51,134,255,.23),transparent 57%),
+linear-gradient(180deg,#020a17,#06162d);border-bottom:1px solid rgba(76,143,229,.32)}
+.card{min-width:0;position:relative;border:1px solid var(--line);border-radius:13px;background:linear-gradient(180deg,rgba(8,28,56,.98),rgba(5,17,36,.98));padding:12px 13px;overflow:hidden}
+.card.now{border-color:#438fff;box-shadow:inset 0 0 38px rgba(49,121,243,.11),0 0 14px rgba(52,124,247,.11)}
+.label{text-align:center;text-transform:uppercase;letter-spacing:.17em;font-size:10px;font-weight:950;color:#adbed3}
+.identity{display:flex;align-items:center;gap:11px;margin-top:13px;min-width:0}
+.avatar{width:60px;height:60px;border-radius:13px;display:grid;place-items:center;overflow:hidden;flex:none;background:radial-gradient(circle at 35% 25%,#285989,#102846 70%);border:1px solid rgba(91,161,244,.34);color:#cce8ff;font-size:19px;font-weight:1000}
+.avatar img,.mgr-avatar img,.next-avatar img{width:100%;height:100%;object-fit:cover}
+.last-name{font-size:clamp(17px,1.45vw,28px);line-height:.95;font-weight:1000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meta{margin-top:7px;color:#5fc1ff;font-size:12px;font-weight:900}
+.pick-meta{margin-top:5px;color:#97acc8;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.now-inner{height:calc(100% - 18px);display:flex;align-items:center;justify-content:center;gap:18px}
+.mgr-avatar{width:76px;height:76px;border-radius:18px;display:grid;place-items:center;overflow:hidden;flex:none;background:radial-gradient(circle at 32% 24%,#2b5a8c,#102847 67%);border:1px solid #3b74ae;color:#d4ecff;font-size:23px;font-weight:1000}
+.now-name{font-size:clamp(27px,2.6vw,50px);font-weight:1000;line-height:.87;letter-spacing:-.045em;text-transform:uppercase}
+.now-owner{margin-top:8px;color:#d0deed;font-size:12px;font-weight:900}
+.now-meta{margin-top:5px;color:#91a8c7;font-size:11px;font-weight:800}
+.roster{margin-top:7px;color:#61c7ff;font-size:10px;font-weight:900;white-space:nowrap}
+.turn-pill{display:inline-block;margin-left:7px;padding:2px 6px;border-radius:999px;border:1px solid rgba(255,199,88,.45);color:#ffd879;background:rgba(255,185,47,.08);font-size:9px;font-weight:1000}
+.clock-area{height:calc(100% - 18px);display:grid;place-items:center}
+.ring{--p:100%;width:min(166px,11.8vw);height:min(166px,11.8vw);min-width:118px;min-height:118px;border-radius:50%;display:grid;place-items:center;position:relative;background:conic-gradient(#50ceff var(--p),rgba(68,110,162,.18) 0)}
+.ring:after{content:"";position:absolute;inset:8px;border-radius:50%;background:#07172d}
+.clock{position:relative;z-index:1;font-size:clamp(28px,2.7vw,52px);font-weight:1000;letter-spacing:-.07em;font-variant-numeric:tabular-nums}
+.clock-state{text-align:center;margin-top:-5px;color:#8ca6c8;font-size:9px;font-weight:950;letter-spacing:.1em}
+.timer-card.warn{border-color:rgba(255,184,77,.65)}
+.timer-card.warn .ring{background:conic-gradient(#ffbd59 var(--p),rgba(107,83,41,.25) 0)}
+.timer-card.urgent{border-color:rgba(255,91,111,.8)}
+.timer-card.urgent .ring{background:conic-gradient(#ff5e73 var(--p),rgba(110,40,51,.25) 0)}
+.timer-card.urgent .clock{color:#ffc1c8}
+.next{text-align:center;margin-top:12px}
+.next-avatar{width:54px;height:54px;margin:auto;border-radius:14px;display:grid;place-items:center;overflow:hidden;background:#102c50;border:1px solid rgba(88,157,239,.35);font-weight:1000;color:#c0e2ff}
+.next-name{margin-top:8px;font-size:clamp(14px,1.35vw,23px);font-weight:1000;line-height:.98;text-transform:uppercase}
+.next-owner{margin-top:5px;color:#c0d0e4;font-size:10px;font-weight:850}
+.next-meta{margin-top:5px;color:#93a9c6;font-size:10px}
+.live{position:absolute;right:11px;top:10px;display:flex;align-items:center;gap:5px;color:#66e7ad;font-size:9px;font-weight:950}
+.dot{width:6px;height:6px;border-radius:50%;background:#58e2a5;box-shadow:0 0 8px #58e2a5}
+.recent{display:grid;gap:5px;margin-top:10px}
+
+.insight-wrap{margin-top:8px;min-height:105px}
+.insight-kicker{font-size:8px;font-weight:1000;letter-spacing:.13em;text-transform:uppercase;color:#63c8ff}
+.insight-list{margin-top:7px;display:grid;gap:4px}
+.insight-row{display:grid;grid-template-columns:20px minmax(0,1fr);gap:6px;align-items:center;padding:5px 6px;border-radius:6px;background:rgba(255,255,255,.035);border:1px solid rgba(104,160,221,.11)}
+.insight-rank{width:20px;height:20px;border-radius:5px;display:grid;place-items:center;background:#0d2b50;color:#78cfff;font-size:8px;font-weight:1000}
+.insight-row-copy{min-width:0}
+.insight-row-title{font-size:9px;font-weight:1000;color:#eef7ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.insight-row-detail{margin-top:2px;font-size:7.5px;line-height:1.15;color:#86a0c1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.insight-row.good .insight-rank{color:#75e8b1;background:#0c3a31}
+.insight-row.hot .insight-rank{color:#ffc077;background:#402714}
+.insight-row.alert .insight-rank{color:#ff9aaa;background:#421b28}
+.insight-dots{position:absolute;left:12px;bottom:7px;display:flex;gap:4px}
+.insight-dot{width:4px;height:4px;border-radius:50%;background:#31577f}
+.insight-dot.active{background:#63c8ff;box-shadow:0 0 6px rgba(99,200,255,.45)}
+
+.recent-row{display:grid;grid-template-columns:34px minmax(0,1fr) 30px;gap:6px;align-items:center;padding:5px 7px;border-radius:6px;background:rgba(255,255,255,.035);font-size:10px}
+.recent-row .pno{color:#8ca6c8;font-weight:900}
+.recent-row b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.recent-row .tm{color:#65caff;text-align:right;font-weight:1000}
+
+/* ---------- SLEEPER-LIKE BOARD ---------- */
+#board-section{min-height:0;display:flex;flex-direction:column;background:
+radial-gradient(circle at 48% 7%,rgba(11,87,189,.18),transparent 45%),
+linear-gradient(180deg,#08234e 0%,#061c41 45%,#071d43 100%)}
+#board-topbar{height:37px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 13px;border-bottom:1px solid rgba(103,161,226,.13);color:#d3e2f4;font-size:11px}
+#board-topbar .left{display:flex;align-items:center;gap:8px;min-width:0}
+.sleeper-mark{width:19px;height:19px;border-radius:50%;display:grid;place-items:center;background:#27a7d8;color:white;font-size:9px;font-weight:1000;box-shadow:0 0 10px rgba(39,167,216,.3)}
+#board-title{font-weight:950;white-space:nowrap}
+#board-subtitle{color:#7f9bbd;font-size:9px;white-space:nowrap}
+#api-state{display:flex;gap:6px;align-items:center;color:#7f9fbd;font-size:9px;font-weight:850}
+#board-scroll{min-height:0;flex:1;overflow:auto;padding:4px 5px 7px 5px;scrollbar-color:#335d91 #071c3d}
+#board{display:grid;gap:3px;min-width:1540px;align-content:start}
+.round-head{height:19px;display:flex;align-items:center;justify-content:center;color:#6f8db2;font-size:7px;font-weight:950;letter-spacing:.04em}
+.team-cell{height:43px;position:sticky;left:0;z-index:2;display:flex;align-items:center;gap:6px;padding:0 6px;border-radius:5px;background:#09254d;border:1px solid rgba(54,104,162,.24);overflow:hidden}
+.team-avatar{width:23px;height:23px;border-radius:50%;display:grid;place-items:center;overflow:hidden;flex:none;background:#19a4c5;border:1px solid rgba(255,255,255,.16);font-size:8px;font-weight:1000;color:white}
+.team-avatar img{width:100%;height:100%;object-fit:cover}
+.team-copy{min-width:0}
+.team-name{font-size:8px;font-weight:950;color:#cce0f5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.team-owner{margin-top:2px;font-size:6.5px;color:#6e8cb0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pick-card{height:43px;position:relative;border-radius:5px;overflow:hidden;padding:4px 27px 4px 5px;color:#09202d;border:1px solid rgba(255,255,255,.08);box-shadow:inset 0 -1px rgba(0,0,0,.08)}
+.pick-card .pickno{position:absolute;right:4px;top:3px;font-size:6.5px;font-weight:1000;opacity:.57}
+.pick-card .player-name{font-size:8.3px;line-height:1.02;font-weight:1000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pick-card .player-meta{margin-top:4px;font-size:6.6px;line-height:1;font-weight:900;opacity:.7;white-space:nowrap}
+.pick-card .headshot{position:absolute;right:1px;bottom:-1px;width:27px;height:34px;object-fit:cover;object-position:center top;filter:saturate(.92);pointer-events:none}
+.pick-card.qb{background:var(--qb)}
+.pick-card.rb{background:var(--rb)}
+.pick-card.wr{background:var(--wr)}
+.pick-card.te{background:var(--te)}
+.pick-card.k{background:var(--k)}
+.pick-card.def{background:var(--def)}
+.pick-card.other{background:var(--other)}
+.pick-card.empty{display:grid;place-items:center;padding:0;background:#092e64;color:#7f9abd;border-color:rgba(58,107,170,.22);font-size:7px;font-weight:950}
+.pick-card.current{outline:2px solid #65caff;outline-offset:-1px;box-shadow:0 0 13px rgba(54,173,255,.6),inset 0 0 10px rgba(84,194,255,.17)}
+.pick-card.just-picked{animation:newPick .9s ease-out}
+
+.pick-card.keeper{filter:saturate(.72) brightness(.86);border-style:dashed}
+.pick-card .keeper-tag{position:absolute;left:4px;bottom:2px;padding:1px 3px;border-radius:4px;background:rgba(4,18,29,.32);font-size:5.5px;font-weight:1000;letter-spacing:.06em}
+
+@keyframes newPick{0%{filter:brightness(1.7);box-shadow:0 0 24px #70d8ff}100%{filter:none;box-shadow:none}}
+
+/* ---------- TAKEOVER ---------- */
+#takeover{position:absolute;inset:0;z-index:20;display:grid;place-items:center;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .17s ease,transform .17s ease,visibility .17s;background:
+radial-gradient(circle at 42% 40%,rgba(36,112,225,.34),transparent 36%),
+linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
+#takeover.show{opacity:1;visibility:visible;transform:translateY(0)}
+.take-inner{width:min(1020px,92%);display:flex;align-items:center;justify-content:center;gap:28px}
+.take-photo,.take-mark{width:125px;height:125px;flex:none;border-radius:24px;display:grid;place-items:center;overflow:hidden;border:1px solid rgba(96,170,255,.5);background:radial-gradient(circle at 35% 25%,#285989,#102846 70%);color:#cce8ff;font-size:45px;font-weight:1000;box-shadow:0 0 35px rgba(57,139,247,.16)}
+.take-photo img{width:100%;height:100%;object-fit:cover}
+.take-kicker{font-size:13px;font-weight:1000;letter-spacing:.22em;text-transform:uppercase;color:#65caff}
+.take-title{margin-top:6px;font-size:clamp(35px,4vw,70px);line-height:.9;letter-spacing:-.05em;font-weight:1000;text-transform:uppercase}
+.take-sub{margin-top:12px;font-size:clamp(13px,1.3vw,21px);font-weight:850;color:#adc1da}
+#takeover.pink .take-kicker{color:#ff9bcf}
+#takeover.gold .take-kicker{color:#ffd26f}
+
+/* ---------- TINY CONTROLS ---------- */
+#status{position:fixed;left:7px;bottom:4px;z-index:50;color:#6d89ad;font-size:8px;opacity:.55;pointer-events:none}
+#status.bad{color:#ff8696}
+#tools{position:fixed;right:7px;bottom:6px;z-index:60;display:flex;gap:5px;opacity:.12;transition:opacity .15s}
+#tools:hover,#tools:focus-within{opacity:1}
+
+.sound-on{border-color:#3e9f79!important;color:#8ff0bd!important}
+.sound-off{border-color:#6a4c4c!important;color:#dca0a0!important}
+
+.tool{border:1px solid #2a5f9c;border-radius:8px;background:#092343;color:white;padding:6px 8px;font-size:11px;font-weight:850;cursor:pointer}
+#settings{position:fixed;right:9px;bottom:43px;z-index:61;width:min(420px,calc(100vw - 18px));display:none;border:1px solid #2e639d;border-radius:13px;background:#06172e;padding:13px;box-shadow:0 16px 50px #0009}
+#settings.open{display:block}
+#settings label{display:block;font-size:12px;color:#9fb3cf;font-weight:800}
+#settings input{margin-top:5px;width:100%;border:1px solid #285b94;border-radius:8px;background:#081e3a;color:white;padding:10px;font-size:16px}
+.settings-actions{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap}
+
+.settings-tabs{display:flex;gap:5px;margin-bottom:11px;border-bottom:1px solid rgba(71,126,190,.28);padding-bottom:8px}
+.settings-tab{border:1px solid #285b94;border-radius:8px;background:#071a34;color:#8fa9c8;padding:7px 11px;font-size:11px;font-weight:900;cursor:pointer}
+.settings-tab.active{background:#123a68;color:#fff;border-color:#4888ca}
+.settings-pane{display:none}
+.settings-pane.active{display:block}
+.people-help{font-size:10px;color:#839dbd;line-height:1.35;margin-bottom:8px}
+.people-list{display:grid;gap:6px;max-height:330px;overflow:auto;padding-right:3px}
+.person-row{display:grid;grid-template-columns:34px minmax(100px,.9fr) minmax(110px,1fr) 58px 66px;gap:7px;align-items:center;padding:7px;border:1px solid rgba(70,126,190,.2);border-radius:8px;background:rgba(255,255,255,.025)}
+.person-avatar{width:32px;height:32px;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:#14345b;color:#bfe1ff;font-size:10px;font-weight:1000}
+.person-avatar img{width:100%;height:100%;object-fit:cover}
+.person-id{min-width:0}
+.person-display{font-size:10px;font-weight:900;color:#e6f2ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.person-user{margin-top:2px;font-size:8px;color:#7794b7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.person-row input[type="text"]{margin:0!important;padding:7px!important;font-size:13px!important;min-width:0}
+.person-check{display:flex!important;align-items:center;justify-content:center;gap:4px!important;color:#91aac7!important;font-size:8px!important}
+.person-check input{width:auto!important;margin:0!important}
+@media(max-width:650px){.person-row{grid-template-columns:30px 1fr 1fr}.person-check{grid-row:2}}
+
+.settings-note{margin-top:9px;font-size:11px;color:#879fbe;line-height:1.35}
+
+
+.market-source{display:inline-flex;align-items:center;gap:5px;margin-left:8px;padding:2px 6px;border-radius:999px;border:1px solid rgba(92,158,235,.25);color:#7897ba;background:rgba(9,40,78,.5);font-size:7px;font-weight:900}
+#market-watch{max-width:440px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#87a9cf;font-size:8.5px;font-weight:850}
+#market-watch strong{color:#70cfff}
+.take-stats{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}
+.take-stat{padding:5px 8px;border-radius:7px;border:1px solid rgba(99,159,224,.26);background:rgba(255,255,255,.04);font-size:10px;font-weight:900;color:#aec3dc}
+.take-stat strong{color:#fff}
+#takeover.green .take-kicker{color:#63e6ad}
+
+#pressure{
+  position:fixed;inset:0;z-index:100;display:none;place-items:center;
+  background:
+    radial-gradient(circle at 50% 42%,rgba(255,83,104,.18),transparent 35%),
+    rgba(1,6,15,.91);
+  backdrop-filter:blur(3px);
+}
+#pressure.show{display:grid}
+.pressure-inner{text-align:center;width:min(1250px,94vw)}
+.pressure-kicker{font-size:clamp(18px,2vw,34px);font-weight:1000;letter-spacing:.26em;text-transform:uppercase;color:#ffbd62}
+.pressure-name{margin-top:10px;font-size:clamp(45px,7vw,120px);font-weight:1000;letter-spacing:-.055em;line-height:.85;text-transform:uppercase}
+.pressure-clock{margin-top:18px;font-size:clamp(105px,19vw,330px);font-weight:1000;line-height:.72;letter-spacing:-.09em;font-variant-numeric:tabular-nums;color:#fff}
+.pressure-sub{margin-top:28px;font-size:clamp(14px,1.45vw,25px);font-weight:850;color:#aebfd4}
+#pressure.final-five{
+  background:
+    radial-gradient(circle at 50% 40%,rgba(255,39,70,.32),transparent 38%),
+    rgba(8,1,7,.94)
+}
+#pressure.final-five .pressure-kicker{color:#ff6f82}
+#pressure.final-five .pressure-clock{color:#ff9cab}
+#pressure.final-three .pressure-clock{animation:pressureBeat .58s ease-in-out infinite}
+@keyframes pressureBeat{0%,100%{transform:scale(1)}50%{transform:scale(1.055)}}
+.roast-kicker{color:#ffad72!important}
+.absent-chip{display:inline-flex;align-items:center;margin-left:7px;padding:2px 6px;border:1px solid rgba(255,151,94,.38);border-radius:999px;color:#ffb77e;background:rgba(255,125,46,.07);font-size:8px;font-weight:1000;letter-spacing:.05em}
+#settings textarea{margin-top:5px;width:100%;min-height:74px;resize:vertical;border:1px solid #285b94;border-radius:8px;background:#081e3a;color:white;padding:10px;font:inherit;font-size:16px}
+#settings select{margin-top:5px;width:100%;border:1px solid #285b94;border-radius:8px;background:#081e3a;color:white;padding:10px;font-size:16px}
+.settings-grid{display:grid;grid-template-columns:1fr 150px;gap:10px;margin-top:10px}
+@media(max-width:640px){.settings-grid{grid-template-columns:1fr}}
+
+#takeover.red .take-kicker{color:#ff8497}
+#takeover.cyan .take-kicker{color:#66d4ff}
+
+@media(prefers-reduced-motion:reduce){#takeover{transition:none}.pick-card.just-picked{animation:none}}
+</style>
+</head>
+<body>
+<div id="app">
+  <section id="dash">
+    <article class="card">
+      <div class="label">Last Pick</div>
+      <div class="identity">
+        <div class="avatar" id="lastAvatar">—</div>
+        <div style="min-width:0">
+          <div class="last-name" id="lastName">Waiting for pick</div>
+          <div class="meta" id="lastMeta">—</div>
+          <div class="pick-meta" id="lastPickMeta">—</div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card now">
+      <div class="label">On The Clock</div>
+      <div class="now-inner">
+        <div class="mgr-avatar" id="nowAvatar">—</div>
+        <div style="min-width:0">
+          <div class="now-name" id="nowName">TEAM 1</div>
+          <div class="now-owner" id="nowOwner"></div>
+          <div class="now-meta" id="nowMeta">Draft slot 1 · Pick 1.01</div>
+          <div class="roster" id="rosterLine"></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card timer-card" id="timerCard">
+      <div class="label">Time Remaining</div>
+      <div class="clock-area"><div class="ring" id="ring"><div class="clock" id="clock">--:--</div></div></div>
+      <div class="clock-state" id="clockState">CONNECTING</div>
+    </article>
+
+    <article class="card">
+      <div class="label">Up Next</div>
+      <div class="next">
+        <div class="next-avatar" id="nextAvatar">—</div>
+        <div class="next-name" id="nextName">TEAM 2</div>
+        <div class="next-owner" id="nextOwner"></div>
+        <div class="next-meta" id="nextMeta">Pick 1.02</div>
+      </div>
+    </article>
+
+    <article class="card" id="insightCard">
+      <div class="label" id="insightLabel">DraftCenter Desk</div>
+      <div class="live"><span class="dot"></span>LIVE</div>
+      <div class="insight-wrap">
+        <div class="insight-kicker" id="insightKicker">THIS ROUND</div>
+        <div class="insight-list" id="insightList"></div>
+      </div>
+      <div class="insight-dots" id="insightDots"></div>
+    </article>
+
+    <div id="takeover"></div>
+  </section>
+
+  <section id="board-section">
+    <div id="board-topbar">
+      <div class="left">
+        <div class="sleeper-mark">S</div>
+        <div>
+          <div id="board-title">Sleeper Draft Party</div>
+          <div id="board-subtitle">Loading draft…</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;min-width:0">
+        <div id="market-watch"></div>
+        <div id="api-state"><span class="dot"></span><span>Connecting</span></div>
+      </div>
+    </div>
+    <div id="board-scroll"><div id="board"></div></div>
+  </section>
+</div>
+
+
+<div id="pressure" aria-live="assertive">
+  <div class="pressure-inner">
+    <div class="pressure-kicker">THE CLOCK IS TICKING</div>
+    <div class="pressure-name" id="pressureName">ON THE CLOCK</div>
+    <div class="pressure-clock" id="pressureClock">00:10</div>
+    <div class="pressure-sub" id="pressureSub">Make the pick.</div>
+  </div>
+</div>
+
+<div id="status">Connecting to Sleeper…</div>
+<div id="tools">
+  <button class="tool sound-off" id="soundBtn" type="button">Enable sound</button>
+  <button class="tool" id="testSoundBtn" type="button">Test sound</button>
+  <button class="tool" id="settingsBtn" type="button">⚙</button>
+  <button class="tool" id="fullBtn" type="button">Fullscreen</button>
+</div>
+<div id="settings">
+  <div class="settings-tabs">
+    <button class="settings-tab active" type="button" data-pane="draftPane">Draft</button>
+    <button class="settings-tab" type="button" data-pane="peoplePane">People</button>
+    <button class="settings-tab" type="button" data-pane="audioPane">Audio</button>
+  </div>
+
+  <section class="settings-pane active" id="draftPane">
+    <label>Draft URL or Draft ID
+      <input id="draftInput" autocomplete="off">
+    </label>
+    <div class="settings-grid">
+      <label>Roast level
+        <select id="roastLevel">
+          <option value="off">Off</option>
+          <option value="light">Light</option>
+          <option value="spicy" selected>Spicy</option>
+        </select>
+      </label>
+      <div></div>
+    </div>
+    <div class="settings-actions">
+      <button class="tool" id="applyDraft" type="button">Load draft</button>
+      <button class="tool" id="demoBtn" type="button">Demo ESPN graphics</button>
+    </div>
+  </section>
+
+  <section class="settings-pane" id="peoplePane">
+    <div class="people-help">
+      Sleeper identities load automatically. Broadcast name is what DraftCenter says in announcements; the board keeps Sleeper's original identity.
+      You can also mark each manager Absent or Auto-draft.
+    </div>
+    <div class="people-list" id="peopleList">
+      <div class="people-help">Waiting for Sleeper users…</div>
+    </div>
+    <div class="settings-actions">
+      <button class="tool" id="savePeople" type="button">Save people</button>
+    </div>
+  </section>
+
+  <section class="settings-pane" id="audioPane">
+    <div class="settings-grid">
+      <label>Sound volume
+        <input id="volumeInput" type="range" min="0" max="100" value="70" step="1">
+      </label>
+      <label>Audio status
+        <input id="audioState" value="off" readonly>
+      </label>
+    </div>
+    <div class="settings-actions">
+      <button class="tool" id="settingsSoundBtn" type="button">Enable / disable sound</button>
+      <button class="tool" id="settingsTestSound" type="button">Test real sounds</button>
+    </div>
+    <div class="settings-note">
+    Sounds use real CC0 recordings streamed from GitHub rather than generated beeps.
+    The People tab controls broadcast names, Absent status and Auto-draft status per Sleeper username.
+    The countdown has a non-repeating phrase bag and a physical click each second from 10 to 1.
+  </div>
+  </section>
+
+  <div class="settings-actions">
+    <button class="tool" id="closeSettings" type="button">Close</button>
+  </div>
+</div>
+
+<script>
+(() => {
+  "use strict";
+
+  const DEFAULT_DRAFT_ID = "1401712491624411136";
+  const API = "https://api.sleeper.app/v1";
+  const PICKS_MS = 300;
+  const DRAFT_MS = 1200;
+  const params = new URLSearchParams(location.search);
+
+  let draftId = (params.get("draft") || DEFAULT_DRAFT_ID).replace(/\D/g,"") || DEFAULT_DRAFT_ID;
+  let draft = null;
+  let picks = [];
+  let users = {};
+  let leagueUsers = {};
+  let lastPickCount = null;
+  let observedPickAt = null;
+  let picksBusy = false;
+  let draftBusy = false;
+  let eventQueue = [];
+  let activeEvent = null;
+  let activeUntil = 0;
+  let activePickNo = 0;
+  let currentLiveOrdinal = 1;
+  let lastLivePickKey = "";
+  let lastLivePickAt = Date.now();
+
+  // Broadcast pacing:
+  // - pick reveal: 5s, always interruptible by a newer pick
+  // - follow-up analysis can be deferred and revisited during a lull
+  const FOLLOWUP_MAX_AGE_MS = 45000;
+  const DEFERRED_MAX = 4;
+  const deferredStories = [];
+  let lastRenderedPickCount = -1;
+  let lastApiAt = 0;
+  let sleeperAdpById = {};
+  let adpRows = [];
+  let marketReady = false;
+  let marketSourceLabel = "Sleeper ADP unavailable";
+  let adpAttemptedFor = "";
+  let turnStartedAt = Date.now();
+  let observedPickTimes = [];
+  let alertedSlips = new Set();
+  let lastSlipStoryPick = -999;
+  const storyMemory = new Map();
+  let absentUsernames = new Set();
+  let autodraftUsernames = new Set();
+  let broadcastNames = {};
+  let roastLevel = "spicy";
+  const roastMemory = new Map();
+  let pressureShowing = false;
+
+  // Original procedural sports-broadcast sound engine.
+  // No ESPN audio or third-party sound samples are used.
+  let soundEnabled = false;
+  let masterVolume = 0.72;
+  let activeClipAudios = [];
+  let soundRecentIds = [];
+  let lastPressureSecond = null;
+  let zeroReactionPlayed = false;
+  let lastZeroPollAt = 0;
+  const SOUND_CATALOG = [{"id":"whistle_attention","tags":["whistle","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/256552__skiggz__attention-whistle.wav"},{"id":"whistle_frisko","tags":["whistle","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/417392__frisko28i__whiste.wav"},{"id":"whistle_male","tags":["whistle","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/132294__j_bond__male-whistle.wav"},{"id":"whistle_pfiff","tags":["whistle","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/19825__tommorawe__pfiff_whistle.wav"},{"id":"crowd_gasp1","tags":["crowd","gasp","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/232263__zerocarina__gasp.wav"},{"id":"crowd_gasp2","tags":["crowd","gasp","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/353924__dr_skitz__gasp.wav"},{"id":"crowd_aww1","tags":["crowd","aww","timeout"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/431134__quartetofantastico__aaww.wav"},{"id":"crowd_aww2","tags":["crowd","aww","timeout"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/752706__nox_sound__voice_crowd_small_expression_awww_stereo.wav"},{"id":"crowd_boo","tags":["crowd","boo","jeer","timeout"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/403060__valeriebbb96__boooh.wav"},{"id":"crowd_protest","tags":["crowd","boo","jeer","protest","timeout"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/271425__karymronda__protest02.wav"},{"id":"crowd_applause","tags":["crowd","applause","pick"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/277022__sandermotions__applause-1.wav"},{"id":"crowd_arena","tags":["crowd","arena","pick"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/113698__huubjeroen__goalloop.wav"},{"id":"clock_click","tags":["tick","clock"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/107806__j1987__metallicclick.wav"},{"id":"finger_click","tags":["tick","clock"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/151214__owlstorm__click-finger-snap.wav"}];
+  let lastSoundEventAt = 0;
+  let insightIndex = 0;
+  let insightSlides = [];
+  let lastInsightBuildPickCount = -1;
+  let pressureSoundStage = 0;
+  let pickSoundVariant = 0;
+  const soundHistory = [];
+
+  // Market/value claims now use Sleeper's format-specific ADP feed.
+  // If that feed cannot be reached by the browser, those claims are disabled.
+
+  const $ = id => document.getElementById(id);
+  const esc = v => String(v ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const initials = s => String(s||"").trim().split(/\s+/).filter(Boolean).map(x=>x[0]).join("").slice(0,2).toUpperCase() || "—";
+
+  const normalizeName = s => String(s||"")
+    .normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
+    .toLowerCase().replace(/['’.\-]/g," ").replace(/\b(jr|sr|ii|iii|iv)\b/g,"")
+    .replace(/[^a-z0-9]+/g," ").trim().replace(/\s+/g," ");
+
+  function adpFieldForDraft(){
+    const settings=draft?.settings||{};
+    if(Number(settings.slots_super_flex||0)>0 || Number(settings.slots_qb||0)>1) return "adp_2qb";
+    const scoring=String(draft?.metadata?.scoring_type||"").toLowerCase();
+    if(scoring.includes("half")) return "adp_half_ppr";
+    if(scoring.includes("ppr")) return "adp_ppr";
+    return "adp_std";
+  }
+
+  function adpScoringLabel(){
+    const f=adpFieldForDraft();
+    if(f==="adp_2qb") return "2QB ADP";
+    if(f==="adp_half_ppr") return "Half-PPR ADP";
+    if(f==="adp_ppr") return "PPR ADP";
+    return "Standard ADP";
+  }
+
+  function marketValue(p){
+    if(!marketReady)return null;
+    const rank=Number(sleeperAdpById[String(p?.player_id||"")]);
+    if(!Number.isFinite(rank) || rank<=0 || rank>=999)return null;
+    return {rank,label:"Sleeper ADP",source:adpScoringLabel()};
+  }
+
+
+  function cb(url){ return `${url}${url.includes("?")?"&":"?"}_tv=${Date.now()}_${Math.random().toString(36).slice(2)}`; }
+  async function apiGet(path){
+    const r = await fetch(cb(API+path),{cache:"no-store",credentials:"omit",headers:{"Accept":"application/json"}});
+    if(!r.ok) throw new Error(`Sleeper API ${r.status}`);
+    lastApiAt=Date.now();
+    return r.json();
+  }
+
+  function pickName(p){
+    const m=p?.metadata||{};
+    return [m.first_name,m.last_name].filter(Boolean).join(" ").trim() || m.full_name || p?.player_id || "Unknown";
+  }
+  function playerImg(p){ return p?.player_id ? `https://sleepercdn.com/content/nfl/players/${encodeURIComponent(p.player_id)}.jpg` : ""; }
+  function avatarImg(a,thumb=false){ return a ? `https://sleepercdn.com/avatars/${thumb?"thumbs/":""}${encodeURIComponent(a)}` : ""; }
+
+  function isForwardRound(round){
+    if((draft?.type||"snake")!=="snake") return true;
+    const reversal=Number(draft?.settings?.reversal_round||0);
+
+    if(!reversal || round<reversal){
+      return round%2===1;
+    }
+
+    // Sleeper 3rd-round reversal: the reversal round uses the SAME direction
+    // as the preceding round, then normal alternation resumes from there.
+    let forward=((reversal-1)%2===1);
+    if((round-reversal)%2===1) forward=!forward;
+    return forward;
+  }
+
+  function info(n){
+    const teams=Math.max(1,Number(draft?.settings?.teams||10));
+    const round=Math.floor((n-1)/teams)+1;
+    const pos=((n-1)%teams)+1;
+    const slot=isForwardRound(round)?pos:(teams-pos+1);
+    return {teams,round,pos,slot,label:`${round}.${String(pos).padStart(2,"0")}`};
+  }
+
+  function allDraftCells(){
+    const teams=Math.max(1,Number(draft?.settings?.teams||10));
+    const rounds=Math.max(1,Number(draft?.settings?.rounds||15));
+    const cells=[];
+    let ordinal=1;
+
+    for(let round=1;round<=rounds;round++){
+      for(let pos=1;pos<=teams;pos++){
+        const slot=isForwardRound(round)?pos:(teams-pos+1);
+        cells.push({
+          ordinal,
+          round,
+          pos,
+          slot,
+          label:`${round}.${String(pos).padStart(2,"0")}`,
+          key:`${round}:${slot}`
+        });
+        ordinal++;
+      }
+    }
+    return cells;
+  }
+
+  function pickCellKey(p){
+    return `${Number(p?.round||0)}:${Number(p?.draft_slot||0)}`;
+  }
+
+  function filledCellMap(){
+    return new Map(
+      picks
+        .filter(p=>Number(p?.round||0)>0 && Number(p?.draft_slot||0)>0)
+        .map(p=>[pickCellKey(p),p])
+    );
+  }
+
+  function liveProgress(){
+    const cells=allDraftCells();
+    const filled=filledCellMap();
+    const nextIndex=cells.findIndex(c=>!filled.has(c.key));
+    const idx=nextIndex<0?cells.length:nextIndex;
+    return {
+      cells,
+      filled,
+      nextCell:idx<cells.length?cells[idx]:null,
+      nextIndex:idx,
+      ordinal:idx+1,
+      complete:idx>=cells.length
+    };
+  }
+
+  function isKeeperPick(p){
+    return p?.is_keeper===true || Number(p?.is_keeper||0)===1 || String(p?.is_keeper||"").toLowerCase()==="true";
+  }
+
+  function livePicksOnly(){
+    return picks.filter(p=>!isKeeperPick(p));
+  }
+
+  function nextLiveCell(offset=0){
+    const progress=liveProgress();
+    if(progress.complete)return null;
+    return progress.cells[progress.nextIndex+offset]||null;
+  }
+
+  function cellForPick(p){
+    const key=pickCellKey(p);
+    return allDraftCells().find(c=>c.key===key)||null;
+  }
+
+  function formatCellLabel(p){
+    return cellForPick(p)?.label || `${Number(p?.round||0)}.${String(Number(p?.draft_slot||0)).padStart(2,"0")}`;
+  }
+
+
+  function userIdForSlot(slot){
+    const order=draft?.draft_order||{};
+    return Object.keys(order).find(uid=>Number(order[uid])===Number(slot))||null;
+  }
+
+  function managerForSlot(slot){
+    const uid=userIdForSlot(slot);
+    if(!uid) return {uid:null,display_name:`Team ${slot}`,team_name:null,avatar:null};
+    const u=users[uid]||{}, l=leagueUsers[uid]||{};
+    return {
+      uid,
+      display_name:u.display_name||l.display_name||u.username||l.username||`Team ${slot}`,
+      team_name:l?.metadata?.team_name||null,
+      avatar:l.avatar||u.avatar||null
+    };
+  }
+
+  function ownerForPick(p){
+    const uid=p?.picked_by ? String(p.picked_by) : null;
+    if(uid && (users[uid]||leagueUsers[uid])){
+      const u=users[uid]||{}, l=leagueUsers[uid]||{};
+      return {uid,display_name:u.display_name||l.display_name||u.username||l.username||"Unknown",team_name:l?.metadata?.team_name||null,avatar:l.avatar||u.avatar||null};
+    }
+    return managerForSlot(Number(p?.draft_slot||info(Number(p?.pick_no||1)).slot));
+  }
+
+
+  function managerUsername(m){
+    if(!m?.uid)return "";
+    const u=users[m.uid]||{}, l=leagueUsers[m.uid]||{};
+    return String(u.username||l.username||u.display_name||l.display_name||"").trim();
+  }
+
+  function broadcastName(m){
+    const username=managerUsername(m).toLowerCase();
+    const mapped=String(broadcastNames[username]||"").trim();
+    return mapped || managerTitle(m);
+  }
+
+  function isAutodraftManager(m){
+    const uname=managerUsername(m).toLowerCase();
+    const display=String(m?.display_name||"").toLowerCase();
+    return autodraftUsernames.has(uname)||autodraftUsernames.has(display);
+  }
+
+  function isAbsentManager(m){
+    const uname=managerUsername(m).toLowerCase();
+    const display=String(m?.display_name||"").toLowerCase();
+    return absentUsernames.has(uname) || absentUsernames.has(display);
+  }
+
+  function roastName(m){
+    return broadcastName(m);
+  }
+
+  const LIGHT_ROASTS = [
+    n=>`${n} couldn't make it tonight, so apparently we're drafting by remote negligence.`,
+    n=>`${n} is absent. The chair is empty; the picks are still legally binding.`,
+    n=>`${n} couldn't be here, but their roster has bravely continued without adult supervision.`,
+    n=>`${n} is drafting from afar. Very brave. Very convenient.`
+  ];
+
+  const SPICY_ROASTS = [
+    n=>`${n} couldn't be bothered to attend their own draft. Commitment remains undefeated.`,
+    n=>`${n} is absent, which at least gives them a ready-made excuse for this roster.`,
+    n=>`${n}'s chair is empty and somehow still showing more draft awareness than expected.`,
+    n=>`${n} couldn't make the draft. Their strategy apparently couldn't make it either.`,
+    n=>`${n} is drafting remotely — because facing the room after these picks would be awkward.`,
+    n=>`${n} has outsourced both attendance and accountability tonight.`,
+    n=>`${n} isn't here. Conveniently, neither is anyone who can explain the plan.`,
+    n=>`${n} skipped draft night. Bold choice for someone who'll talk about injuries for four months.`
+  ];
+
+  function absentRoastStory(m,pickNo){
+    if(roastLevel==="off" || !isAbsentManager(m))return null;
+
+    const uid=m.uid||managerUsername(m)||managerTitle(m);
+    const last=Number(roastMemory.get(uid)??-999);
+
+    // At most once every ~2 rounds / 18 picks per absent manager.
+    if(Number(pickNo)-last<18)return null;
+    roastMemory.set(uid,Number(pickNo));
+
+    const arr=roastLevel==="light"?LIGHT_ROASTS:SPICY_ROASTS;
+    const index=Math.abs(Number(pickNo)+String(uid).length)%arr.length;
+    const copy=arr[index](roastName(m));
+
+    return {
+      kicker:"ABSENT OWNER DESK",
+      title:String(roastName(m)).toUpperCase(),
+      sub:copy,
+      tone:"gold",
+      duration:3900,
+      priority:52,
+      storyKey:`absent:${uid}:${Math.floor(Number(pickNo)/18)}`
+    };
+  }
+
+  function managerTitle(m){ return m?.team_name||m?.display_name||"Unknown"; }
+  function managerSub(m){ return m?.team_name && m?.display_name && m.team_name!==m.display_name ? m.display_name : ""; }
+
+  function setImgBox(el, src, fallback){
+    el.replaceChildren();
+    if(src){
+      const img=document.createElement("img");
+      img.alt="";
+      img.src=src;
+      img.onerror=()=>{el.replaceChildren(document.createTextNode(fallback));};
+      el.appendChild(img);
+    }else el.textContent=fallback;
+  }
+
+  function rosterCounts(uid){
+    const c={QB:0,RB:0,WR:0,TE:0,K:0,DEF:0};
+    if(!uid) return c;
+    for(const p of picks){
+      if(String(p.picked_by||"")!==String(uid)) continue;
+      const pos=String(p?.metadata?.position||"").toUpperCase();
+      if(c[pos]!==undefined)c[pos]++;
+    }
+    return c;
+  }
+
+  function rosterLine(uid){
+    const c=rosterCounts(uid);
+    const x=["QB","RB","WR","TE"].map(k=>`${k} ${c[k]}`);
+    if(c.K)x.push(`K ${c.K}`);
+    if(c.DEF)x.push(`DEF ${c.DEF}`);
+    return x.join("  ·  ");
+  }
+
+  function posClass(pos){
+    const p=String(pos||"").toLowerCase();
+    return ["qb","rb","wr","te","k","def"].includes(p)?p:"other";
+  }
+
+
+  function storyAllowed(key,pickNo,gap){
+    const last=Number(storyMemory.get(key)??-999);
+    if(Number(pickNo)-last<gap)return false;
+    storyMemory.set(key,Number(pickNo));
+    return true;
+  }
+
+  function storyOnce(key){
+    if(storyMemory.has(key))return false;
+    storyMemory.set(key,picks.length);
+    return true;
+  }
+
+  function marketStory(p){
+    const mv=marketValue(p);
+    if(!mv)return null;
+
+    const cell=cellForPick(p);
+    const pickNo=Number(cell?.ordinal || p?.pick_no || 0);
+    const delta=pickNo-mv.rank;
+    const abs=Math.abs(delta);
+
+    // Big discrepancies can always break through. Smaller ones get a cooldown
+    // so DraftCenter doesn't become "VALUE ALERT" every other pick.
+    if(abs<12)return null;
+    if(abs<25 && !storyAllowed(delta>0?"market:value":"market:early",pickNo,4)) return null;
+
+    if(delta>=25){
+      return {kicker:"DRAFTCENTER VALUE",title:`${pickName(p)} FALLS ${Math.round(delta)} PICKS`,sub:`Selected ${pickNo} · Sleeper ADP ${mv.rank.toFixed(1)} · ${mv.source}`,tone:"green",duration:3900,
+        stats:[["Selected",pickNo],["Sleeper ADP",mv.rank.toFixed(1)],["Value","+ "+Math.round(delta)+" picks"]]};
+    }
+    if(delta>=12){
+      return {kicker:"VALUE ALERT",title:`${Math.round(delta)} PICKS PAST ADP`,sub:`${pickName(p)} stayed on the board longer than Sleeper's market expected.`,tone:"green",duration:3500,
+        stats:[["Selected",pickNo],["Sleeper ADP",mv.rank.toFixed(1)]]};
+    }
+    if(delta<=-25){
+      return {kicker:"AGGRESSIVE PICK",title:`${Math.abs(Math.round(delta))} PICKS AHEAD OF ADP`,sub:`${pickName(p)} goes well ahead of the Sleeper market.`,tone:"red",duration:3900,
+        stats:[["Selected",pickNo],["Sleeper ADP",mv.rank.toFixed(1)]]};
+    }
+    if(delta<=-12){
+      return {kicker:"EARLY CALL",title:`${pickName(p)} GOES EARLY`,sub:`Selected ${pickNo} · Sleeper ADP ${mv.rank.toFixed(1)}.`,tone:"gold",duration:3500,
+        stats:[["Selected",pickNo],["Sleeper ADP",mv.rank.toFixed(1)],["Difference",Math.abs(Math.round(delta))+" early"]]};
+    }
+    return null;
+  }
+
+  function detectStory(p){
+    const pos=String(p?.metadata?.position||"").toUpperCase();
+    const owner=ownerForPick(p);
+    const liveHistory=livePicksOnly();
+    const last5=liveHistory.slice(-5);
+    const last3=liveHistory.slice(-3);
+
+    // Position-run thresholds are intentionally asymmetric.
+    // WR/RB runs are common, so we only interrupt the broadcast for a truly
+    // meaningful surge. QB/TE/DEF runs are rarer, so we surface them earlier.
+    const last8=liveHistory.slice(-8);
+    const countIn=(arr,position)=>arr.filter(x=>String(x?.metadata?.position||"").toUpperCase()===position).length;
+    const straight=(arr,position,n)=>arr.length>=n && arr.slice(-n).every(x=>String(x?.metadata?.position||"").toUpperCase()===position);
+
+    if(["WR","RB"].includes(pos)){
+      if(straight(liveHistory,pos,5) && storyAllowed(`run:${pos}`,Number(p.pick_no),10)){
+        return {kicker:`${pos} RUN`,title:`FIVE STRAIGHT ${pos}s`,sub:`This has become a full-on ${pos} rush.`,tone:"pink",duration:3400};
+      }
+      if(countIn(last8,pos)>=6 && storyAllowed(`run:${pos}`,Number(p.pick_no),10)){
+        return {kicker:`${pos} RUN`,title:`6 OF THE LAST 8 PICKS`,sub:`The room is hammering the ${pos} position.`,tone:"pink",duration:3400};
+      }
+    }
+
+    if(["QB","TE","DEF"].includes(pos)){
+      if(straight(liveHistory,pos,3) && storyAllowed(`run:${pos}`,Number(p.pick_no),6)){
+        return {kicker:`${pos} RUN`,title:`THREE STRAIGHT ${pos}s`,sub:`A real ${pos} run is underway.`,tone:"pink",duration:3400};
+      }
+      if(countIn(last5,pos)>=4 && storyAllowed(`run:${pos}`,Number(p.pick_no),6)){
+        return {kicker:`${pos} RUN`,title:`4 OF THE LAST 5 PICKS`,sub:`The ${pos} market is moving fast.`,tone:"pink",duration:3400};
+      }
+    }
+
+    const before=liveHistory.slice(0,-1);
+    if(["QB","TE","DEF"].includes(pos) &&
+       !before.some(x=>String(x?.metadata?.position||"").toUpperCase()===pos) &&
+       storyOnce(`first:${pos}`)){
+      return {kicker:"DRAFT MILESTONE",title:`FIRST ${pos} OFF THE BOARD`,sub:`${pickName(p)} starts the ${pos} market.`,tone:"gold",duration:3500};
+    }
+
+    const prev=liveHistory[liveHistory.length-2];
+    if(prev && String(prev.picked_by||"")===String(p.picked_by||"")){
+      const prevPos=String(prev?.metadata?.position||"").toUpperCase();
+      if(prevPos===pos && storyAllowed(`double:${owner.uid||owner.display_name}:${pos}`,Number(p.pick_no),8)){
+        return {kicker:"DOUBLE DIP",title:`BACK-TO-BACK ${pos}s`,sub:`${broadcastName(owner)} uses the turn to take two ${pos}s.`,tone:"cyan",duration:3500};
+      }
+    }
+
+    const nfl=String(p?.metadata?.team||"");
+    if(owner.uid && nfl){
+      const own=picks.filter(x=>String(x.picked_by||"")===String(owner.uid));
+      const same=own.filter(x=>String(x?.metadata?.team||"")===nfl);
+      const qb=same.find(x=>String(x?.metadata?.position||"").toUpperCase()==="QB");
+      const pass=same.find(x=>["WR","TE"].includes(String(x?.metadata?.position||"").toUpperCase()));
+      if(qb&&pass&&(qb===p||pass===p) && storyOnce(`stack:${owner.uid}:${nfl}`)){
+        return {kicker:"STACK ALERT",title:`${pickName(qb)} + ${pickName(pass)}`,sub:`${broadcastName(owner)} has a ${nfl} QB/pass-catcher stack.`,tone:"cyan",duration:3600};
+      }
+      if((same.length===3 || same.length===5) && storyOnce(`homer:${owner.uid}:${nfl}:${same.length}`)){
+        return {kicker:"HOMER ALERT",title:`${same.length} ${nfl} PLAYERS`,sub:`${broadcastName(owner)} is building the ${nfl}.`,tone:"gold",duration:3400};
+      }
+    }
+
+    const c=rosterCounts(owner.uid);
+    const currentRound=info(Number(p.pick_no)).round;
+    if(currentRound>=5 && c.WR>=4 && c.RB<=1 && storyOnce(`identity:zeroRB:${owner.uid}`)){
+      return {kicker:"ROSTER IDENTITY",title:"ZERO-RB WATCH",sub:`${broadcastName(owner)} now has ${c.WR} WRs and ${c.RB} RB.`,tone:"cyan",duration:3300};
+    }
+    if(currentRound>=5 && c.RB>=4 && c.WR<=1 && storyOnce(`identity:ground:${owner.uid}`)){
+      return {kicker:"ROSTER IDENTITY",title:"GROUND GAME",sub:`${broadcastName(owner)} now has ${c.RB} RBs and ${c.WR} WR.`,tone:"green",duration:3300};
+    }
+
+    return null;
+  }
+
+  function roundSummary(round){
+    const teams=Number(draft?.settings?.teams||10);
+    const arr=picks.slice((round-1)*teams,round*teams);
+    const c={};
+    for(const p of arr){const pos=String(p?.metadata?.position||"OTHER").toUpperCase();c[pos]=(c[pos]||0)+1;}
+    return ["QB","RB","WR","TE","K","DEF","OTHER"].filter(k=>c[k]).map(k=>`${c[k]} ${k}`).join(" · ");
+  }
+
+
+
+  function roundLeader(round){
+    const teams=Number(draft?.settings?.teams||10);
+    const arr=picks.slice((round-1)*teams,round*teams);
+    const counts={};
+    for(const p of arr){
+      const pos=String(p?.metadata?.position||"OTHER").toUpperCase();
+      counts[pos]=(counts[pos]||0)+1;
+    }
+    const entries=Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+    return entries[0]||null;
+  }
+
+  function roundBestValue(round){
+    if(!marketReady)return null;
+    const teams=Number(draft?.settings?.teams||10);
+    const arr=picks.slice((round-1)*teams,round*teams);
+    let best=null;
+    for(const p of arr){
+      const mv=marketValue(p);
+      if(!mv)continue;
+      const delta=Number(p.pick_no)-mv.rank;
+      if(!best || delta>best.delta)best={p,delta,adp:mv.rank};
+    }
+    return best && best.delta>=8 ? best : null;
+  }
+
+  function bestAvailable(){
+    if(!marketReady || !adpRows.length)return null;
+    const taken=new Set(picks.map(p=>String(p.player_id)));
+    for(const x of adpRows){
+      if(taken.has(String(x.player_id)))continue;
+      if(!["QB","RB","WR","TE","K","DEF"].some(pos=>(x.fantasy_positions||[]).includes(pos)))continue;
+      return x;
+    }
+    return null;
+  }
+
+  function slipStory(){
+    const x=bestAvailable();
+    if(!x)return null;
+    const nextPick=liveProgress().ordinal;
+    const slip=nextPick-x.adp;
+
+    // Treat "still available" as a studio note, not something to repeat every pick.
+    if(slip<15 || alertedSlips.has(String(x.player_id)) || nextPick-lastSlipStoryPick<8)return null;
+    alertedSlips.add(String(x.player_id));
+    lastSlipStoryPick=nextPick;
+
+    return {
+      kicker:"STILL ON THE BOARD",
+      title:x.full_name||"Top ADP player",
+      sub:`Sleeper ADP ${x.adp.toFixed(1)} · draft has reached pick ${nextPick}.`,
+      image:x.player_id?`https://sleepercdn.com/content/nfl/players/${encodeURIComponent(x.player_id)}.jpg`:"",
+      fallback:initials(x.full_name),tone:"cyan",duration:3500,
+      stats:[["Sleeper ADP",x.adp.toFixed(1)],["Next pick",nextPick],["Slide",Math.round(slip)+" picks"]]
+    };
+  }
+
+  function quickPickStory(p,seconds){
+    if(!Number.isFinite(seconds))return null;
+
+    // Sleeper's documented pick payload has no guaranteed per-pick "autodraft"
+    // flag. If CPU autopick is enabled globally, do not run speed stories at all.
+    if(Number(draft?.settings?.cpu_autopick||0)===1)return null;
+    if(isAutodraftManager(ownerForPick(p)))return null;
+
+    // Honor any explicit auto marker if Sleeper ever includes one.
+    const explicitAuto =
+      p?.is_auto===true || p?.is_autopick===true ||
+      String(p?.metadata?.is_auto||"")==="1" ||
+      String(p?.metadata?.is_autopick||"")==="1";
+    if(explicitAuto)return null;
+
+    // Near-instant choices are too ambiguous (force CPU, queue/automation, etc.).
+    // Timer-expiry choices also aren't "quick picks".
+    if(seconds<2.5 || seconds>8)return null;
+
+    const round=info(Number(p.pick_no)).round;
+    if(!storyOnce(`quick:round:${round}`))return null;
+
+    return {
+      kicker:"QUICK TURNAROUND",
+      title:`${seconds.toFixed(1)} SECONDS`,
+      sub:`${pickName(p)} came off the board almost immediately.`,
+      tone:"cyan",duration:2600
+    };
+  }
+
+
+  function rememberDeferred(story){
+    if(!story)return;
+
+    // Round recaps are allowed to linger longer than normal analysis.
+    const ttl=story.roundRecap?90000:45000;
+    const key=story.storyKey || `${story.kicker}:${story.title}`;
+
+    // Deduplicate, preferring the newest version of the same story.
+    for(let i=deferredStories.length-1;i>=0;i--){
+      if((deferredStories[i].storyKey || `${deferredStories[i].kicker}:${deferredStories[i].title}`)===key){
+        deferredStories.splice(i,1);
+      }
+    }
+
+    deferredStories.push({
+      ...story,
+      storyKey:key,
+      deferredAt:Date.now(),
+      deferredExpiresAt:Date.now()+ttl,
+      replayCount:Number(story.replayCount||0)
+    });
+
+    deferredStories.sort((a,b)=>(b.priority||0)-(a.priority||0) || b.deferredAt-a.deferredAt);
+    while(deferredStories.length>DEFERRED_MAX)deferredStories.pop();
+  }
+
+  function clockRemainingSeconds(){
+    if(!draft)return 0;
+    const timer=Number(draft?.settings?.pick_timer||0);
+    if(!timer)return 999;
+    if(draft.status!=="drafting")return 0;
+
+    const start=Math.max(Number(draft?.last_picked||0),Number(observedPickAt||0),Number(lastLivePickAt||0)) || Date.now();
+    return Math.max(0,timer-(Date.now()-start)/1000);
+  }
+
+  function safeToReplayDeferred(){
+    if(activeEvent)return false;
+    if(draft?.status!=="drafting")return false;
+
+    // Give the new pick/reveal time to settle first.
+    if(Date.now()-lastLivePickAt<6500)return false;
+
+    const timer=Number(draft?.settings?.pick_timer||0);
+    if(!timer)return true;
+
+    // Scale the lull threshold to the draft clock:
+    // 30s mock -> ~16.5s remaining
+    // 60s      -> 33s remaining
+    // 120s     -> capped at 45s remaining
+    const safeThreshold=Math.min(45,Math.max(12,timer*0.55));
+    return clockRemainingSeconds()>safeThreshold;
+  }
+
+  function popDeferredStory(){
+    const now=Date.now();
+
+    for(let i=0;i<deferredStories.length;i++){
+      const s=deferredStories[i];
+      if(now>s.deferredExpiresAt)continue;
+      if(Number(s.replayCount||0)>=1)continue;
+
+      deferredStories.splice(i,1);
+      return {
+        ...s,
+        replayCount:Number(s.replayCount||0)+1,
+        deferredReplay:true,
+        createdAt:now,
+        expiresAt:now+Math.min(9000,Number(s.duration||3500)+2500),
+        duration:s.roundRecap?7000:Math.min(4300,Number(s.duration||3500)+700)
+      };
+    }
+
+    // Purge expired stories.
+    for(let i=deferredStories.length-1;i>=0;i--){
+      if(now>deferredStories[i].deferredExpiresAt)deferredStories.splice(i,1);
+    }
+    return null;
+  }
+
+  function queueEventsForPick(p,secondsOnClock=null){
+    if(isKeeperPick(p))return;
+
+    const i=cellForPick(p) || info(Number(p.pick_no||1));
+    const owner=ownerForPick(p);
+    const mv=marketValue(p);
+    const now=Date.now();
+    activePickNo=Number(i.ordinal || p.pick_no || currentLiveOrdinal);
+
+    // LIVE-TV RULE:
+    // A new pick immediately kills anything left over from the previous pick.
+    // We never allow old analysis to stack up behind newer draft action.
+    eventQueue.length=0;
+
+    let marketText="";
+    if(mv){
+      const d=Number(p.pick_no)-mv.rank;
+      marketText=` · ${mv.label} ${Math.round(mv.rank)}${Math.abs(d)>=3?` (${d>0?"+":""}${Math.round(d)})`:""}`;
+    }
+
+    const reveal={
+      kind:"pick",
+      pickNo:Number(i.ordinal || p.pick_no || currentLiveOrdinal),
+      createdAt:now,
+      expiresAt:now+7000,
+      kicker:"THE PICK IS IN",
+      title:pickName(p),
+      sub:`${p?.metadata?.position||"—"} · ${p?.metadata?.team||"FA"}  —  ${broadcastName(owner)}  —  Pick ${i.label}${marketText}`,
+      image:playerImg(p),
+      fallback:initials(pickName(p)),
+      tone:"",
+      duration:5000
+    };
+
+    // The new pick reveal preempts whatever is currently on screen.
+    activeEvent=reveal;
+    activeUntil=now+reveal.duration;
+    renderTakeover();
+
+    // Build candidate follow-up stories, but select ONLY ONE.
+    // This gives us SportsCenter-style editorial priority instead of a FIFO queue.
+    const candidates=[];
+
+    const market=marketStory(p);
+    if(market) candidates.push({...market,priority:90});
+
+    const story=detectStory(p);
+    if(story && (!market || story.title!==market.title)) {
+      let priority=60;
+      if(story.kicker==="STACK ALERT") priority=78;
+      else if(story.kicker==="DOUBLE DIP") priority=74;
+      else if(String(story.kicker||"").includes("RUN")) priority=72;
+      else if(story.kicker==="DRAFT MILESTONE") priority=76;
+      candidates.push({...story,priority});
+    }
+
+    const autoMgr=ownerForPick(p);
+    if(isAutodraftManager(autoMgr)){
+      candidates.push({
+        kicker:"AUTO-DRAFT DESK",
+        title:`${broadcastName(autoMgr)} IS ON AUTO`,
+        sub:isAbsentManager(autoMgr)
+          ? `Not here and not pretending otherwise — Sleeper is handling the selections.`
+          : `DraftCenter has this manager marked as auto-drafting.`,
+        tone:"gold",
+        duration:3900,
+        priority:96,
+        storyKey:`autodraft:${autoMgr.uid||managerUsername(autoMgr)}:${Math.floor(Number(i.ordinal||p.pick_no||1)/10)}`
+      });
+    }
+
+    const quick=quickPickStory(p,secondsOnClock);
+    if(quick) candidates.push({...quick,priority:45});
+
+    const roast=absentRoastStory(owner,Number(i.ordinal||p.pick_no||currentLiveOrdinal));
+    if(roast) candidates.push(roast);
+
+    const slip=slipStory();
+    if(slip) candidates.push({...slip,priority:48});
+
+    if(i.pos===i.teams){
+      const leader=roundLeader(i.round);
+      const value=roundBestValue(i.round);
+      const nextInfo=info(Number(p.pick_no)+1);
+      const nextMgr=managerForSlot(nextInfo.slot);
+      const leaderText=leader?`${leader[0]} led the round with ${leader[1]} picks.`:"";
+      const valueText=value?` Best value: ${pickName(value.p)} (${Math.round(value.delta)} past ADP).`:"";
+
+      candidates.push({
+        kicker:`ROUND ${i.round} COMPLETE`,
+        title:roundSummary(i.round)||"ROUND COMPLETE",
+        sub:`${leaderText}${valueText} Next: ${managerTitle(nextMgr)} at ${nextInfo.label}.`,
+        image:"",
+        fallback:"R",
+        tone:"",
+        duration:8000,
+        priority:100,
+        roundRecap:true
+      });
+    }
+
+    candidates.sort((a,b)=>(b.priority||0)-(a.priority||0));
+    const follow=candidates[0];
+
+    if(follow){
+      const isRound=Boolean(follow.roundRecap);
+      eventQueue.push({
+        ...follow,
+        kind:"followup",
+        pickNo:Number(i.ordinal || p.pick_no || currentLiveOrdinal),
+        storyKey:follow.storyKey || `${follow.kicker}:${follow.title}`,
+        createdAt:now,
+        expiresAt:now+(isRound?18000:FOLLOWUP_MAX_AGE_MS),
+        // End-of-round is a proper studio segment.
+        duration:isRound?8000:Math.min(Number(follow.duration||2800),3600)
+      });
+    }
+  }
+
+  function eventTick(){
+    const now=Date.now();
+
+    if(activeEvent && now>=activeUntil){
+      activeEvent=null;
+      renderTakeover();
+    }
+
+    if(!activeEvent && eventQueue.length){
+      while(eventQueue.length){
+        const candidate=eventQueue.shift();
+
+        // A follow-up attached to an old pick isn't shown immediately.
+        // Preserve it for a later studio lull instead of losing it.
+        if(candidate.kind==="followup" && Number(candidate.pickNo)!==Number(activePickNo)){
+          rememberDeferred(candidate);
+          continue;
+        }
+
+        if(candidate.expiresAt && now>candidate.expiresAt){
+          if(candidate.kind==="followup")rememberDeferred(candidate);
+          continue;
+        }
+
+        activeEvent=candidate;
+        activeUntil=now+candidate.duration;
+        renderTakeover();
+        return;
+      }
+    }
+
+    // If the draft has settled and the current manager still has plenty of time,
+    // bring back one worthwhile story that was bypassed by faster action.
+    if(safeToReplayDeferred()){
+      const replay=popDeferredStory();
+      if(replay){
+        activeEvent=replay;
+        activeUntil=now+replay.duration;
+        renderTakeover();
+      }
+    }
+  }
+
+  function renderTakeover(){
+    const t=$("takeover");
+    if(!activeEvent){t.className="";t.innerHTML="";return;}
+    t.className=`show ${activeEvent.tone||""}`;
+    const art=activeEvent.image
+      ? `<div class="take-photo"><img src="${esc(activeEvent.image)}" alt="" onerror="this.parentElement.textContent='${esc(activeEvent.fallback||"★")}'"></div>`
+      : `<div class="take-mark">${esc(activeEvent.fallback||"!")}</div>`;
+    const replayTag=activeEvent.deferredReplay
+      ? `<div class="take-stat">DRAFTCENTER REPLAY</div>`
+      : "";
+    const stats=Array.isArray(activeEvent.stats)&&activeEvent.stats.length
+      ? `<div class="take-stats">${replayTag}${activeEvent.stats.map(([k,v])=>`<div class="take-stat">${esc(k)} <strong>${esc(v)}</strong></div>`).join("")}</div>`
+      : (replayTag?`<div class="take-stats">${replayTag}</div>`:"");
+    t.innerHTML=`<div class="take-inner">${art}<div><div class="take-kicker">${esc(activeEvent.kicker)}</div><div class="take-title">${esc(activeEvent.title)}</div><div class="take-sub">${esc(activeEvent.sub||"")}</div>${stats}</div></div>`;
+  }
+
+
+  function currentRoundNumber(){
+    const p=liveProgress();
+    return p.nextCell?.round || Number(draft?.settings?.rounds||1);
+  }
+
+  function picksForRound(round){
+    return picks.filter(p=>Number(p?.round||0)===Number(round));
+  }
+
+  function positionBreakdown(arr){
+    const c={QB:0,RB:0,WR:0,TE:0,K:0,DEF:0};
+    for(const p of arr){
+      const pos=String(p?.metadata?.position||"").toUpperCase();
+      if(c[pos]!==undefined)c[pos]++;
+    }
+    return c;
+  }
+
+  function marketDelta(p){
+    const mv=marketValue(p);
+    if(!mv)return null;
+    const cell=cellForPick(p);
+    const ordinal=Number(cell?.ordinal||p?.pick_no||0);
+    return {
+      p,
+      ordinal,
+      adp:Number(mv.rank),
+      delta:ordinal-Number(mv.rank)
+    };
+  }
+
+  function currentRosterFacts(){
+    const facts=[];
+    const ids=Object.keys(draft?.draft_order||{});
+    for(const uid of ids){
+      const slot=Number(draft.draft_order[uid]);
+      const mgr=managerForSlot(slot);
+      const c=rosterCounts(uid);
+      const total=c.QB+c.RB+c.WR+c.TE+c.K+c.DEF;
+      if(!total)continue;
+
+      if(c.WR>=4) facts.push({score:c.WR,title:`${managerTitle(mgr)}: ${c.WR} WRs`,detail:`Roster through ${total} selections`,tone:"hot"});
+      if(c.RB>=4) facts.push({score:c.RB,title:`${managerTitle(mgr)}: ${c.RB} RBs`,detail:`Roster through ${total} selections`,tone:"hot"});
+      if(c.QB>=2) facts.push({score:c.QB+0.5,title:`${managerTitle(mgr)}: ${c.QB} QBs`,detail:`Quarterback-heavy build`,tone:"alert"});
+      if(c.TE>=2) facts.push({score:c.TE+0.25,title:`${managerTitle(mgr)}: ${c.TE} TEs`,detail:`Multiple tight ends already`,tone:"alert"});
+      if(total>=5 && c.RB<=1) facts.push({score:4.4,title:`${managerTitle(mgr)}: ${c.RB} RB`,detail:`Zero-RB / light-RB build`,tone:"good"});
+      if(total>=5 && c.WR<=1) facts.push({score:4.2,title:`${managerTitle(mgr)}: ${c.WR} WR`,detail:`Very light at wide receiver`,tone:"good"});
+    }
+    return facts.sort((a,b)=>b.score-a.score).slice(0,4);
+  }
+
+  function stackFacts(){
+    const facts=[];
+    const byOwner=new Map();
+
+    for(const p of picks){
+      if(isKeeperPick(p))continue;
+      const uid=String(p.picked_by||"");
+      if(!uid)continue;
+      if(!byOwner.has(uid))byOwner.set(uid,[]);
+      byOwner.get(uid).push(p);
+    }
+
+    for(const [uid,arr] of byOwner){
+      const slot=Number(draft?.draft_order?.[uid]||0);
+      const mgr=managerForSlot(slot);
+      const byNFL={};
+
+      for(const p of arr){
+        const team=String(p?.metadata?.team||"");
+        if(!team)continue;
+        if(!byNFL[team])byNFL[team]=[];
+        byNFL[team].push(p);
+      }
+
+      for(const [team,players] of Object.entries(byNFL)){
+        const qb=players.find(p=>String(p?.metadata?.position||"").toUpperCase()==="QB");
+        const catcher=players.find(p=>["WR","TE"].includes(String(p?.metadata?.position||"").toUpperCase()));
+        if(qb&&catcher){
+          facts.push({
+            score:5,
+            title:`${managerTitle(mgr)}: ${team} stack`,
+            detail:`${pickName(qb)} + ${pickName(catcher)}`,
+            tone:"good"
+          });
+        }else if(players.length>=3){
+          facts.push({
+            score:players.length,
+            title:`${managerTitle(mgr)}: ${players.length} ${team} players`,
+            detail:`Leaning heavily into one NFL team`,
+            tone:"hot"
+          });
+        }
+      }
+    }
+
+    return facts.sort((a,b)=>b.score-a.score).slice(0,4);
+  }
+
+  function positionWatchFacts(){
+    const live=livePicksOnly();
+    const facts=[];
+    const windows=[5,8,12];
+
+    for(const size of windows){
+      const arr=live.slice(-size);
+      if(arr.length<Math.min(size,4))continue;
+      const c=positionBreakdown(arr);
+      for(const [pos,count] of Object.entries(c)){
+        if(count===0)continue;
+        const threshold=["WR","RB"].includes(pos)
+          ? (size===8?5:size===12?7:4)
+          : (size===5?3:size===8?4:5);
+        if(count>=threshold){
+          facts.push({
+            score:count/size,
+            title:`${count} ${pos}s in last ${arr.length}`,
+            detail:`${Math.round(count/arr.length*100)}% of recent picks`,
+            tone:"hot"
+          });
+        }
+      }
+    }
+
+    // Position scarcity this round
+    const round=currentRoundNumber();
+    const rp=picksForRound(round);
+    const c=positionBreakdown(rp);
+    for(const pos of ["QB","TE","DEF"]){
+      if(c[pos]===0 && rp.length>=4){
+        facts.push({
+          score:.35,
+          title:`No ${pos} yet in Round ${round}`,
+          detail:`${rp.length} picks into the round`,
+          tone:"good"
+        });
+      }
+    }
+
+    const seen=new Set();
+    return facts
+      .sort((a,b)=>b.score-a.score)
+      .filter(f=>{const k=f.title;if(seen.has(k))return false;seen.add(k);return true;})
+      .slice(0,4);
+  }
+
+  function marketMoverFacts(){
+    if(!marketReady)return [];
+    const facts=[];
+
+    for(const p of picks){
+      if(isKeeperPick(p))continue;
+      const x=marketDelta(p);
+      if(!x)continue;
+
+      if(x.delta>=8){
+        facts.push({
+          score:Math.abs(x.delta),
+          title:`VALUE: ${pickName(p)}`,
+          detail:`${Math.round(x.delta)} picks past Sleeper ADP ${x.adp.toFixed(1)}`,
+          tone:"good"
+        });
+      }else if(x.delta<=-8){
+        facts.push({
+          score:Math.abs(x.delta),
+          title:`EARLY: ${pickName(p)}`,
+          detail:`${Math.abs(Math.round(x.delta))} picks ahead of Sleeper ADP ${x.adp.toFixed(1)}`,
+          tone:"alert"
+        });
+      }
+    }
+
+    const ba=bestAvailable();
+    if(ba){
+      const next=liveProgress().ordinal;
+      const slide=next-Number(ba.adp||0);
+      facts.push({
+        score:Math.max(1,slide),
+        title:`AVAILABLE: ${ba.full_name}`,
+        detail:slide>=5
+          ? `${Math.round(slide)} picks past Sleeper ADP ${Number(ba.adp).toFixed(1)}`
+          : `Sleeper ADP ${Number(ba.adp).toFixed(1)}`,
+        tone:"hot"
+      });
+    }
+
+    return facts.sort((a,b)=>b.score-a.score).slice(0,4);
+  }
+
+  function roundFacts(){
+    const round=currentRoundNumber();
+    const rp=picksForRound(round);
+    const c=positionBreakdown(rp);
+    const facts=[];
+
+    const byCount=Object.entries(c)
+      .filter(([,n])=>n>0)
+      .sort((a,b)=>b[1]-a[1]);
+
+    for(const [pos,count] of byCount.slice(0,3)){
+      facts.push({
+        score:count,
+        title:`${count} ${pos}${count===1?"":"s"} this round`,
+        detail:`${rp.length} of ${Number(draft?.settings?.teams||10)} picks complete`,
+        tone:count>=4?"hot":""
+      });
+    }
+
+    if(rp.length){
+      const first=rp[0];
+      facts.push({
+        score:.1,
+        title:`Round ${round} opened with ${pickName(first)}`,
+        detail:`${first?.metadata?.position||"—"} · ${first?.metadata?.team||"FA"}`,
+        tone:""
+      });
+    }
+
+    if(!facts.length){
+      facts.push({
+        score:0,
+        title:`Round ${round} just started`,
+        detail:"Waiting for the board to develop",
+        tone:""
+      });
+    }
+
+    return facts.slice(0,4);
+  }
+
+  function keeperFacts(){
+    const keepers=picks.filter(isKeeperPick);
+    if(!keepers.length)return [];
+    const facts=[];
+
+    const pos=positionBreakdown(keepers);
+    const byCount=Object.entries(pos).filter(([,n])=>n>0).sort((a,b)=>b[1]-a[1]);
+    for(const [p,n] of byCount.slice(0,3)){
+      facts.push({
+        score:n,
+        title:`${n} keeper ${p}${n===1?"":"s"}`,
+        detail:"Pre-filled before the live draft",
+        tone:"good"
+      });
+    }
+
+    facts.push({
+      score:.1,
+      title:`${keepers.length} keeper slots total`,
+      detail:"They do not advance the live pick sequence",
+      tone:""
+    });
+
+    return facts.slice(0,4);
+  }
+
+  function buildInsightPanels(){
+    const panels=[];
+
+    const round=roundFacts();
+    if(round.length) panels.push({label:"This Round",kicker:`ROUND ${currentRoundNumber()}`,rows:round});
+
+    const market=marketMoverFacts();
+    if(market.length) panels.push({label:"Market Movers",kicker:"ADP DESK",rows:market});
+
+    const positions=positionWatchFacts();
+    if(positions.length) panels.push({label:"Position Watch",kicker:"DRAFT TRENDS",rows:positions});
+
+    const rosters=currentRosterFacts();
+    if(rosters.length) panels.push({label:"Team Trends",kicker:"ROSTER BUILDS",rows:rosters});
+
+    const stacks=stackFacts();
+    if(stacks.length) panels.push({label:"Connections",kicker:"STACKS & HOMERS",rows:stacks});
+
+    const keeper=keeperFacts();
+    if(keeper.length) panels.push({label:"Keeper Notes",kicker:"KEEPER BOARD",rows:keeper});
+
+    return panels;
+  }
+
+  function renderInsight(){
+    if(!draft)return;
+
+    const panels=buildInsightPanels();
+    insightSlides=panels;
+
+    if(!panels.length)return;
+    if(insightIndex>=panels.length)insightIndex=0;
+
+    const panel=panels[insightIndex];
+    $("insightLabel").textContent=panel.label||"DraftCenter Desk";
+    $("insightKicker").textContent=panel.kicker||"LIVE";
+
+    $("insightList").innerHTML=(panel.rows||[]).slice(0,4).map((row,i)=>`
+      <div class="insight-row ${esc(row.tone||"")}">
+        <div class="insight-rank">${i+1}</div>
+        <div class="insight-row-copy">
+          <div class="insight-row-title">${esc(row.title||"")}</div>
+          <div class="insight-row-detail">${esc(row.detail||"")}</div>
+        </div>
+      </div>
+    `).join("");
+
+    $("insightDots").innerHTML=panels
+      .map((_,i)=>`<span class="insight-dot${i===insightIndex?" active":""}"></span>`)
+      .join("");
+  }
+
+  function rotateInsight(){
+    if(!insightSlides.length){
+      renderInsight();
+      return;
+    }
+    insightIndex=(insightIndex+1)%insightSlides.length;
+    renderInsight();
+  }
+
+  function renderDash(){
+    if(!draft)return;
+    const progress=liveProgress();
+    const curInfo=progress.nextCell || allDraftCells().at(-1);
+    const nextInfo=progress.cells[progress.nextIndex+1] || curInfo;
+    if(!curInfo)return;
+    currentLiveOrdinal=progress.ordinal;
+
+    const cur=managerForSlot(curInfo.slot), nxt=managerForSlot(nextInfo.slot);
+
+    $("nowName").textContent=managerTitle(cur);
+    $("nowOwner").innerHTML=`${esc(managerSub(cur))}${isAbsentManager(cur)?'<span class="absent-chip">ABSENT</span>':""}${isAutodraftManager(cur)?'<span class="absent-chip">AUTO-DRAFT</span>':""}`;
+    $("nowMeta").innerHTML=`Draft slot ${curInfo.slot} · Pick ${curInfo.label}${((draft?.type||"snake")==="snake"&&(curInfo.pos===1||curInfo.pos===curInfo.teams))?'<span class="turn-pill">SNAKE TURN</span>':""}`;
+    $("rosterLine").textContent=rosterLine(cur.uid);
+    setImgBox($("nowAvatar"),avatarImg(cur.avatar),initials(managerTitle(cur)));
+
+    $("nextName").textContent=managerTitle(nxt);
+    $("nextOwner").textContent=managerSub(nxt);
+    $("nextMeta").textContent=`Pick ${nextInfo.label}`;
+    setImgBox($("nextAvatar"),avatarImg(nxt.avatar),initials(managerTitle(nxt)));
+
+    const liveOnly=livePicksOnly();
+    const last=liveOnly[liveOnly.length-1];
+    if(last){
+      const li=cellForPick(last) || info(Number(last.pick_no||1)), owner=ownerForPick(last), nm=pickName(last);
+      $("lastName").textContent=nm;
+      $("lastMeta").textContent=`${last?.metadata?.position||"—"} · ${last?.metadata?.team||"FA"}`;
+      $("lastPickMeta").textContent=`Pick ${li.label} · ${managerTitle(owner)}`;
+      setImgBox($("lastAvatar"),playerImg(last),initials(nm));
+    }else{
+      $("lastName").textContent="Draft not started";$("lastMeta").textContent="—";$("lastPickMeta").textContent="Waiting for Pick 1.01";$("lastAvatar").textContent="—";
+    }
+
+    renderInsight();
+  }
+
+
+
+  function soundsWithTags(tags){
+    const wanted=Array.isArray(tags)?tags:[tags];
+    return SOUND_CATALOG.filter(s=>wanted.every(t=>s.tags.includes(t)));
+  }
+
+  function chooseSound(tags){
+    const matches=soundsWithTags(tags);
+    if(!matches.length)return null;
+    let choices=matches.filter(s=>!soundRecentIds.includes(s.id));
+    if(!choices.length)choices=matches;
+    const chosen=choices[Math.floor(Math.random()*choices.length)];
+    soundRecentIds.push(chosen.id);
+    while(soundRecentIds.length>4)soundRecentIds.shift();
+    return chosen;
+  }
+
+  function makeRepoAudio(sound,volume=1,rate=1){
+    if(!sound)return null;
+    const a=new Audio(sound.url);
+    a.preload="auto";
+    a.volume=Math.max(0,Math.min(1,volume*masterVolume));
+    a.playbackRate=Math.max(.85,Math.min(1.2,rate));
+    return a;
+  }
+
+  function cleanupFinishedClips(){
+    activeClipAudios=activeClipAudios.filter(a=>!a.ended&&!a.paused);
+  }
+
+  async function playTags(tags,volume=1,rate=1){
+    if(!soundEnabled)return null;
+    cleanupFinishedClips();
+    const chosen=chooseSound(tags);
+    if(!chosen)return null;
+    const a=makeRepoAudio(chosen,volume,rate);
+    activeClipAudios.push(a);
+    try{await a.play()}catch(_){}
+    return a;
+  }
+
+  function updateAudioState(){
+    const el=$("audioState");
+    if(el)el.value=soundEnabled?"ready — CC0 repo":"off";
+  }
+
+  async function setSoundEnabled(on){
+    soundEnabled=Boolean(on);
+    const b=$("soundBtn");
+    b.textContent=soundEnabled?"Sound on":"Enable sound";
+    b.classList.toggle("sound-on",soundEnabled);
+    b.classList.toggle("sound-off",!soundEnabled);
+    updateAudioState();
+
+    if(soundEnabled){
+      await playAudioTest();
+    }else{
+      for(const a of activeClipAudios){try{a.pause();a.currentTime=0}catch(_){}}
+      activeClipAudios=[];
+    }
+  }
+
+  async function playAudioTest(){
+    if(!soundEnabled)return;
+    await playTags(["whistle"],.72);
+    setTimeout(()=>playTags(["crowd","boo"],.70),1200);
+    setTimeout(()=>playTags(["crowd","pick"],.42),3000);
+  }
+
+  function playTinyConfirm(){}
+
+  function playPickStinger(){
+    if(!soundEnabled)return;
+    if(Math.random()<.56)playTags(["crowd","pick"],.38);
+  }
+
+  function playClockTick(second){
+    if(!soundEnabled||second<1||second>10)return;
+    const rate=.95+Math.random()*.10;
+    const volume=second<=3?.72:second<=5?.58:.40;
+    playTags(["tick","clock"],volume,rate);
+  }
+
+  function playPressureCue(stage){
+    if(!soundEnabled)return;
+    if(stage===1){
+      playTags(["whistle","pressure"],.56);
+    }else if(stage===2){
+      if(Math.random()<.58)playTags(["crowd","gasp"],.56);
+      else playTags(["crowd","aww"],.56);
+    }
+  }
+
+  function playTimeoutReaction(){
+    if(!soundEnabled||zeroReactionPlayed)return;
+    zeroReactionPlayed=true;
+    const r=Math.random();
+    if(r<.50)playTags(["crowd","boo"],.82);
+    else if(r<.80)playTags(["crowd","protest"],.72);
+    else playTags(["crowd","aww"],.72);
+  }
+
+  function resetPressureSound(){
+    pressureSoundStage=0;
+    lastPressureSecond=null;
+    zeroReactionPlayed=false;
+  }
+
+  function hidePressure(){
+    if(!pressureShowing){
+      resetPressureSound();
+      return;
+    }
+    pressureShowing=false;
+    $("pressure").className="";
+    resetPressureSound();
+  }
+
+
+  const PRESSURE_PHRASES = {
+    ten:[
+      "Plenty of time. Allegedly.",
+      "The room is starting to notice.",
+      "Clock management has entered the chat.",
+      "No pressure. Except the giant clock.",
+      "The board is waiting.",
+      "Decisions, decisions.",
+      "Somebody has entered the danger zone.",
+      "This was easier two minutes ago.",
+      "The draft room has become suspiciously quiet.",
+      "The clock would appreciate a decision."
+    ],
+    five:[
+      "The clock is getting LOUD.",
+      "We're running out of runway.",
+      "Commit to the bit.",
+      "This is becoming everyone's problem.",
+      "The room would like a decision.",
+      "Five seconds. Choose wisely-ish.",
+      "Analysis paralysis is now public.",
+      "We're officially making this awkward.",
+      "At some point you do have to pick.",
+      "Your research window is closing rapidly."
+    ],
+    three:[
+      "PICK. A. PLAYER.",
+      "Everybody is watching.",
+      "The clock has no sympathy.",
+      "Three seconds of pure confidence.",
+      "Time to stop researching.",
+      "The spreadsheet cannot save you now.",
+      "This decision will be remembered.",
+      "Please select a football player.",
+      "There are, in fact, players available.",
+      "The room has questions."
+    ],
+    zero:[
+      "CLOCK EXPIRED — Sleeper is processing the pick.",
+      "ZERO. The room has opinions.",
+      "TIME. Let's see what Sleeper does.",
+      "CLOCK EXPIRED. Cue the judgment.",
+      "That clock is extremely finished.",
+      "Time's up. The crowd would like a word.",
+      "The clock has left the building.",
+      "Zero seconds. Excellent time management."
+    ]
+  };
+
+  const pressurePhraseBags={};
+  let pressurePhraseTurnKey="";
+
+  function shuffledCopy(arr){
+    const x=[...arr];
+    for(let i=x.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [x[i],x[j]]=[x[j],x[i]];
+    }
+    return x;
+  }
+
+  function pressurePhrase(stage,turnKey){
+    if(pressurePhraseTurnKey!==turnKey)pressurePhraseTurnKey=turnKey;
+    if(!pressurePhraseBags[stage]||!pressurePhraseBags[stage].length){
+      pressurePhraseBags[stage]=shuffledCopy(PRESSURE_PHRASES[stage]||PRESSURE_PHRASES.ten);
+    }
+    return pressurePhraseBags[stage].shift();
+  }
+
+  function renderPressure(seconds){
+    if(!draft)return;
+
+    // Full-screen pressure mode for the final 10 seconds.
+    // It is intentionally more important than deferred analysis, but a real
+    // pick will immediately remove it before THE PICK IS IN appears.
+    if(draft.status!=="drafting" || seconds>10){
+      hidePressure();
+      return;
+    }
+
+    const curCell=liveProgress().nextCell;
+    if(!curCell){hidePressure();return;}
+    const mgr=managerForSlot(curCell.slot);
+    const name=broadcastName(mgr);
+
+    pressureShowing=true;
+
+    if(soundEnabled){
+      const whole=Math.max(0,Math.ceil(seconds));
+
+      if(whole>=1 && whole<=10 && whole!==lastPressureSecond){
+        lastPressureSecond=whole;
+        playClockTick(whole);
+      }
+
+      if(seconds<=10 && seconds>5 && pressureSoundStage<1){
+        pressureSoundStage=1;
+        playPressureCue(1);
+      }else if(seconds<=5 && seconds>0 && pressureSoundStage<2){
+        pressureSoundStage=2;
+        playPressureCue(2);
+      }else if(seconds<=0){
+        playTimeoutReaction();
+      }
+    }
+
+    const el=$("pressure");
+    el.className=`show${seconds<=5?" final-five":""}${seconds<=3?" final-three":""}`;
+    $("pressureName").textContent=name;
+    $("pressureClock").textContent=`00:${String(Math.max(0,Math.ceil(seconds))).padStart(2,"0")}`;
+
+    const turnKey=`${curCell.key}:${managerUsername(mgr)||name}`;
+
+    if(seconds<=0){
+      $("pressureSub").textContent=pressurePhrase("zero",turnKey);
+    }else if(isAutodraftManager(mgr)){
+      const autoPool=[
+        `${name} is on auto-draft. The machine is officially under pressure.`,
+        `Sleeper has the wheel for ${name}.`,
+        `${name} delegated the stressful part to a computer.`,
+        `AUTO-DRAFT ACTIVE — somehow the clock still feels personal.`
+      ];
+      const key="auto-pressure";
+      if(!pressurePhraseBags[key]||!pressurePhraseBags[key].length)pressurePhraseBags[key]=shuffledCopy(autoPool);
+      $("pressureSub").textContent=pressurePhraseBags[key].shift();
+    }else if(isAbsentManager(mgr)){
+      const absentPool=[
+        `${name} isn't here, but the clock very much is.`,
+        `Somebody tell ${name} their laptop is on the clock.`,
+        `Remote management is going beautifully for ${name}.`,
+        `${name}'s empty chair is now under serious pressure.`,
+        `Apparently ${name} delegated attendance but not the clock.`
+      ];
+      const key="absent-pressure";
+      if(!pressurePhraseBags[key]||!pressurePhraseBags[key].length)pressurePhraseBags[key]=shuffledCopy(absentPool);
+      $("pressureSub").textContent=pressurePhraseBags[key].shift();
+    }else if(seconds<=3){
+      $("pressureSub").textContent=pressurePhrase("three",turnKey);
+    }else if(seconds<=5){
+      $("pressureSub").textContent=pressurePhrase("five",turnKey);
+    }else{
+      $("pressureSub").textContent=pressurePhrase("ten",turnKey);
+    }
+  }
+
+  function renderClock(){
+    if(!draft)return;
+    const timer=Number(draft?.settings?.pick_timer||0);
+    const card=$("timerCard");
+    card.classList.remove("warn","urgent");
+
+    if(draft.status==="complete"){
+      hidePressure();
+      $("clock").textContent="DONE";$("clockState").textContent="DRAFT COMPLETE";$("ring").style.setProperty("--p","0%");return;
+    }
+    if(!timer){
+      hidePressure();
+      $("clock").textContent="∞";$("clockState").textContent="NO PICK TIMER";$("ring").style.setProperty("--p","100%");return;
+    }
+
+    const isAutoPaused=String(draft?.metadata?.is_autopaused||"")==="1";
+    const isPaused=draft.status!=="drafting" || isAutoPaused;
+    if(isPaused){
+      hidePressure();
+      $("clockState").textContent=isAutoPaused?"AUTO-PAUSED":"DRAFT PAUSED";
+      card.classList.remove("warn","urgent");
+      return;
+    }
+
+    const start=Math.max(Number(draft?.last_picked||0),Number(observedPickAt||0))||Number(draft?.start_time||0)||Date.now();
+    const rem=Math.max(0,timer*1000-Math.max(0,Date.now()-start));
+    const secs=rem/1000;
+    renderPressure(secs);
+
+    if(secs<=0){
+      $("clockState").textContent="PICK PROCESSING…";
+      if(Date.now()-lastZeroPollAt>150){
+        lastZeroPollAt=Date.now();
+        pollPicks();
+        pollDraft();
+      }
+    }
+    if(secs<=10)card.classList.add("urgent");else if(secs<=30)card.classList.add("warn");
+    $("clock").textContent=`${String(Math.floor(secs/60)).padStart(2,"0")}:${String(Math.floor(secs%60)).padStart(2,"0")}`;
+    $("ring").style.setProperty("--p",`${Math.max(0,Math.min(100,rem/(timer*1000)*100))}%`);
+    if(secs>0){
+      $("clockState").textContent=draft.status==="drafting"?"CLOCK RUNNING":String(draft.status||"SYNCED").toUpperCase();
+    }
+  }
+
+  function renderBoard(){
+    if(!draft)return;
+    const teams=Number(draft?.settings?.teams||10);
+    const rounds=Number(draft?.settings?.rounds||15);
+    // Completed picks are placed using Sleeper's returned round + draft_slot,
+    // not our inferred snake sequence.
+    const cellMap=new Map(picks.map(p=>[`${Number(p.round)}:${Number(p.draft_slot)}`,p]));
+    const progress=liveProgress();
+    const nextKey=progress.nextCell?.key||"";
+    const rowWidth=106;
+    const cardWidth=Math.max(82,Math.floor((window.innerWidth-rowWidth-18)/Math.min(rounds,15)));
+    $("board").style.gridTemplateColumns=`${rowWidth}px repeat(${rounds},minmax(${cardWidth}px,1fr))`;
+
+    let out="<div></div>";
+    for(let r=1;r<=rounds;r++)out+=`<div class="round-head">R${r}</div>`;
+
+    for(let slot=1;slot<=teams;slot++){
+      const m=managerForSlot(slot), title=managerTitle(m), sub=managerSub(m)||`Draft slot ${slot}`;
+      const av=avatarImg(m.avatar,true);
+      out+=`<div class="team-cell"><div class="team-avatar">${av?`<img src="${esc(av)}" alt="" onerror="this.parentElement.textContent='${esc(initials(title))}'">`:esc(initials(title))}</div><div class="team-copy"><div class="team-name">${esc(title)}</div><div class="team-owner">${esc(sub)}</div></div></div>`;
+
+      for(let round=1;round<=rounds;round++){
+        const pos=isForwardRound(round)?slot:teams-slot+1;
+        const n=(round-1)*teams+pos;
+        const p=cellMap.get(`${round}:${slot}`);
+        if(p){
+          const pc=posClass(p?.metadata?.position), img=playerImg(p);
+          const keeper=isKeeperPick(p);
+          const just=(!keeper && pickCellKey(p)===lastLivePickKey && lastRenderedPickCount!==picks.length)?" just-picked":"";
+          out+=`<div class="pick-card ${pc}${keeper?" keeper":""}${just}"><span class="pickno">${round}.${String(pos).padStart(2,"0")}</span><div class="player-name">${esc(pickName(p))}</div><div class="player-meta">${esc(p?.metadata?.position||"—")} · ${esc(p?.metadata?.team||"FA")}</div>${keeper?`<span class="keeper-tag">KEEPER</span>`:""}${img?`<img class="headshot" src="${esc(img)}" alt="" onerror="this.remove()">`:""}</div>`;
+        }else{
+          const key=`${round}:${slot}`;
+          out+=`<div class="pick-card empty${key===nextKey?" current":""}">${round}.${String(pos).padStart(2,"0")}</div>`;
+        }
+      }
+    }
+    $("board").innerHTML=out;
+    lastRenderedPickCount=picks.length;
+  }
+
+  function renderMeta(){
+    if(!draft)return;
+    const teams=Number(draft?.settings?.teams||10), rounds=Number(draft?.settings?.rounds||15), timer=Number(draft?.settings?.pick_timer||0);
+    $("board-title").textContent=draft?.metadata?.name||`${teams}-team ${draft?.type||"snake"} draft`;
+    $("board-subtitle").textContent=`${teams}-team ${draft?.type||"snake"} · ${timer?Math.round(timer/60*10)/10+" min/pick":"no timer"} · ${rounds} rounds`;
+    $("api-state").innerHTML=`<span class="dot"></span><span>${draft.status==="drafting"?"Draft live":String(draft.status||"Synced")}</span>`;
+    const ba=bestAvailable();
+    if(ba){
+      const slide=(picks.length+1)-Number(ba.adp||0);
+      $("market-watch").innerHTML=`BEST AVAILABLE · <strong>${esc(ba.full_name||"—")}</strong> · Sleeper ADP ${Number(ba.adp).toFixed(1)}${slide>=8?` · ${Math.round(slide)} picks past ADP`:""}`;
+    }else{
+      $("market-watch").innerHTML=marketReady
+        ? `ADP ENGINE <span class="market-source">${esc(marketSourceLabel)}</span>`
+        : `ADP ENGINE <span class="market-source">unavailable — value alerts off</span>`;
+    }
+    $("status").textContent=`LIVE · draft ${draftId} · API ${Math.max(0,Date.now()-lastApiAt)} ms ago · ${marketReady?marketSourceLabel:"ADP off"}`;
+    $("status").classList.remove("bad");
+  }
+
+  function renderAll(){renderDash();renderBoard();renderMeta();}
+
+
+  async function loadSleeperADP(){
+    if(!draft)return;
+    const season=String(draft.season||"2026");
+    const field=adpFieldForDraft();
+    const attemptKey=`${season}:${field}`;
+    if(adpAttemptedFor===attemptKey)return;
+    adpAttemptedFor=attemptKey;
+    const url=`https://api.sleeper.com/projections/nfl/${encodeURIComponent(season)}?season_type=regular&order_by=${encodeURIComponent(field)}`;
+
+    try{
+      const r=await fetch(cb(url),{cache:"no-store",credentials:"omit",headers:{"Accept":"application/json"}});
+      if(!r.ok)throw new Error(`ADP HTTP ${r.status}`);
+      const arr=await r.json();
+      if(!Array.isArray(arr))throw new Error("unexpected ADP response");
+
+      const rows=[];
+      const byId={};
+      for(const x of arr){
+        const adp=Number(x?.stats?.[field]);
+        if(!Number.isFinite(adp) || adp<=0 || adp>=999)continue;
+        const player=x?.player||{};
+        const playerId=String(x?.player_id||player?.player_id||"");
+        if(!playerId)continue;
+        const fullName=player.full_name || [player.first_name,player.last_name].filter(Boolean).join(" ") || playerId;
+        const fantasyPositions=Array.isArray(player.fantasy_positions)
+          ? player.fantasy_positions
+          : (player.position?[player.position]:[]);
+        rows.push({
+          player_id:playerId,
+          adp,
+          full_name:fullName,
+          fantasy_positions:fantasyPositions,
+          team:x.team||player.team||""
+        });
+        byId[playerId]=adp;
+      }
+
+      rows.sort((a,b)=>a.adp-b.adp);
+      if(!rows.length)throw new Error(`no ${field} values returned`);
+
+      adpRows=rows;
+      sleeperAdpById=byId;
+      marketReady=true;
+      marketSourceLabel=`Sleeper ${adpScoringLabel()}`;
+      renderAll();
+    }catch(err){
+      // Accuracy over completeness: do not fall back to search_rank.
+      marketReady=false;
+      adpRows=[];
+      sleeperAdpById={};
+      marketSourceLabel="Sleeper ADP unavailable";
+      console.warn("DraftCenter ADP disabled:",err);
+      renderAll();
+    }
+  }
+
+  async function hydrate(){
+    if(!draft)return;
+    const ids=Object.keys(draft.draft_order||{});
+    await Promise.all(ids.map(async uid=>{
+      if(users[uid])return;
+      try{users[uid]=await apiGet(`/user/${encodeURIComponent(uid)}`);}catch(_){}
+    }));
+    if(draft.league_id){
+      try{
+        const arr=await apiGet(`/league/${draft.league_id}/users`);
+        if(Array.isArray(arr))leagueUsers=Object.fromEntries(arr.filter(x=>x?.user_id).map(x=>[String(x.user_id),x]));
+      }catch(_){}
+    }
+    renderAll();
+    if($("settings")?.classList.contains("open"))renderPeopleSettings();
+  }
+
+  async function pollDraft(){
+    if(draftBusy)return;draftBusy=true;
+    try{
+      const oldOrder=JSON.stringify(draft?.draft_order||{});
+      const d=await apiGet(`/draft/${draftId}`);
+      const firstDraft=!draft;
+      const oldField=draft?adpFieldForDraft():null;
+      draft=d;
+      const newField=adpFieldForDraft();
+      if(oldOrder!==JSON.stringify(draft?.draft_order||{})||!Object.keys(users).length)hydrate();
+      if(firstDraft || oldField!==newField) {
+        adpAttemptedFor="";
+        loadSleeperADP();
+      }
+      renderAll();
+    }catch(e){$("status").textContent=`Draft API error: ${e.message}`;$("status").classList.add("bad");}
+    finally{draftBusy=false;}
+  }
+
+  async function pollPicks(){
+    if(picksBusy)return;picksBusy=true;
+    try{
+      const arr=await apiGet(`/draft/${draftId}/picks`);
+      const next=Array.isArray(arr)?arr.slice().sort((a,b)=>Number(a.pick_no)-Number(b.pick_no)):[];
+      const previousLiveKeys=new Set(picks.filter(p=>!isKeeperPick(p)).map(p=>pickCellKey(p)));
+      const incomingLive=next
+        .filter(p=>!isKeeperPick(p))
+        .filter(p=>!previousLiveKeys.has(pickCellKey(p)));
+
+      if(lastPickCount!==null && incomingLive.length){
+        const now=Date.now();
+        const secondsOnClock=Math.max(0,(now-turnStartedAt)/1000);
+
+        // If analysis is on screen OR waiting behind the current pick reveal,
+        // preserve it for the next lull. A new pick reveal always wins live,
+        // but useful analysis should not simply disappear.
+        if(activeEvent && activeEvent.kind==="followup"){
+          rememberDeferred(activeEvent);
+        }
+
+        for(const pending of eventQueue){
+          if(pending?.kind==="followup") rememberDeferred(pending);
+        }
+
+        hidePressure();
+        playPickStinger();
+        activeEvent=null;
+        activeUntil=0;
+        eventQueue.length=0;
+
+        observedPickAt=now;
+        lastLivePickAt=now;
+        picks=next;
+        // Fresh draft action can materially change the insight carousel.
+        // Start back at the first slide rather than showing stale context.
+        insightIndex=0;
+
+        // Normally one, but handle batched API updates safely in board order.
+        incomingLive
+          .sort((a,b)=>{
+            const ca=cellForPick(a)?.ordinal||Number(a.pick_no||0);
+            const cb=cellForPick(b)?.ordinal||Number(b.pick_no||0);
+            return ca-cb;
+          })
+          .forEach(p=>{
+            const cell=cellForPick(p);
+            lastLivePickKey=pickCellKey(p);
+            const mgr=managerTitle(ownerForPick(p));
+            observedPickTimes.push({
+              pick:Number(cell?.ordinal||p.pick_no||0),
+              seconds:secondsOnClock,
+              manager:mgr
+            });
+            observedPickTimes=observedPickTimes.slice(-80);
+            queueEventsForPick(p,secondsOnClock);
+          });
+
+        turnStartedAt=now;
+      }else{
+        picks=next;
+      }
+      lastPickCount=next.length;
+      renderAll();
+    }catch(e){$("status").textContent=`Picks API error: ${e.message}`;$("status").classList.add("bad");}
+    finally{picksBusy=false;}
+  }
+
+
+  function runBroadcastDemo(){
+    const sample=picks[picks.length-1];
+    const image=sample?playerImg(sample):"";
+    const nm=sample?pickName(sample):"Jahmyr Gibbs";
+    const now=Date.now();
+
+    // Demo is intentionally sequential; real draft events do NOT behave this way.
+    activeEvent=null;
+    eventQueue.length=0;
+    activePickNo=-1;
+    eventQueue.push(
+      {kind:"demo",pickNo:-1,createdAt:now,expiresAt:now+15000,kicker:"THE PICK IS IN",title:nm,sub:"Live picks always preempt older graphics.",image,fallback:initials(nm),tone:"",duration:1500},
+      {kind:"demo",pickNo:-1,createdAt:now,expiresAt:now+15000,kicker:"DRAFTCENTER VALUE",title:"18 PICKS PAST SLEEPER ADP",sub:"Only the highest-priority follow-up survives in a real draft.",tone:"green",duration:1900,stats:[["Selected",42],["Sleeper ADP",24],["Value","+18 picks"]]},
+      {kind:"demo",pickNo:-1,createdAt:now,expiresAt:now+15000,kicker:"WR RUN",title:"4 OF THE LAST 5 PICKS",sub:"Automatic position-run detection.",tone:"pink",duration:1800}
+    );
+    $("settings").classList.remove("open");
+  }
+
+  function loadDraft(v){
+    const m=String(v||"").match(/(\d{10,})/);if(!m)return;
+    const u=new URL(location.href);u.searchParams.set("draft",m[1]);location.href=u.toString();
+  }
+
+
+  function loadLeagueSettings(){
+    try{
+      const raw=localStorage.getItem("draftcenterLeagueSettings");
+      if(!raw)return;
+      const s=JSON.parse(raw);
+      absentUsernames=new Set((Array.isArray(s.absent)?s.absent:[]).map(x=>String(x).trim().toLowerCase()).filter(Boolean));
+      autodraftUsernames=new Set((Array.isArray(s.autodraft)?s.autodraft:[]).map(x=>String(x).trim().toLowerCase()).filter(Boolean));
+      broadcastNames=(s.broadcastNames&&typeof s.broadcastNames==="object")?s.broadcastNames:{};
+      roastLevel=["off","light","spicy"].includes(s.roastLevel)?s.roastLevel:"spicy";
+    }catch(_){}
+  }
+
+  function saveLeagueSettings(){
+    const data={
+      absent:[...absentUsernames],
+      autodraft:[...autodraftUsernames],
+      broadcastNames,
+      roastLevel
+    };
+    try{localStorage.setItem("draftcenterLeagueSettings",JSON.stringify(data));}catch(_){}
+  }
+
+  function renderPeopleSettings(){
+    const order=draft?.draft_order||{};
+    const rows=Object.keys(order)
+      .map(uid=>{
+        const slot=Number(order[uid]);
+        const m=managerForSlot(slot);
+        const username=managerUsername(m);
+        return {uid,slot,m,username};
+      })
+      .sort((a,b)=>a.slot-b.slot);
+
+    $("peopleList").innerHTML=rows.length?rows.map(x=>{
+      const key=x.username.toLowerCase();
+      const av=avatarImg(x.m.avatar,true);
+      const bc=String(broadcastNames[key]||"");
+      return `<div class="person-row" data-username="${esc(key)}">
+        <div class="person-avatar">${av?`<img src="${esc(av)}" alt="">`:esc(initials(managerTitle(x.m)))}</div>
+        <div class="person-id">
+          <div class="person-display">${esc(managerTitle(x.m))}</div>
+          <div class="person-user">${esc(x.username||x.m.display_name||"unknown")} · Slot ${x.slot}</div>
+        </div>
+        <input class="person-broadcast" type="text" value="${esc(bc)}" placeholder="Broadcast name">
+        <label class="person-check"><input class="person-absent" type="checkbox" ${absentUsernames.has(key)?"checked":""}>Absent</label>
+        <label class="person-check"><input class="person-auto" type="checkbox" ${autodraftUsernames.has(key)?"checked":""}>Auto</label>
+      </div>`;
+    }).join(""):`<div class="people-help">Waiting for Sleeper users…</div>`;
+  }
+
+  function savePeopleSettings(){
+    const absent=new Set();
+    const auto=new Set();
+    const names={};
+
+    for(const row of $("peopleList").querySelectorAll(".person-row")){
+      const username=String(row.dataset.username||"").toLowerCase();
+      if(!username)continue;
+      const bc=String(row.querySelector(".person-broadcast")?.value||"").trim();
+      if(bc)names[username]=bc;
+      if(row.querySelector(".person-absent")?.checked)absent.add(username);
+      if(row.querySelector(".person-auto")?.checked)auto.add(username);
+    }
+
+    absentUsernames=absent;
+    autodraftUsernames=auto;
+    broadcastNames=names;
+    roastLevel=$("roastLevel").value;
+    saveLeagueSettings();
+    renderDash();
+    $("settings").classList.remove("open");
+  }
+
+  function populateLeagueSettings(){
+    $("roastLevel").value=roastLevel;
+    $("volumeInput").value=Math.round(masterVolume*100);
+    updateAudioState();
+    renderPeopleSettings();
+  }
+
+  loadLeagueSettings();
+
+
+
+  function setMasterVolume(percent){
+    masterVolume=Math.max(0,Math.min(100,Number(percent)||0))/100;
+  }
+
+  $("volumeInput").addEventListener("input",e=>{
+    setMasterVolume(e.currentTarget.value);
+  });
+
+  $("testSoundBtn").addEventListener("click",async()=>{
+    if(!soundEnabled) await setSoundEnabled(true);
+    else await playAudioTest();
+  });
+
+  $("soundBtn").addEventListener("click",async()=>{
+    await setSoundEnabled(!soundEnabled);
+  });
+
+
+  for(const tab of document.querySelectorAll(".settings-tab")){
+    tab.addEventListener("click",()=>{
+      document.querySelectorAll(".settings-tab").forEach(x=>x.classList.toggle("active",x===tab));
+      document.querySelectorAll(".settings-pane").forEach(p=>p.classList.toggle("active",p.id===tab.dataset.pane));
+      if(tab.dataset.pane==="peoplePane")renderPeopleSettings();
+      if(tab.dataset.pane==="audioPane")updateAudioState();
+    });
+  }
+
+  $("settingsBtn").addEventListener("click",()=>{
+    populateLeagueSettings();
+    $("settings").classList.toggle("open");
+  });
+  $("roastLevel").addEventListener("change",()=>{
+    roastLevel=$("roastLevel").value;
+    saveLeagueSettings();
+  });
+  $("savePeople").addEventListener("click",savePeopleSettings);
+  $("settingsSoundBtn").addEventListener("click",async()=>await setSoundEnabled(!soundEnabled));
+  $("settingsTestSound").addEventListener("click",async()=>{
+    if(!soundEnabled)await setSoundEnabled(true);
+    else await playAudioTest();
+  });
+  $("closeSettings").addEventListener("click",()=>$("settings").classList.remove("open"));
+  $("applyDraft").addEventListener("click",()=>loadDraft($("draftInput").value));
+  $("demoBtn").addEventListener("click",runBroadcastDemo);
+  $("draftInput").addEventListener("keydown",e=>{if(e.key==="Enter")loadDraft(e.currentTarget.value)});
+  $("fullBtn").addEventListener("click",async()=>{try{if(!document.fullscreenElement)await document.documentElement.requestFullscreen();else await document.exitFullscreen();}catch(_){}});
+  window.addEventListener("resize",renderBoard);
+
+  $("draftInput").value=`https://sleeper.com/draft/nfl/${draftId}`;
+  pollDraft();pollPicks();
+  // ADP load is started after the first draft object arrives so we can choose
+  // the correct scoring format. pollDraft() will trigger it once below.
+  setInterval(pollDraft,DRAFT_MS);
+  setInterval(pollPicks,PICKS_MS);
+  setInterval(renderClock,100);
+  setInterval(eventTick,100);
+  setInterval(rotateInsight,10000);
+})();
+</script>
+</body>
+</html>
