@@ -2214,9 +2214,9 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     if(draft.status==="drafting" && secs<=20 && secs>0 && soundEnabled && !warningCrowdStarted){
       warningCrowdStarted=true;
       fadeOutAudioGroup("warning",220);
-      // The warning is specifically booing. Rotate two verified CC0 boo clips
-      // and fade them before the final countdown takes over.
-      playTags(["crowd","boo"],.32,1,"warning","warning-boo",8500);
+      // Brief crowd impatience only: one low-level boo burst at 20 seconds,
+      // then quiet well before the final 10-second countdown.
+      playTags(["crowd","boo"],.26,1,"warning","warning-boo",2600);
     }
 
     renderPressure(secs);
@@ -2422,7 +2422,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
 
         hidePressure();
         playPickStinger();
-        fadeOutAudioGroup("warning",420);
+        fadeOutAudioGroup("warning",120);
         warningCrowdStarted=false;
         activeEvent=null;
         activeUntil=0;
