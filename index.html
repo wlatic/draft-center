@@ -409,7 +409,10 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   const PICKS_MS = 300;
   const DRAFT_MS = 1200;
 
-  const SHARED_CONFIG_URL = "https://raw.githubusercontent.com/wlatic/draft-center/main/config.json";
+  // Read shared settings from the same GitHub Pages site first. This avoids
+  // making raw.githubusercontent.com a hard dependency during startup.
+  const SHARED_CONFIG_URL = new URL("config.json", window.location.href).toString();
+  const SHARED_CONFIG_FALLBACK_URL = "https://raw.githubusercontent.com/wlatic/draft-center/main/config.json";
   const GITHUB_CONFIG_API = "https://api.github.com/repos/wlatic/draft-center/contents/config.json";
 
   let draftId = DEFAULT_DRAFT_ID;
@@ -2503,17 +2506,44 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     return btoa(unescape(encodeURIComponent(text)));
   }
 
-  async function loadSharedSettings(){
+  async function fetchJsonWithTimeout(url,timeoutMs=3500){
+    const sep=url.includes("?")?"&":"?";
+    let timer;
+    const timeout=new Promise((_,reject)=>{
+      timer=setTimeout(()=>reject(new Error(`timeout after ${timeoutMs}ms`)),timeoutMs);
+    });
     try{
-      const r=await fetch(`${SHARED_CONFIG_URL}?v=${Date.now()}`,{cache:"no-store"});
-      if(!r.ok)throw new Error(`config ${r.status}`);
-      const cfg=await r.json();
-      applySharedSettings(cfg);
-      debugLog("CONFIG",`loaded shared config: draft ${draftId}, ${Object.keys(broadcastNames).length} names, ${absentUsernames.size} absent, ${autodraftUsernames.size} auto`);
-      updateSharedConfigSummary();
-    }catch(e){
-      console.warn("Shared DraftCenter config unavailable; using defaults",e);
+      const request=fetch(`${url}${sep}v=${Date.now()}`,{cache:"no-store",credentials:"omit"}).then(async r=>{
+        if(!r.ok)throw new Error(`HTTP ${r.status}`);
+        return r.json();
+      });
+      return await Promise.race([request,timeout]);
+    }finally{
+      clearTimeout(timer);
     }
+  }
+
+  async function loadSharedSettings(){
+    const sources=[
+      ["GitHub Pages",SHARED_CONFIG_URL],
+      ["GitHub raw fallback",SHARED_CONFIG_FALLBACK_URL]
+    ];
+
+    for(const [label,url] of sources){
+      try{
+        const cfg=await fetchJsonWithTimeout(url);
+        applySharedSettings(cfg);
+        debugLog("CONFIG",`loaded from ${label}: draft ${draftId}, ${Object.keys(broadcastNames).length} names, ${absentUsernames.size} absent, ${autodraftUsernames.size} auto`);
+        updateSharedConfigSummary();
+        return true;
+      }catch(e){
+        console.warn(`DraftCenter config via ${label} failed`,e);
+      }
+    }
+
+    debugLog("CONFIG!",`shared config unavailable; continuing with default draft ${draftId}`);
+    updateSharedConfigSummary();
+    return false;
   }
 
   async function saveSharedSettings({reload=false}={}){
@@ -2686,10 +2716,27 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   async function boot(){
     // Shared league settings are loaded once per page load. There is deliberately
     // no config polling: refresh another device when you want it to pick up changes.
+    $("status").textContent="Loading shared DraftCenter settings…";
     await loadSharedSettings();
     debugLog("BOOT",`DraftCenter session started for ${draftId}`);
     $("draftInput").value=`https://sleeper.com/draft/nfl/${draftId}`;
-    pollDraft();pollPicks();
+    $("status").textContent=`Connecting to Sleeper draft ${draftId}…`;
+
+    // Start Sleeper immediately after the bounded config read. A slow/blocked
+    // config host can no longer leave the whole TV UI stuck on CONNECTING.
+    pollDraft();
+    pollPicks();
+
+    setTimeout(()=>{
+      if(draft)return;
+      const msg=`Still waiting for Sleeper draft ${draftId}. Open Settings → Debug for the exact startup error.`;
+      $("status").textContent=msg;
+      $("status").classList.add("bad");
+      $("board-subtitle").textContent=`Unable to load draft ${draftId}`;
+      $("api-state").innerHTML='<span class="dot"></span><span>Connection problem</span>';
+      debugLog("BOOT!",msg);
+    },6000);
+
     // ADP load is started after the first draft object arrives so we can choose
     // the correct scoring format. pollDraft() will trigger it once below.
     setInterval(pollDraft,DRAFT_MS);
