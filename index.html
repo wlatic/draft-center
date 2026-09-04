@@ -474,10 +474,14 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     {id:"whistle_male",tags:["whistle","pressure"],url:"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/132294__j_bond__male-whistle.wav"},
     {id:"whistle_pfiff",tags:["whistle","pressure"],url:"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/19825__tommorawe__pfiff_whistle.wav"},
 
-    // Both boo recordings are CC0 at their original Freesound sources. These
-    // GitHub mirrors let a static DraftCenter page stream them without auth.
+    // Warning-boo pool. Use a shuffle bag so every clip is heard before one
+    // repeats; these mirrors are backed by CC0 source credits in their repos.
     {id:"boo_small_cc0",tags:["crowd","boo","warning"],url:"https://raw.githubusercontent.com/NEW-CYLANDIA/little-warioware/main/microgames/press_key/353925__dr_skitz__boo.wav"},
     {id:"boo_group_cc0",tags:["crowd","boo","warning"],url:"https://raw.githubusercontent.com/de-teiu/booing/master/js/sound/81191__payattention__booooooo.mp3"},
+    {id:"boo_bardcraft_1_cc0",tags:["crowd","boo","warning"],url:"https://raw.githubusercontent.com/raltsmc/Bardcraft/main/sound/Bardcraft/crowd/boo1.wav"},
+    {id:"boo_bardcraft_2_cc0",tags:["crowd","boo","warning"],url:"https://raw.githubusercontent.com/raltsmc/Bardcraft/main/sound/Bardcraft/crowd/boo2.wav"},
+    {id:"boo_bardcraft_3_cc0",tags:["crowd","boo","warning"],url:"https://raw.githubusercontent.com/raltsmc/Bardcraft/main/sound/Bardcraft/crowd/boo3.wav"},
+    {id:"boo_simonsays_cc0",tags:["crowd","boo","warning"],url:"https://raw.githubusercontent.com/juan-rey/simonsays-web/main/simonsays-board-editor/assets/sounds/boo.mp3"},
 
     {id:"gasp_zerocarina",tags:["reaction","pressure","timeout"],url:"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/232263__zerocarina__gasp.wav"},
     {id:"gasp_drskitz",tags:["reaction","pressure","timeout"],url:"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/353924__dr_skitz__gasp.wav"},
@@ -488,6 +492,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
 
     {id:"clock_click",tags:["tick","clock"],url:"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/107806__j1987__metallicclick.wav"}
   ];
+  const NON_CLOCK_SOUND_GAP_MS = 2500;
   let lastSoundEventAt = 0;
   let insightIndex = 0;
   let insightSlides = [];
@@ -1844,7 +1849,13 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     const key=deckKey||tags.join(":");
     let deck=soundDecks.get(key)||[];
     deck=deck.filter(id=>matches.some(s=>s.id===id));
-    if(!deck.length)deck=shuffledSounds(matches).map(s=>s.id);
+    if(!deck.length){
+      deck=shuffledSounds(matches).map(s=>s.id);
+      const previous=soundRecentIds[soundRecentIds.length-1];
+      if(deck.length>1 && deck[0]===previous){
+        [deck[0],deck[1]]=[deck[1],deck[0]];
+      }
+    }
     const id=deck.shift();
     soundDecks.set(key,deck);
     return matches.find(s=>s.id===id)||matches[0];
@@ -1908,12 +1919,29 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
 
   async function playTags(tags,volume=1,rate=1,group="general",deckKey=null,maxMs=0){
     if(!soundEnabled)return null;
+
+    const tagList=Array.isArray(tags)?tags:[tags];
+    const isClock=group==="clock" || tagList.includes("tick") || tagList.includes("clock");
+    const now=Date.now();
+
+    // Keep non-clock cues separated so the room never becomes a pile of
+    // whistles, boos and reactions. Clock ticks are the deliberate exception.
+    if(!isClock && now-lastSoundEventAt<NON_CLOCK_SOUND_GAP_MS){
+      debugLog("AUDIO-SKIP",`${group} suppressed · ${NON_CLOCK_SOUND_GAP_MS-(now-lastSoundEventAt)}ms spacing remaining`);
+      return null;
+    }
+
     cleanupFinishedClips();
     const chosen=chooseSound(tags,deckKey);
     if(!chosen)return null;
+
+    if(!isClock)lastSoundEventAt=now;
+    soundRecentIds.push(chosen.id);
+    while(soundRecentIds.length>12)soundRecentIds.shift();
+
     const a=makeRepoAudio(chosen,volume,rate,group);
     activeClipAudios.push(a);
-    debugLog("AUDIO",`${chosen.id} · ${group} · ${Array.isArray(tags)?tags.join("+"):tags}`);
+    debugLog("AUDIO",`${chosen.id} · ${group} · ${tagList.join("+")}`);
     try{await a.play()}catch(e){debugLog("AUDIO!",`${chosen.id} failed: ${e?.message||e}`)}
     if(maxMs>0)setTimeout(()=>fadeOutAudio(a,500),maxMs);
     return a;
@@ -1942,7 +1970,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   async function playAudioTest(){
     if(!soundEnabled)return;
     await playTags(["whistle","pressure"],.72,1,"test","test-whistle",1800);
-    setTimeout(()=>playTags(["reaction","timeout"],.62,1,"test","test-reaction",2200),1200);
+    setTimeout(()=>playTags(["reaction","timeout"],.62,1,"test","test-reaction",2200),3000);
   }
 
   function playTinyConfirm(){}
@@ -2098,19 +2126,26 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     if(soundEnabled){
       const whole=Math.max(0,Math.ceil(seconds));
 
-      if(whole>=1 && whole<=10 && whole!==lastPressureSecond){
-        lastPressureSecond=whole;
-        playClockTick(whole);
-      }
-
+      let cueFired=false;
       if(seconds<=10 && seconds>5 && pressureSoundStage<1){
         pressureSoundStage=1;
         playPressureCue(1);
+        cueFired=true;
       }else if(seconds<=5 && seconds>0 && pressureSoundStage<2){
         pressureSoundStage=2;
         playPressureCue(2);
+        cueFired=true;
       }else if(seconds<=0){
         playTimeoutReaction();
+        cueFired=true;
+      }
+
+      if(!cueFired && whole>=1 && whole<=10 && whole!==lastPressureSecond){
+        lastPressureSecond=whole;
+        playClockTick(whole);
+      }else if(cueFired && whole>=1 && whole<=10){
+        // Mark the second consumed so it cannot tick on the next 100ms render.
+        lastPressureSecond=whole;
       }
     }
 
@@ -2461,7 +2496,18 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
       $("status").classList.add("bad");
       return;
     }
-    draftId=m[1];
+    const nextDraftId=m[1];
+    const draftChanged=nextDraftId!==draftId;
+    draftId=nextDraftId;
+
+    if(draftChanged){
+      broadcastNames={};
+      absentUsernames=new Set();
+      autodraftUsernames=new Set();
+      roastDecks.clear();
+      debugLog("CONFIG",`new draft ${draftId}: cleared broadcast names, absent flags and auto-draft flags`);
+    }
+
     roastLevel=$("roastLevel").value;
     await saveSharedSettings({reload:true});
   }
