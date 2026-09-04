@@ -11,21 +11,175 @@ def rep(old, new, label):
     s = s.replace(old, new, 1)
 
 
+# -----------------------------------------------------------------------------
+# A new draft is a new room. Do not carry manager-specific aliases/flags from
+# the previous draft into it.
+# -----------------------------------------------------------------------------
 rep(
-'''  const SHARED_CONFIG_URL = "https://raw.githubusercontent.com/wlatic/draft-center/main/config.json";\n  const GITHUB_CONFIG_API = "https://api.github.com/repos/wlatic/draft-center/contents/config.json";''',
-'''  // Read shared settings from the same GitHub Pages site first. This avoids\n  // making raw.githubusercontent.com a hard dependency during startup.\n  const SHARED_CONFIG_URL = new URL("config.json", window.location.href).toString();\n  const SHARED_CONFIG_FALLBACK_URL = "https://raw.githubusercontent.com/wlatic/draft-center/main/config.json";\n  const GITHUB_CONFIG_API = "https://api.github.com/repos/wlatic/draft-center/contents/config.json";''',
-'shared config URLs'
+'''    draftId=m[1];
+    roastLevel=$("roastLevel").value;
+    await saveSharedSettings({reload:true});''',
+'''    const nextDraftId=m[1];
+    const draftChanged=nextDraftId!==draftId;
+    draftId=nextDraftId;
+
+    if(draftChanged){
+      broadcastNames={};
+      absentUsernames=new Set();
+      autodraftUsernames=new Set();
+      roastDecks.clear();
+      debugLog("CONFIG",`new draft ${draftId}: cleared broadcast names, absent flags and auto-draft flags`);
+    }
+
+    roastLevel=$("roastLevel").value;
+    await saveSharedSettings({reload:true});''',
+'draft-specific people reset'
 )
 
-old_load = '''  async function loadSharedSettings(){\n    try{\n      const r=await fetch(`${SHARED_CONFIG_URL}?v=${Date.now()}`,{cache:"no-store"});\n      if(!r.ok)throw new Error(`config ${r.status}`);\n      const cfg=await r.json();\n      applySharedSettings(cfg);\n      debugLog("CONFIG",`loaded shared config: draft ${draftId}, ${Object.keys(broadcastNames).length} names, ${absentUsernames.size} absent, ${autodraftUsernames.size} auto`);\n      updateSharedConfigSummary();\n    }catch(e){\n      console.warn("Shared DraftCenter config unavailable; using defaults",e);\n    }\n  }'''
 
-new_load = '''  async function fetchJsonWithTimeout(url,timeoutMs=3500){\n    const sep=url.includes("?")?"&":"?";\n    let timer;\n    const timeout=new Promise((_,reject)=>{\n      timer=setTimeout(()=>reject(new Error(`timeout after ${timeoutMs}ms`)),timeoutMs);\n    });\n    try{\n      const request=fetch(`${url}${sep}v=${Date.now()}`,{cache:"no-store",credentials:"omit"}).then(async r=>{\n        if(!r.ok)throw new Error(`HTTP ${r.status}`);\n        return r.json();\n      });\n      return await Promise.race([request,timeout]);\n    }finally{\n      clearTimeout(timer);\n    }\n  }\n\n  async function loadSharedSettings(){\n    const sources=[\n      ["GitHub Pages",SHARED_CONFIG_URL],\n      ["GitHub raw fallback",SHARED_CONFIG_FALLBACK_URL]\n    ];\n\n    for(const [label,url] of sources){\n      try{\n        const cfg=await fetchJsonWithTimeout(url);\n        applySharedSettings(cfg);\n        debugLog("CONFIG",`loaded from ${label}: draft ${draftId}, ${Object.keys(broadcastNames).length} names, ${absentUsernames.size} absent, ${autodraftUsernames.size} auto`);\n        updateSharedConfigSummary();\n        return true;\n      }catch(e){\n        console.warn(`DraftCenter config via ${label} failed`,e);\n      }\n    }\n\n    debugLog("CONFIG!",`shared config unavailable; continuing with default draft ${draftId}`);\n    updateSharedConfigSummary();\n    return false;\n  }'''
-rep(old_load, new_load, 'shared config loader')
+# -----------------------------------------------------------------------------
+# Expand the warning-boo pool. All additions below are backed by repository
+# credits that identify the original Freesound files as CC0.
+# -----------------------------------------------------------------------------
+rep(
+'''    // Both boo recordings are CC0 at their original Freesound sources. These
+    // GitHub mirrors let a static DraftCenter page stream them without auth.
+    {id:"boo_small_cc0",tags:["crowd","boo","warning"],url:"https://raw.githubusercontent.com/NEW-CYLANDIA/little-warioware/main/microgames/press_key/353925__dr_skitz__boo.wav"},
+    {id:"boo_group_cc0",tags:["crowd","boo","warning"],url:"https://raw.githubusercontent.com/de-teiu/booing/master/js/sound/81191__payattention__booooooo.mp3"},''',
+'''    // Warning-boo pool. Use a shuffle bag so every clip is heard before one
+    // repeats; these mirrors are backed by CC0 source credits in their repos.
+    {id:"boo_small_cc0",tags:["crowd","boo","warning"],url:"https://raw.githubusercontent.com/NEW-CYLANDIA/little-warioware/main/microgames/press_key/353925__dr_skitz__boo.wav"},
+    {id:"boo_group_cc0",tags:["crowd","boo","warning"],url:"https://raw.githubusercontent.com/de-teiu/booing/master/js/sound/81191__payattention__booooooo.mp3"},
+    {id:"boo_bardcraft_1_cc0",tags:["crowd","boo","warning"],url:"https://raw.githubusercontent.com/raltsmc/Bardcraft/main/sound/Bardcraft/crowd/boo1.wav"},
+    {id:"boo_bardcraft_2_cc0",tags:["crowd","boo","warning"],url:"https://raw.githubusercontent.com/raltsmc/Bardcraft/main/sound/Bardcraft/crowd/boo2.wav"},
+    {id:"boo_bardcraft_3_cc0",tags:["crowd","boo","warning"],url:"https://raw.githubusercontent.com/raltsmc/Bardcraft/main/sound/Bardcraft/crowd/boo3.wav"},
+    {id:"boo_simonsays_cc0",tags:["crowd","boo","warning"],url:"https://raw.githubusercontent.com/juan-rey/simonsays-web/main/simonsays-board-editor/assets/sounds/boo.mp3"},''',
+'expanded CC0 boo pool'
+)
 
-old_boot = '''  async function boot(){\n    // Shared league settings are loaded once per page load. There is deliberately\n    // no config polling: refresh another device when you want it to pick up changes.\n    await loadSharedSettings();\n    debugLog("BOOT",`DraftCenter session started for ${draftId}`);\n    $("draftInput").value=`https://sleeper.com/draft/nfl/${draftId}`;\n    pollDraft();pollPicks();\n    // ADP load is started after the first draft object arrives so we can choose\n    // the correct scoring format. pollDraft() will trigger it once below.\n    setInterval(pollDraft,DRAFT_MS);\n    setInterval(pollPicks,PICKS_MS);\n    setInterval(renderClock,100);\n    setInterval(eventTick,100);\n    setInterval(rotateInsight,10000);\n  }'''
 
-new_boot = '''  async function boot(){\n    // Shared league settings are loaded once per page load. There is deliberately\n    // no config polling: refresh another device when you want it to pick up changes.\n    $("status").textContent="Loading shared DraftCenter settings…";\n    await loadSharedSettings();\n    debugLog("BOOT",`DraftCenter session started for ${draftId}`);\n    $("draftInput").value=`https://sleeper.com/draft/nfl/${draftId}`;\n    $("status").textContent=`Connecting to Sleeper draft ${draftId}…`;\n\n    // Start Sleeper immediately after the bounded config read. A slow/blocked\n    // config host can no longer leave the whole TV UI stuck on CONNECTING.\n    pollDraft();\n    pollPicks();\n\n    setTimeout(()=>{\n      if(draft)return;\n      const msg=`Still waiting for Sleeper draft ${draftId}. Open Settings → Debug for the exact startup error.`;\n      $("status").textContent=msg;\n      $("status").classList.add("bad");\n      $("board-subtitle").textContent=`Unable to load draft ${draftId}`;\n      $("api-state").innerHTML='<span class="dot"></span><span>Connection problem</span>';\n      debugLog("BOOT!",msg);\n    },6000);\n\n    // ADP load is started after the first draft object arrives so we can choose\n    // the correct scoring format. pollDraft() will trigger it once below.\n    setInterval(pollDraft,DRAFT_MS);\n    setInterval(pollPicks,PICKS_MS);\n    setInterval(renderClock,100);\n    setInterval(eventTick,100);\n    setInterval(rotateInsight,10000);\n  }'''
-rep(old_boot, new_boot, 'boot watchdog')
+# -----------------------------------------------------------------------------
+# Audio spacing. Event sounds should not pile on top of each other. The clock
+# tick is allowed to repeat once per second, but event cues have a 2.5s floor.
+# -----------------------------------------------------------------------------
+rep(
+'''  let lastSoundEventAt = 0;
+  let insightIndex = 0;''',
+'''  const NON_CLOCK_SOUND_GAP_MS = 2500;
+  let lastSoundEventAt = 0;
+  let insightIndex = 0;''',
+'audio gap state'
+)
+
+rep(
+'''    let deck=soundDecks.get(key)||[];
+    deck=deck.filter(id=>matches.some(s=>s.id===id));
+    if(!deck.length)deck=shuffledSounds(matches).map(s=>s.id);
+    const id=deck.shift();''',
+'''    let deck=soundDecks.get(key)||[];
+    deck=deck.filter(id=>matches.some(s=>s.id===id));
+    if(!deck.length){
+      deck=shuffledSounds(matches).map(s=>s.id);
+      const previous=soundRecentIds[soundRecentIds.length-1];
+      if(deck.length>1 && deck[0]===previous){
+        [deck[0],deck[1]]=[deck[1],deck[0]];
+      }
+    }
+    const id=deck.shift();''',
+'avoid immediate sound repeat across shuffle cycles'
+)
+
+rep(
+'''  async function playTags(tags,volume=1,rate=1,group="general",deckKey=null,maxMs=0){
+    if(!soundEnabled)return null;
+    cleanupFinishedClips();
+    const chosen=chooseSound(tags,deckKey);
+    if(!chosen)return null;
+    const a=makeRepoAudio(chosen,volume,rate,group);
+    activeClipAudios.push(a);
+    debugLog("AUDIO",`${chosen.id} · ${group} · ${Array.isArray(tags)?tags.join("+"):tags}`);
+    try{await a.play()}catch(e){debugLog("AUDIO!",`${chosen.id} failed: ${e?.message||e}`)}
+    if(maxMs>0)setTimeout(()=>fadeOutAudio(a,500),maxMs);
+    return a;
+  }''',
+'''  async function playTags(tags,volume=1,rate=1,group="general",deckKey=null,maxMs=0){
+    if(!soundEnabled)return null;
+
+    const tagList=Array.isArray(tags)?tags:[tags];
+    const isClock=group==="clock" || tagList.includes("tick") || tagList.includes("clock");
+    const now=Date.now();
+
+    // Keep non-clock cues separated so the room never becomes a pile of
+    // whistles, boos and reactions. Clock ticks are the deliberate exception.
+    if(!isClock && now-lastSoundEventAt<NON_CLOCK_SOUND_GAP_MS){
+      debugLog("AUDIO-SKIP",`${group} suppressed · ${NON_CLOCK_SOUND_GAP_MS-(now-lastSoundEventAt)}ms spacing remaining`);
+      return null;
+    }
+
+    cleanupFinishedClips();
+    const chosen=chooseSound(tags,deckKey);
+    if(!chosen)return null;
+
+    if(!isClock)lastSoundEventAt=now;
+    soundRecentIds.push(chosen.id);
+    while(soundRecentIds.length>12)soundRecentIds.shift();
+
+    const a=makeRepoAudio(chosen,volume,rate,group);
+    activeClipAudios.push(a);
+    debugLog("AUDIO",`${chosen.id} · ${group} · ${tagList.join("+")}`);
+    try{await a.play()}catch(e){debugLog("AUDIO!",`${chosen.id} failed: ${e?.message||e}`)}
+    if(maxMs>0)setTimeout(()=>fadeOutAudio(a,500),maxMs);
+    return a;
+  }''',
+'global non-clock audio spacing'
+)
+
+rep(
+'''    setTimeout(()=>playTags(["reaction","timeout"],.62,1,"test","test-reaction",2200),1200);''',
+'''    setTimeout(()=>playTags(["reaction","timeout"],.62,1,"test","test-reaction",2200),3000);''',
+'audio test spacing'
+)
+
+# At 10s and 5s an event cue is more useful than playing the clock click at the
+# exact same instant. Skip that one tick rather than layer two sounds.
+rep(
+'''      if(whole>=1 && whole<=10 && whole!==lastPressureSecond){
+        lastPressureSecond=whole;
+        playClockTick(whole);
+      }
+
+      if(seconds<=10 && seconds>5 && pressureSoundStage<1){
+        pressureSoundStage=1;
+        playPressureCue(1);
+      }else if(seconds<=5 && seconds>0 && pressureSoundStage<2){
+        pressureSoundStage=2;
+        playPressureCue(2);
+      }else if(seconds<=0){
+        playTimeoutReaction();
+      }''',
+'''      let cueFired=false;
+      if(seconds<=10 && seconds>5 && pressureSoundStage<1){
+        pressureSoundStage=1;
+        playPressureCue(1);
+        cueFired=true;
+      }else if(seconds<=5 && seconds>0 && pressureSoundStage<2){
+        pressureSoundStage=2;
+        playPressureCue(2);
+        cueFired=true;
+      }else if(seconds<=0){
+        playTimeoutReaction();
+        cueFired=true;
+      }
+
+      if(!cueFired && whole>=1 && whole<=10 && whole!==lastPressureSecond){
+        lastPressureSecond=whole;
+        playClockTick(whole);
+      }else if(cueFired && whole>=1 && whole<=10){
+        // Mark the second consumed so it cannot tick on the next 100ms render.
+        lastPressureSecond=whole;
+      }''',
+'prevent cue and tick collision'
+)
 
 p.write_text(s, encoding='utf-8')
-print('patched startup config loading and watchdog')
+print('patched draft reset, expanded boo pool, and audio spacing')
