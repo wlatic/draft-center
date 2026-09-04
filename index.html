@@ -323,6 +323,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     <button class="settings-tab active" type="button" data-pane="draftPane">Draft</button>
     <button class="settings-tab" type="button" data-pane="peoplePane">People</button>
     <button class="settings-tab" type="button" data-pane="audioPane">Audio</button>
+    <button class="settings-tab" type="button" data-pane="debugPane">Debug</button>
   </div>
 
   <section class="settings-pane active" id="draftPane">
@@ -355,6 +356,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
       Sleeper identities load automatically. Broadcast name is what DraftCenter says in announcements; the board keeps Sleeper's original identity.
       You can also mark each manager Absent or Auto-draft.
     </div>
+    <div class="people-help" id="sharedConfigSummary">Shared config not loaded yet.</div>
     <div class="people-list" id="peopleList">
       <div class="people-help">Waiting for Sleeper users…</div>
     </div>
@@ -381,6 +383,16 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     The People tab controls broadcast names, Absent status and Auto-draft status per Sleeper username.
     Sounds fade out instead of stopping abruptly when a draft moment interrupts them.
   </div>
+  </section>
+
+  <section class="settings-pane" id="debugPane">
+    <div class="people-help">Session-only diagnostics. This logs meaningful events — config/name matching, turn changes, picks, stories and the exact audio file selected. It deliberately does not log every API poll.</div>
+    <div class="people-help" id="debugSummary">Waiting for boot…</div>
+    <textarea id="debugOutput" readonly spellcheck="false" style="width:100%;height:280px;resize:vertical;background:#07111f;color:#b9d4ef;border:1px solid rgba(97,150,214,.35);border-radius:8px;padding:10px;font:10px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre;"></textarea>
+    <div class="settings-actions">
+      <button class="tool" id="copyDebug" type="button">Copy log</button>
+      <button class="tool" id="clearDebug" type="button">Clear log</button>
+    </div>
   </section>
 
   <div class="settings-actions">
@@ -440,6 +452,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   let broadcastNames = {};
   let roastLevel = "spicy";
   const roastMemory = new Map();
+  const roastDecks = new Map();
   let pressureShowing = false;
 
   // Real CC0 crowd/whistle/click recordings streamed from the sound bank.
@@ -452,7 +465,26 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   let zeroReactionPlayed = false;
   let lastZeroPollAt = 0;
   let warningCrowdStarted = false;
-  const SOUND_CATALOG = [{"id":"whistle_attention","tags":["whistle","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/256552__skiggz__attention-whistle.wav"},{"id":"whistle_frisko","tags":["whistle","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/417392__frisko28i__whiste.wav"},{"id":"whistle_male","tags":["whistle","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/132294__j_bond__male-whistle.wav"},{"id":"whistle_pfiff","tags":["whistle","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/19825__tommorawe__pfiff_whistle.wav"},{"id":"crowd_gasp1","tags":["crowd","gasp","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/232263__zerocarina__gasp.wav"},{"id":"crowd_gasp2","tags":["crowd","gasp","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/353924__dr_skitz__gasp.wav"},{"id":"crowd_aww1","tags":["crowd","aww","timeout"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/431134__quartetofantastico__aaww.wav"},{"id":"crowd_aww2","tags":["crowd","aww","timeout"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/752706__nox_sound__voice_crowd_small_expression_awww_stereo.wav"},{"id":"crowd_boo","tags":["crowd","boo","jeer","timeout"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/403060__valeriebbb96__boooh.wav"},{"id":"crowd_applause","tags":["crowd","applause","pick"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/277022__sandermotions__applause-1.wav"},{"id":"clock_click","tags":["tick","clock"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/107806__j1987__metallicclick.wav"},{"id":"finger_click","tags":["tick","clock"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/151214__owlstorm__click-finger-snap.wav"}];
+  const SOUND_CATALOG = [
+    {id:"whistle_attention",tags:["whistle","pressure"],url:"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/256552__skiggz__attention-whistle.wav"},
+    {id:"whistle_frisko",tags:["whistle","pressure"],url:"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/417392__frisko28i__whiste.wav"},
+    {id:"whistle_male",tags:["whistle","pressure"],url:"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/132294__j_bond__male-whistle.wav"},
+    {id:"whistle_pfiff",tags:["whistle","pressure"],url:"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/19825__tommorawe__pfiff_whistle.wav"},
+
+    // Both boo recordings are CC0 at their original Freesound sources. These
+    // GitHub mirrors let a static DraftCenter page stream them without auth.
+    {id:"boo_small_cc0",tags:["crowd","boo","warning"],url:"https://raw.githubusercontent.com/NEW-CYLANDIA/little-warioware/main/microgames/press_key/353925__dr_skitz__boo.wav"},
+    {id:"boo_group_cc0",tags:["crowd","boo","warning"],url:"https://raw.githubusercontent.com/de-teiu/booing/master/js/sound/81191__payattention__booooooo.mp3"},
+
+    {id:"gasp_zerocarina",tags:["reaction","pressure","timeout"],url:"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/232263__zerocarina__gasp.wav"},
+    {id:"gasp_drskitz",tags:["reaction","pressure","timeout"],url:"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/353924__dr_skitz__gasp.wav"},
+    {id:"gasp_big",tags:["reaction","timeout"],url:"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/343878__reitanna__big-gasp.wav"},
+    {id:"reaction_ooh",tags:["reaction","pressure","timeout"],url:"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/323707__reitanna__ooh.wav"},
+    {id:"reaction_disappointed",tags:["reaction","timeout"],url:"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/170765__esperar__oh-disappointed.wav"},
+    {id:"reaction_sigh",tags:["reaction","timeout"],url:"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/252224__reitanna__defeated-sigh.wav"},
+
+    {id:"clock_click",tags:["tick","clock"],url:"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/107806__j1987__metallicclick.wav"}
+  ];
   let lastSoundEventAt = 0;
   let insightIndex = 0;
   let insightSlides = [];
@@ -460,6 +492,10 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   let pressureSoundStage = 0;
   let pickSoundVariant = 0;
   const soundHistory = [];
+  const debugEvents = [];
+  const debugOnce = new Set();
+  let lastLoggedTurnKey = "";
+  let lastLoggedStoryKey = "";
 
   // Market/value claims now use Sleeper's format-specific ADP feed.
   // If that feed cannot be reached by the browser, those claims are disabled.
@@ -467,6 +503,60 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   const $ = id => document.getElementById(id);
   const esc = v => String(v ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const initials = s => String(s||"").trim().split(/\s+/).filter(Boolean).map(x=>x[0]).join("").slice(0,2).toUpperCase() || "—";
+
+  function renderDebugLog(){
+    const out=$("debugOutput");
+    if(!out)return;
+    out.value=debugEvents.join("\n");
+    out.scrollTop=out.scrollHeight;
+  }
+
+  function updateSharedConfigSummary(){
+    const names=Object.keys(broadcastNames||{}).length;
+    const text=`Shared config · draft ${draftId} · ${names} broadcast name${names===1?"":"s"} · ${absentUsernames.size} absent · ${autodraftUsernames.size} auto`;
+    const people=$("sharedConfigSummary");
+    const debug=$("debugSummary");
+    if(people)people.textContent=text;
+    if(debug)debug.textContent=text;
+  }
+
+  function debugLog(type,message){
+    const stamp=new Date().toLocaleTimeString([], {hour12:false});
+    const line=`${stamp} [${type}] ${message}`;
+    debugEvents.push(line);
+    while(debugEvents.length>250)debugEvents.shift();
+    console.log(`[DraftCenter:${type}] ${message}`);
+    renderDebugLog();
+  }
+
+  function debugLogOnce(key,type,message){
+    if(debugOnce.has(key))return;
+    debugOnce.add(key);
+    debugLog(type,message);
+  }
+
+  function logNameResolution(source="hydrate"){
+    if(!draft)return;
+    const known=new Set();
+    for(const uid of Object.keys(draft?.draft_order||{})){
+      const slot=Number(draft.draft_order[uid]);
+      const mgr=managerForSlot(slot);
+      const username=managerUsername(mgr).toLowerCase();
+      if(!username)continue;
+      known.add(username);
+      const alias=String(broadcastNames[username]||"").trim();
+      if(alias){
+        debugLogOnce(`name:${draftId}:${username}:${alias}`,"NAME",`${username} → ${alias} matched Sleeper slot ${slot} (${source})`);
+      }
+    }
+    for(const [username,alias] of Object.entries(broadcastNames||{})){
+      const key=String(username).trim().toLowerCase();
+      if(key && !known.has(key)){
+        debugLogOnce(`name-miss:${draftId}:${key}:${alias}`,"NAME?",`${key} → ${alias} has no matching Sleeper username in this draft`);
+      }
+    }
+    updateSharedConfigSummary();
+  }
 
   const normalizeName = s => String(s||"")
     .normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
@@ -649,6 +739,16 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     return mapped || managerTitle(m);
   }
 
+  function broadcastSub(m){
+    const alias=broadcastName(m);
+    const title=managerTitle(m);
+    const sub=managerSub(m);
+    const parts=[];
+    if(alias!==title && title)parts.push(title);
+    if(sub && !parts.includes(sub))parts.push(sub);
+    return parts.join(" · ");
+  }
+
   function isAutodraftManager(m){
     const uname=managerUsername(m).toLowerCase();
     const display=String(m?.display_name||"").toLowerCase();
@@ -666,10 +766,14 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   }
 
   const LIGHT_ROASTS = [
-    n=>`${n} couldn't make it tonight, so apparently we're drafting by remote negligence.`,
+    n=>`${n} couldn't make it tonight, so the roster is operating without supervision.`,
     n=>`${n} is absent. The chair is empty; the picks are still legally binding.`,
-    n=>`${n} couldn't be here, but their roster has bravely continued without adult supervision.`,
-    n=>`${n} is drafting from afar. Very brave. Very convenient.`
+    n=>`${n} is drafting from afar. Convenient for both travel and accountability.`,
+    n=>`${n} couldn't be here, but the waiver wire will know their name soon enough.`,
+    n=>`${n} has chosen the remote-management experience. Results may vary.`,
+    n=>`${n} is not in the room to explain the plan, which may be for the best.`,
+    n=>`${n} skipped the room but kept the consequences.`,
+    n=>`${n} is absent tonight. Their lineup decisions are already working from home.`
   ];
 
   const SPICY_ROASTS = [
@@ -677,25 +781,102 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     n=>`${n} is absent, which at least gives them a ready-made excuse for this roster.`,
     n=>`${n}'s chair is empty and somehow still showing more draft awareness than expected.`,
     n=>`${n} couldn't make the draft. Their strategy apparently couldn't make it either.`,
-    n=>`${n} is drafting remotely — because facing the room after these picks would be awkward.`,
     n=>`${n} has outsourced both attendance and accountability tonight.`,
     n=>`${n} isn't here. Conveniently, neither is anyone who can explain the plan.`,
-    n=>`${n} skipped draft night. Bold choice for someone who'll talk about injuries for four months.`
+    n=>`${n} skipped draft night and pre-ordered three months of waiver-wire regret.`,
+    n=>`${n} is drafting remotely because bad picks are easier to defend from a safe distance.`,
+    n=>`${n} missed draft night but will absolutely be available to complain about injuries.`,
+    n=>`${n} has gone full hands-off management before Week 1. Ambitious.`,
+    n=>`${n} is absent. Their future 'I was going to take him next' messages are already scheduled.`,
+    n=>`${n} couldn't attend, so apparently the roster is being assembled by vibes and push notifications.`,
+    n=>`${n} is not here to defend this roster. The prosecution rests.`,
+    n=>`${n} skipped the draft and somehow the accountability left with them.`,
+    n=>`${n} is running the franchise like a forgotten fantasy team from 2019.`,
+    n=>`${n} isn't here, but the eventual 2-5 start has sent a representative.`,
+    n=>`${n} has achieved the rare combo of absentee ownership and extremely visible consequences.`,
+    n=>`${n} is managing from afar. So far, mostly the 'afar' part is working.`,
+    n=>`${n} couldn't make it. Neither could the coherent roster construction.`,
+    n=>`${n} skipped draft night to preserve plausible deniability.`,
+    n=>`${n} is absent and already building a strong case for 'the projections lied to me.'`,
+    n=>`${n} has delegated attendance, judgment and apparently quality control.`,
+    n=>`${n} isn't here to hear the room laugh. Technology truly is amazing.`,
+    n=>`${n} has turned fantasy football into unattended baggage.`,
+    n=>`${n} skipped the one night where pretending to have a strategy was actually required.`,
+    n=>`${n} is absent. The roster is currently being raised by the internet.`,
+    n=>`${n} couldn't show up, but their future trade offers for your best player definitely will.`,
+    n=>`${n} has chosen to draft without witnesses. Sensible legal strategy.`,
+    n=>`${n} is not here, which saves everyone the trouble of hearing why this was 'their guy.'`,
+    n=>`${n} missed draft night. The consolation bracket has noted their availability.`
   ];
+
+  const ABSENT_REACH_ROASTS = [
+    (n,c)=>`${n} isn't even in the room and still managed to reach ${c.gap} picks. Elite remote work.`,
+    (n,c)=>`${n} travelled ${c.gap} spots up the board without travelling to draft night.`,
+    (n,c)=>`ADP called. ${n} wasn't here to answer.`,
+    (n,c)=>`${n} just paid full retail for a player the market had on clearance.`,
+    (n,c)=>`Nothing says conviction like ignoring the room and the market simultaneously.`,
+    (n,c)=>`${n} reached ${c.gap} picks from a safe distance where nobody can ask follow-up questions.`,
+    (n,c)=>`${n} isn't present, but the reach absolutely is.`,
+    (n,c)=>`The laptop has apparently developed its own scouting department. It is aggressive.`,
+    (n,c)=>`${n} saw Sleeper ADP and chose violence against arithmetic.`,
+    (n,c)=>`${n} couldn't attend draft night, but did find time to move the market backwards.`,
+    (n,c)=>`${n} has drafted ${c.player} like someone else was about to steal him ${c.gap} picks early.`,
+    (n,c)=>`Remote drafting update: the Wi-Fi works. The value discipline does not.`,
+    (n,c)=>`${n} has confused 'get your guy' with 'pay absolutely any price.'`,
+    (n,c)=>`${n} is proving you do not need to be physically present to panic.`,
+    (n,c)=>`A ${c.gap}-pick reach with no one here to explain it. That's efficient embarrassment.`,
+    (n,c)=>`${n} drafted like the ADP column was decorative.`,
+    (n,c)=>`${n} isn't here, so we'll assume this was a typo until further notice.`,
+    (n,c)=>`The market said later. ${n} said 'I can't hear you from wherever I am.'`
+  ];
+
+  const ABSENT_VALUE_ROASTS = [
+    (n,c)=>`${n} gets ${c.gap} picks of value. Even unattended franchises occasionally find a coupon.`,
+    (n,c)=>`${n} skipped draft night and the room still did them a favor.`,
+    (n,c)=>`${n} wasn't here for the slide, but will absolutely claim this was the plan.`,
+    (n,c)=>`Credit where it's due: ${n} let everybody else make the mistake first.`,
+    (n,c)=>`${n} gets bailed out by ${c.player} falling ${c.gap} spots. Please prepare for the victory lap.`,
+    (n,c)=>`${n} found value remotely. The dangerous part is the confidence this will create.`,
+    (n,c)=>`The room handed ${n} a discount and somehow they'll take full credit.`,
+    (n,c)=>`${n} wasn't present for the bargain. History will shortly be rewritten.`,
+    (n,c)=>`${n} gets one right from off-site. Alert the fantasy group chat.`,
+    (n,c)=>`A real value pick for ${n}. Unfortunately this will encourage them.`,
+    (n,c)=>`${n} waited, the player fell, and now we're all going to hear about the genius of it.`,
+    (n,c)=>`${n} gets ${c.player} well past ADP. The absentee strategy accidentally produced evidence.`,
+    (n,c)=>`Somehow not showing up has yielded ${c.gap} picks of value. Do not let ${n} build a philosophy around this.`,
+    (n,c)=>`${n} just got rewarded for doing less. Fantasy football remains deeply unfair.`
+  ];
+
+  function nextRoastLine(poolKey,arr,name,context={}){
+    let deck=roastDecks.get(poolKey)||[];
+    deck=deck.filter(i=>Number.isInteger(i)&&i>=0&&i<arr.length);
+    if(!deck.length){
+      deck=arr.map((_,i)=>i);
+      for(let i=deck.length-1;i>0;i--){
+        const j=Math.floor(Math.random()*(i+1));
+        [deck[i],deck[j]]=[deck[j],deck[i]];
+      }
+    }
+    const idx=deck.shift();
+    roastDecks.set(poolKey,deck);
+    return arr[idx](name,context);
+  }
 
   function absentRoastStory(m,pickNo){
     if(roastLevel==="off" || !isAbsentManager(m))return null;
 
     const uid=m.uid||managerUsername(m)||managerTitle(m);
-    const last=Number(roastMemory.get(uid)??-999);
+    const ownCount=livePicksOnly().filter(p=>String(p.picked_by||"")===String(m.uid||"")).length;
 
-    // At most once every ~2 rounds / 18 picks per absent manager.
-    if(Number(pickNo)-last<18)return null;
-    roastMemory.set(uid,Number(pickNo));
+    // Generic absence jokes are seasoning, not a notification on every selection.
+    // Contextual ADP reaches/value are handled by marketStory and can break through.
+    if(ownCount<2 || ownCount%3!==0)return null;
+    const memoryKey=`absent-generic:${uid}:${ownCount}`;
+    if(storyMemory.has(memoryKey))return null;
+    storyMemory.set(memoryKey,pickNo);
 
     const arr=roastLevel==="light"?LIGHT_ROASTS:SPICY_ROASTS;
-    const index=Math.abs(Number(pickNo)+String(uid).length)%arr.length;
-    const copy=arr[index](roastName(m));
+    const copy=nextRoastLine(`generic:${uid}:${roastLevel}`,arr,roastName(m));
 
     return {
       kicker:"ABSENT OWNER DESK",
@@ -703,8 +884,8 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
       sub:copy,
       tone:"gold",
       duration:3900,
-      priority:52,
-      storyKey:`absent:${uid}:${Math.floor(Number(pickNo)/18)}`
+      priority:50,
+      storyKey:memoryKey
     };
   }
 
@@ -768,11 +949,53 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     const pickNo=Number(cell?.ordinal || p?.pick_no || 0);
     const delta=pickNo-mv.rank;
     const abs=Math.abs(delta);
-
-    // Big discrepancies can always break through. Smaller ones get a cooldown
-    // so DraftCenter doesn't become "VALUE ALERT" every other pick.
     if(abs<12)return null;
-    if(abs<25 && !storyAllowed(delta>0?"market:value":"market:early",pickNo,4)) return null;
+
+    const owner=ownerForPick(p);
+    const absent=isAbsentManager(owner);
+    const uid=owner.uid||managerUsername(owner)||managerTitle(owner);
+
+    // Ordinary market notes get a global cooldown. Absent-owner ADP weirdness gets
+    // its own manager/category cooldown so a truly wild reach is not suppressed by
+    // somebody else's value alert.
+    if(abs<25){
+      const key=absent
+        ? `market:absent:${uid}:${delta>0?"value":"reach"}`
+        : (delta>0?"market:value":"market:early");
+      if(!storyAllowed(key,pickNo,absent?8:4))return null;
+    }
+
+    if(absent && roastLevel!=="off"){
+      const name=roastName(owner);
+      const gap=Math.abs(Math.round(delta));
+      const context={gap,player:pickName(p),pickNo,adp:mv.rank};
+
+      if(delta<=-12){
+        const line=roastLevel==="light"
+          ? `${name} is not here to explain why this went ${gap} picks ahead of Sleeper ADP.`
+          : nextRoastLine(`reach:${uid}`,ABSENT_REACH_ROASTS,name,context);
+        return {
+          kicker:delta<=-25?"ABSENT OWNER REACH":"ABSENT OWNER GAMBLE",
+          title:`${String(name).toUpperCase()} · ${gap} AHEAD OF ADP`,
+          sub:`${pickName(p)} selected ${pickNo} · Sleeper ADP ${mv.rank.toFixed(1)}. ${line}`,
+          tone:delta<=-25?"red":"gold",duration:4200,priority:94,
+          stats:[["Selected",pickNo],["Sleeper ADP",mv.rank.toFixed(1)],["Reach",gap+" picks"]]
+        };
+      }
+
+      if(delta>=12){
+        const line=roastLevel==="light"
+          ? `${name} gets a useful discount despite not being in the room.`
+          : nextRoastLine(`value:${uid}`,ABSENT_VALUE_ROASTS,name,context);
+        return {
+          kicker:"ABSENT OWNER VALUE",
+          title:`${String(name).toUpperCase()} · ${gap} PAST ADP`,
+          sub:`${pickName(p)} selected ${pickNo} · Sleeper ADP ${mv.rank.toFixed(1)}. ${line}`,
+          tone:"green",duration:4200,priority:92,
+          stats:[["Selected",pickNo],["Sleeper ADP",mv.rank.toFixed(1)],["Value","+ "+gap+" picks"]]
+        };
+      }
+    }
 
     if(delta>=25){
       return {kicker:"DRAFTCENTER VALUE",title:`${pickName(p)} FALLS ${Math.round(delta)} PICKS`,sub:`Selected ${pickNo} · Sleeper ADP ${mv.rank.toFixed(1)} · ${mv.source}`,tone:"green",duration:3900,
@@ -856,8 +1079,11 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
 
     const c=rosterCounts(owner.uid);
     const currentRound=info(Number(p.pick_no)).round;
-    if(currentRound>=5 && c.WR>=4 && c.RB<=1 && storyOnce(`identity:zeroRB:${owner.uid}`)){
-      return {kicker:"ROSTER IDENTITY",title:"ZERO-RB WATCH",sub:`${broadcastName(owner)} now has ${c.WR} WRs and ${c.RB} RB.`,tone:"cyan",duration:3300};
+    if(currentRound>=5 && c.WR>=4 && c.RB===0 && storyOnce(`identity:zeroRB:${owner.uid}`)){
+      return {kicker:"ROSTER IDENTITY",title:"ZERO-RB WATCH",sub:`${broadcastName(owner)} has ${c.WR} WRs and still has not drafted an RB.`,tone:"cyan",duration:3300};
+    }
+    if(currentRound>=6 && c.WR>=4 && c.RB===1 && storyOnce(`identity:wrheavy:${owner.uid}`)){
+      return {kicker:"ROSTER IDENTITY",title:"WR-HEAVY BUILD",sub:`${broadcastName(owner)} has ${c.WR} WRs and 1 RB. That's WR-heavy — not Zero-RB.`,tone:"cyan",duration:3300};
     }
     if(currentRound>=5 && c.RB>=4 && c.WR<=1 && storyOnce(`identity:ground:${owner.uid}`)){
       return {kicker:"ROSTER IDENTITY",title:"GROUND GAME",sub:`${broadcastName(owner)} now has ${c.RB} RBs and ${c.WR} WR.`,tone:"green",duration:3300};
@@ -1089,7 +1315,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     const candidates=[];
 
     const market=marketStory(p);
-    if(market) candidates.push({...market,priority:90});
+    if(market) candidates.push({...market,priority:Number(market.priority||90)});
 
     const story=detectStory(p);
     if(story && (!market || story.title!==market.title)) {
@@ -1136,7 +1362,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
       candidates.push({
         kicker:`ROUND ${i.round} COMPLETE`,
         title:roundSummary(i.round)||"ROUND COMPLETE",
-        sub:`${leaderText}${valueText} Next: ${managerTitle(nextMgr)} at ${nextInfo.label}.`,
+        sub:`${leaderText}${valueText} Next: ${broadcastName(nextMgr)} at ${nextInfo.label}.`,
         image:"",
         fallback:"R",
         tone:"",
@@ -1209,7 +1435,12 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
 
   function renderTakeover(){
     const t=$("takeover");
-    if(!activeEvent){t.className="";t.innerHTML="";return;}
+    if(!activeEvent){t.className="";t.innerHTML="";lastLoggedStoryKey="";return;}
+    const logKey=`${activeEvent.pickNo||""}:${activeEvent.kicker||""}:${activeEvent.title||""}:${activeEvent.deferredReplay?"replay":"live"}`;
+    if(logKey!==lastLoggedStoryKey){
+      lastLoggedStoryKey=logKey;
+      debugLog("STORY",`${activeEvent.kicker||""} · ${activeEvent.title||""}${activeEvent.deferredReplay?" · REPLAY":""}`);
+    }
     t.className=`show ${activeEvent.tone||""}`;
     const art=activeEvent.image
       ? `<div class="take-photo"><img src="${esc(activeEvent.image)}" alt="" onerror="this.parentElement.textContent='${esc(activeEvent.fallback||"★")}'"></div>`
@@ -1265,12 +1496,14 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
       const total=c.QB+c.RB+c.WR+c.TE+c.K+c.DEF;
       if(!total)continue;
 
-      if(c.WR>=4) facts.push({score:c.WR,title:`${managerTitle(mgr)}: ${c.WR} WRs`,detail:`Roster through ${total} selections`,tone:"hot"});
-      if(c.RB>=4) facts.push({score:c.RB,title:`${managerTitle(mgr)}: ${c.RB} RBs`,detail:`Roster through ${total} selections`,tone:"hot"});
-      if(c.QB>=2) facts.push({score:c.QB+0.5,title:`${managerTitle(mgr)}: ${c.QB} QBs`,detail:`Quarterback-heavy build`,tone:"alert"});
-      if(c.TE>=2) facts.push({score:c.TE+0.25,title:`${managerTitle(mgr)}: ${c.TE} TEs`,detail:`Multiple tight ends already`,tone:"alert"});
-      if(total>=5 && c.RB<=1) facts.push({score:4.4,title:`${managerTitle(mgr)}: ${c.RB} RB`,detail:`Zero-RB / light-RB build`,tone:"good"});
-      if(total>=5 && c.WR<=1) facts.push({score:4.2,title:`${managerTitle(mgr)}: ${c.WR} WR`,detail:`Very light at wide receiver`,tone:"good"});
+      if(c.WR>=4) facts.push({score:c.WR,title:`${broadcastName(mgr)}: ${c.WR} WRs`,detail:`Roster through ${total} selections`,tone:"hot"});
+      if(c.RB>=4) facts.push({score:c.RB,title:`${broadcastName(mgr)}: ${c.RB} RBs`,detail:`Roster through ${total} selections`,tone:"hot"});
+      if(c.QB>=2) facts.push({score:c.QB+0.5,title:`${broadcastName(mgr)}: ${c.QB} QBs`,detail:`Quarterback-heavy build`,tone:"alert"});
+      if(c.TE>=2) facts.push({score:c.TE+0.25,title:`${broadcastName(mgr)}: ${c.TE} TEs`,detail:`Multiple tight ends already`,tone:"alert"});
+      if(total>=5 && c.RB===0) facts.push({score:4.4,title:`${broadcastName(mgr)}: no RB yet`,detail:`True Zero-RB build so far`,tone:"good"});
+      else if(total>=5 && c.RB===1 && c.WR>=4) facts.push({score:4.1,title:`${broadcastName(mgr)}: 1 RB / ${c.WR} WRs`,detail:`WR-heavy build`,tone:"good"});
+      if(total>=5 && c.WR===0) facts.push({score:4.2,title:`${broadcastName(mgr)}: no WR yet`,detail:`No wide receiver selected yet`,tone:"good"});
+      else if(total>=5 && c.WR===1 && c.RB>=4) facts.push({score:4.0,title:`${broadcastName(mgr)}: 1 WR / ${c.RB} RBs`,detail:`RB-heavy build`,tone:"good"});
     }
     return facts.sort((a,b)=>b.score-a.score).slice(0,4);
   }
@@ -1305,14 +1538,14 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
         if(qb&&catcher){
           facts.push({
             score:5,
-            title:`${managerTitle(mgr)}: ${team} stack`,
+            title:`${broadcastName(mgr)}: ${team} stack`,
             detail:`${pickName(qb)} + ${pickName(catcher)}`,
             tone:"good"
           });
         }else if(players.length>=3){
           facts.push({
             score:players.length,
-            title:`${managerTitle(mgr)}: ${players.length} ${team} players`,
+            title:`${broadcastName(mgr)}: ${players.length} ${team} players`,
             detail:`Leaning heavily into one NFL team`,
             tone:"hot"
           });
@@ -1551,16 +1784,22 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
 
     const cur=managerForSlot(curInfo.slot), nxt=managerForSlot(nextInfo.slot);
 
-    $("nowName").textContent=managerTitle(cur);
-    $("nowOwner").innerHTML=`${esc(managerSub(cur))}${isAbsentManager(cur)?'<span class="absent-chip">ABSENT</span>':""}${isAutodraftManager(cur)?'<span class="absent-chip">AUTO-DRAFT</span>':""}`;
+    $("nowName").textContent=broadcastName(cur);
+    $("nowOwner").innerHTML=`${esc(broadcastSub(cur))}${isAbsentManager(cur)?'<span class="absent-chip">ABSENT</span>':""}${isAutodraftManager(cur)?'<span class="absent-chip">AUTO-DRAFT</span>':""}`;
     $("nowMeta").innerHTML=`Draft slot ${curInfo.slot} · Pick ${curInfo.label}${((draft?.type||"snake")==="snake"&&(curInfo.pos===1||curInfo.pos===curInfo.teams))?'<span class="turn-pill">SNAKE TURN</span>':""}`;
     $("rosterLine").textContent=rosterLine(cur.uid);
-    setImgBox($("nowAvatar"),avatarImg(cur.avatar),initials(managerTitle(cur)));
+    setImgBox($("nowAvatar"),avatarImg(cur.avatar),initials(broadcastName(cur)));
 
-    $("nextName").textContent=managerTitle(nxt);
-    $("nextOwner").textContent=managerSub(nxt);
+    $("nextName").textContent=broadcastName(nxt);
+    $("nextOwner").textContent=broadcastSub(nxt);
     $("nextMeta").textContent=`Pick ${nextInfo.label}`;
-    setImgBox($("nextAvatar"),avatarImg(nxt.avatar),initials(managerTitle(nxt)));
+    setImgBox($("nextAvatar"),avatarImg(nxt.avatar),initials(broadcastName(nxt)));
+
+    const turnLogKey=`${curInfo.key}:${managerUsername(cur)||broadcastName(cur)}`;
+    if(turnLogKey!==lastLoggedTurnKey){
+      lastLoggedTurnKey=turnLogKey;
+      debugLog("TURN",`${curInfo.label} · ${broadcastName(cur)}${managerUsername(cur)?` (@${managerUsername(cur)})`:""}${isAbsentManager(cur)?" · ABSENT":""}${isAutodraftManager(cur)?" · AUTO":""}`);
+    }
 
     const liveOnly=livePicksOnly();
     const last=liveOnly[liveOnly.length-1];
@@ -1568,7 +1807,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
       const li=cellForPick(last) || info(Number(last.pick_no||1)), owner=ownerForPick(last), nm=pickName(last);
       $("lastName").textContent=nm;
       $("lastMeta").textContent=`${last?.metadata?.position||"—"} · ${last?.metadata?.team||"FA"}`;
-      $("lastPickMeta").textContent=`Pick ${li.label} · ${managerTitle(owner)}`;
+      $("lastPickMeta").textContent=`Pick ${li.label} · ${broadcastName(owner)}`;
       setImgBox($("lastAvatar"),playerImg(last),initials(nm));
     }else{
       $("lastName").textContent="Draft not started";$("lastMeta").textContent="—";$("lastPickMeta").textContent="Waiting for Pick 1.01";$("lastAvatar").textContent="—";
@@ -1664,14 +1903,16 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     activeClipAudios.forEach(a=>fadeOutAudio(a,duration));
   }
 
-  async function playTags(tags,volume=1,rate=1,group="general",deckKey=null){
+  async function playTags(tags,volume=1,rate=1,group="general",deckKey=null,maxMs=0){
     if(!soundEnabled)return null;
     cleanupFinishedClips();
     const chosen=chooseSound(tags,deckKey);
     if(!chosen)return null;
     const a=makeRepoAudio(chosen,volume,rate,group);
     activeClipAudios.push(a);
-    try{await a.play()}catch(_){}
+    debugLog("AUDIO",`${chosen.id} · ${group} · ${Array.isArray(tags)?tags.join("+"):tags}`);
+    try{await a.play()}catch(e){debugLog("AUDIO!",`${chosen.id} failed: ${e?.message||e}`)}
+    if(maxMs>0)setTimeout(()=>fadeOutAudio(a,500),maxMs);
     return a;
   }
 
@@ -1697,11 +1938,8 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
 
   async function playAudioTest(){
     if(!soundEnabled)return;
-    await playTags(["whistle","pressure"],.72,1,"test","test-whistle");
-    setTimeout(()=>{
-      const family=chooseReactionFamily(["boo","aww","gasp"],"test-reaction-families");
-      playTags(["crowd",family],.62,1,"test",`test-${family}`);
-    },1200);
+    await playTags(["whistle","pressure"],.72,1,"test","test-whistle",1800);
+    setTimeout(()=>playTags(["reaction","timeout"],.62,1,"test","test-reaction",2200),1200);
   }
 
   function playTinyConfirm(){}
@@ -1722,20 +1960,18 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     if(!soundEnabled)return;
     if(stage===1){
       fadeOutAudioGroup("pressure",260);
-      playTags(["whistle","pressure"],.56,1,"pressure","pressure-whistle");
+      playTags(["whistle","pressure"],.56,1,"pressure","pressure-whistle",2200);
     }else if(stage===2){
       fadeOutAudioGroup("pressure",260);
-      const family=chooseReactionFamily(["gasp","aww"],"pressure-reaction-families");
-      playTags(["crowd",family],.56,1,"pressure",`pressure-${family}`);
+      playTags(["reaction","pressure"],.56,1,"pressure","pressure-reaction",2200);
     }
   }
 
   function playTimeoutReaction(){
     if(!soundEnabled||zeroReactionPlayed)return;
     zeroReactionPlayed=true;
-    const family=chooseReactionFamily(["boo","aww","gasp"],"timeout-reaction-families");
-    const volume=(family==="boo"?.82:.68);
-    playTags(["crowd",family],volume,1,"timeout",`timeout-${family}`);
+    // No group chant/crowd vocal at zero. One short human reaction only.
+    playTags(["reaction","timeout"],.70,1,"timeout","timeout-reaction",2600);
   }
 
   function resetPressureSound(){
@@ -1940,9 +2176,9 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     if(draft.status==="drafting" && secs<=20 && secs>0 && soundEnabled && !warningCrowdStarted){
       warningCrowdStarted=true;
       fadeOutAudioGroup("warning",220);
-      const family=chooseReactionFamily(["boo","aww","gasp"],"warning-reaction-families");
-      const volume=(family==="boo"?.34:.28);
-      playTags(["crowd",family],volume,1,"warning",`warning-${family}`);
+      // The warning is specifically booing. Rotate two verified CC0 boo clips
+      // and fade them before the final countdown takes over.
+      playTags(["crowd","boo"],.32,1,"warning","warning-boo",8500);
     }
 
     renderPressure(secs);
@@ -2095,6 +2331,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
       }catch(_){}
     }
     renderAll();
+    logNameResolution("hydrate");
     if($("settings")?.classList.contains("open"))renderPeopleSettings();
   }
 
@@ -2106,6 +2343,9 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
       const firstDraft=!draft;
       const oldField=draft?adpFieldForDraft():null;
       draft=d;
+      if(firstDraft){
+        debugLog("DRAFT",`loaded ${draftId} · ${draft?.settings?.teams||"?"} teams · ${draft?.settings?.rounds||"?"} rounds · timer ${draft?.settings?.pick_timer||0}s · status ${draft?.status||"unknown"}`);
+      }
       const newField=adpFieldForDraft();
       if(oldOrder!==JSON.stringify(draft?.draft_order||{})||!Object.keys(users).length)hydrate();
       if(firstDraft || oldField!==newField) {
@@ -2167,7 +2407,12 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
           .forEach(p=>{
             const cell=cellForPick(p);
             lastLivePickKey=pickCellKey(p);
-            const mgr=managerTitle(ownerForPick(p));
+            const pickOwner=ownerForPick(p);
+            const mgr=broadcastName(pickOwner);
+            const mv=marketValue(p);
+            const ordinal=Number(cell?.ordinal||p.pick_no||0);
+            const delta=mv?ordinal-Number(mv.rank):null;
+            debugLog("PICK",`${cell?.label||formatCellLabel(p)} · ${pickName(p)} (${p?.metadata?.position||"—"}) · ${mgr}${managerUsername(pickOwner)?` @${managerUsername(pickOwner)}`:""}${mv?` · ADP ${mv.rank.toFixed(1)} · ${delta>=0?"+":""}${Math.round(delta)}`:""}${isAutodraftManager(pickOwner)?" · AUTO-MARKED":""}`);
             observedPickTimes.push({
               pick:Number(cell?.ordinal||p.pick_no||0),
               seconds:secondsOnClock,
@@ -2225,7 +2470,11 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     if(id)draftId=id;
     absentUsernames=new Set((Array.isArray(cfg.absent)?cfg.absent:[]).map(x=>String(x).trim().toLowerCase()).filter(Boolean));
     autodraftUsernames=new Set((Array.isArray(cfg.autodraft)?cfg.autodraft:[]).map(x=>String(x).trim().toLowerCase()).filter(Boolean));
-    broadcastNames=(cfg.broadcastNames&&typeof cfg.broadcastNames==="object")?cfg.broadcastNames:{};
+    broadcastNames=Object.fromEntries(
+      Object.entries((cfg.broadcastNames&&typeof cfg.broadcastNames==="object")?cfg.broadcastNames:{})
+        .map(([k,v])=>[String(k).trim().toLowerCase(),String(v||"").trim()])
+        .filter(([k,v])=>k&&v)
+    );
     roastLevel=["off","light","spicy"].includes(cfg.roastLevel)?cfg.roastLevel:"spicy";
   }
 
@@ -2258,7 +2507,10 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     try{
       const r=await fetch(`${SHARED_CONFIG_URL}?v=${Date.now()}`,{cache:"no-store"});
       if(!r.ok)throw new Error(`config ${r.status}`);
-      applySharedSettings(await r.json());
+      const cfg=await r.json();
+      applySharedSettings(cfg);
+      debugLog("CONFIG",`loaded shared config: draft ${draftId}, ${Object.keys(broadcastNames).length} names, ${absentUsernames.size} absent, ${autodraftUsernames.size} auto`);
+      updateSharedConfigSummary();
     }catch(e){
       console.warn("Shared DraftCenter config unavailable; using defaults",e);
     }
@@ -2300,6 +2552,8 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
         throw new Error(`GitHub save failed (${put.status})${detail?`: ${detail}`:""}`);
       }
       if(state)state.textContent="Shared settings saved. Refresh another device to load them.";
+      debugLog("CONFIG",`saved shared config: draft ${draftId}, ${Object.keys(broadcastNames).length} names, ${absentUsernames.size} absent, ${autodraftUsernames.size} auto`);
+      updateSharedConfigSummary();
       if(reload)setTimeout(()=>location.reload(),900);
       return true;
     }catch(e){
@@ -2368,6 +2622,8 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     $("volumeInput").value=Math.round(masterVolume*100);
     updateAudioState();
     renderPeopleSettings();
+    updateSharedConfigSummary();
+    renderDebugLog();
   }
 
 
@@ -2394,8 +2650,9 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     tab.addEventListener("click",()=>{
       document.querySelectorAll(".settings-tab").forEach(x=>x.classList.toggle("active",x===tab));
       document.querySelectorAll(".settings-pane").forEach(p=>p.classList.toggle("active",p.id===tab.dataset.pane));
-      if(tab.dataset.pane==="peoplePane")renderPeopleSettings();
+      if(tab.dataset.pane==="peoplePane"){renderPeopleSettings();updateSharedConfigSummary();}
       if(tab.dataset.pane==="audioPane")updateAudioState();
+      if(tab.dataset.pane==="debugPane"){updateSharedConfigSummary();renderDebugLog();}
     });
   }
 
@@ -2407,6 +2664,13 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     roastLevel=$("roastLevel").value;
   });
   $("savePeople").addEventListener("click",savePeopleSettings);
+  $("copyDebug").addEventListener("click",async()=>{
+    const text=debugEvents.join("\n");
+    try{await navigator.clipboard.writeText(text);debugLog("DEBUG","log copied to clipboard")}catch(_){
+      const out=$("debugOutput");if(out){out.focus();out.select();document.execCommand("copy");}
+    }
+  });
+  $("clearDebug").addEventListener("click",()=>{debugEvents.length=0;renderDebugLog();});
   $("settingsSoundBtn").addEventListener("click",async()=>await setSoundEnabled(!soundEnabled));
   $("settingsTestSound").addEventListener("click",async()=>{
     if(!soundEnabled)await setSoundEnabled(true);
@@ -2423,6 +2687,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     // Shared league settings are loaded once per page load. There is deliberately
     // no config polling: refresh another device when you want it to pick up changes.
     await loadSharedSettings();
+    debugLog("BOOT",`DraftCenter session started for ${draftId}`);
     $("draftInput").value=`https://sleeper.com/draft/nfl/${draftId}`;
     pollDraft();pollPicks();
     // ADP load is started after the first draft object arrives so we can choose
