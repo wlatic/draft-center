@@ -1780,7 +1780,8 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   };
 
   const pressurePhraseBags={};
-  let pressurePhraseTurnKey="";
+  const pressurePhraseCache=new Map();
+  PRESSURE_PHRASES.countdown=[...PRESSURE_PHRASES.ten,...PRESSURE_PHRASES.five,...PRESSURE_PHRASES.three];
 
   function shuffledCopy(arr){
     const x=[...arr];
@@ -1791,12 +1792,23 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     return x;
   }
 
-  function pressurePhrase(stage,turnKey){
-    if(pressurePhraseTurnKey!==turnKey)pressurePhraseTurnKey=turnKey;
+  function pressurePhrase(stage,turnKey,pool=null){
+    const cacheKey=`${turnKey}:${stage}`;
+    if(pressurePhraseCache.has(cacheKey))return pressurePhraseCache.get(cacheKey);
+
+    const source=pool||PRESSURE_PHRASES[stage]||PRESSURE_PHRASES.countdown;
     if(!pressurePhraseBags[stage]||!pressurePhraseBags[stage].length){
-      pressurePhraseBags[stage]=shuffledCopy(PRESSURE_PHRASES[stage]||PRESSURE_PHRASES.ten);
+      pressurePhraseBags[stage]=shuffledCopy(source);
     }
-    return pressurePhraseBags[stage].shift();
+    const phrase=pressurePhraseBags[stage].shift();
+    pressurePhraseCache.set(cacheKey,phrase);
+
+    // Keep the cache bounded across a long draft.
+    if(pressurePhraseCache.size>80){
+      const oldest=pressurePhraseCache.keys().next().value;
+      pressurePhraseCache.delete(oldest);
+    }
+    return phrase;
   }
 
   function renderPressure(seconds){
@@ -1852,9 +1864,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
         `${name} delegated the stressful part to a computer.`,
         `AUTO-DRAFT ACTIVE — somehow the clock still feels personal.`
       ];
-      const key="auto-pressure";
-      if(!pressurePhraseBags[key]||!pressurePhraseBags[key].length)pressurePhraseBags[key]=shuffledCopy(autoPool);
-      $("pressureSub").textContent=pressurePhraseBags[key].shift();
+      $("pressureSub").textContent=pressurePhrase("auto",turnKey,autoPool);
     }else if(isAbsentManager(mgr)){
       const absentPool=[
         `${name} isn't here, but the clock very much is.`,
@@ -1863,15 +1873,10 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
         `${name}'s empty chair is now under serious pressure.`,
         `Apparently ${name} delegated attendance but not the clock.`
       ];
-      const key="absent-pressure";
-      if(!pressurePhraseBags[key]||!pressurePhraseBags[key].length)pressurePhraseBags[key]=shuffledCopy(absentPool);
-      $("pressureSub").textContent=pressurePhraseBags[key].shift();
-    }else if(seconds<=3){
-      $("pressureSub").textContent=pressurePhrase("three",turnKey);
-    }else if(seconds<=5){
-      $("pressureSub").textContent=pressurePhrase("five",turnKey);
+      $("pressureSub").textContent=pressurePhrase("absent",turnKey,absentPool);
     }else{
-      $("pressureSub").textContent=pressurePhrase("ten",turnKey);
+      // One line per turn. The countdown numbers change; the copy does not spam.
+      $("pressureSub").textContent=pressurePhrase("countdown",turnKey);
     }
   }
 
