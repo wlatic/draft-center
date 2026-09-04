@@ -1,7 +1,15 @@
 {
   "draftId": "1401732549104951296",
   "roastLevel": "spicy",
-  "broadcastNames": {},
-  "absent": [],
+  "broadcastNames": {
+    "whatthefaiyuk": "Nob",
+    "edparkes2148": "Fool",
+    "drnichols": "Idiot"
+  },
+  "absent": [
+    "whatthefaiyuk",
+    "edparkes2148",
+    "drnichols"
+  ],
   "autodraft": []
 }
