@@ -1,0 +1,212 @@
+tart=Math.max(Number(draft?.last_picked||0),Number(observedPickAt||0),Number(lastLivePickAt||0)) || Date.now();
+    return Math.max(0,timer-(Date.now()-start)/1000);
+  }
+
+  function safeToReplayDeferred(){
+    if(activeEvent)return false;
+    if(draft?.status!=="drafting")return false;
+
+    // Give the new pick/reveal time to settle first.
+    if(Date.now()-lastLivePickAt<6500)return false;
+
+    const timer=Number(draft?.settings?.pick_timer||0);
+    if(!timer)return true;
+
+    // Scale the lull threshold to the draft clock:
+    // 30s mock -> ~16.5s remaining
+    // 60s      -> 33s remaining
+    // 120s     -> capped at 45s remaining
+    const safeThreshold=Math.min(45,Math.max(12,timer*0.55));
+    return clockRemainingSeconds()>safeThreshold;
+  }
+
+  function popDeferredStory(){
+    const now=Date.now();
+
+    for(let i=0;i<deferredStories.length;i++){
+      const s=deferredStories[i];
+      if(now>s.deferredExpiresAt)continue;
+      if(Number(s.replayCount||0)>=1)continue;
+
+      deferredStories.splice(i,1);
+      return {
+        ...s,
+        replayCount:Number(s.replayCount||0)+1,
+        deferredReplay:true,
+        createdAt:now,
+        expiresAt:now+Math.min(9000,Number(s.duration||3500)+2500),
+        duration:s.roundRecap?7000:Math.min(4300,Number(s.duration||3500)+700)
+      };
+    }
+
+    // Purge expired stories.
+    for(let i=deferredStories.length-1;i>=0;i--){
+      if(now>deferredStories[i].deferredExpiresAt)deferredStories.splice(i,1);
+    }
+    return null;
+  }
+
+  function queueEventsForPick(p,secondsOnClock=null){
+    if(isKeeperPick(p))return;
+
+    const i=cellForPick(p) || info(Number(p.pick_no||1));
+    const owner=ownerForPick(p);
+    const mv=marketValue(p);
+    const now=Date.now();
+    activePickNo=Number(i.ordinal || p.pick_no || currentLiveOrdinal);
+
+    // LIVE-TV RULE:
+    // A new pick immediately kills anything left over from the previous pick.
+    // We never allow old analysis to stack up behind newer draft action.
+    eventQueue.length=0;
+
+    let marketText="";
+    if(mv){
+      const d=Number(p.pick_no)-mv.rank;
+      marketText=` · ${mv.label} ${Math.round(mv.rank)}${Math.abs(d)>=3?` (${d>0?"+":""}${Math.round(d)})`:""}`;
+    }
+
+    const reveal={
+      kind:"pick",
+      pickNo:Number(i.ordinal || p.pick_no || currentLiveOrdinal),
+      createdAt:now,
+      expiresAt:now+7000,
+      kicker:"THE PICK IS IN",
+      title:pickName(p),
+      sub:`${p?.metadata?.position||"—"} · ${p?.metadata?.team||"FA"}  —  ${broadcastName(owner)}  —  Pick ${i.label}${marketText}`,
+      image:playerImg(p),
+      fallback:initials(pickName(p)),
+      tone:"",
+      duration:5000
+    };
+
+    // The new pick reveal preempts whatever is currently on screen.
+    activeEvent=reveal;
+    activeUntil=now+reveal.duration;
+    renderTakeover();
+
+    // Build candidate follow-up stories, but select ONLY ONE.
+    // This gives us SportsCenter-style editorial priority instead of a FIFO queue.
+    const candidates=[];
+
+    const market=marketStory(p);
+    if(market) candidates.push({...market,priority:90});
+
+    const story=detectStory(p);
+    if(story && (!market || story.title!==market.title)) {
+      let priority=60;
+      if(story.kicker==="STACK ALERT") priority=78;
+      else if(story.kicker==="DOUBLE DIP") priority=74;
+      else if(String(story.kicker||"").includes("RUN")) priority=72;
+      else if(story.kicker==="DRAFT MILESTONE") priority=76;
+      candidates.push({...story,priority});
+    }
+
+    const autoMgr=ownerForPick(p);
+    if(isAutodraftManager(autoMgr)){
+      candidates.push({
+        kicker:"AUTO-DRAFT DESK",
+        title:`${broadcastName(autoMgr)} IS ON AUTO`,
+        sub:isAbsentManager(autoMgr)
+          ? `Not here and not pretending otherwise — Sleeper is handling the selections.`
+          : `DraftCenter has this manager marked as auto-drafting.`,
+        tone:"gold",
+        duration:3900,
+        priority:96,
+        storyKey:`autodraft:${autoMgr.uid||managerUsername(autoMgr)}:${Math.floor(Number(i.ordinal||p.pick_no||1)/10)}`
+      });
+    }
+
+    const quick=quickPickStory(p,secondsOnClock);
+    if(quick) candidates.push({...quick,priority:45});
+
+    const roast=absentRoastStory(owner,Number(i.ordinal||p.pick_no||currentLiveOrdinal));
+    if(roast) candidates.push(roast);
+
+    const slip=slipStory();
+    if(slip) candidates.push({...slip,priority:48});
+
+    if(i.pos===i.teams){
+      const leader=roundLeader(i.round);
+      const value=roundBestValue(i.round);
+      const nextInfo=info(Number(p.pick_no)+1);
+      const nextMgr=managerForSlot(nextInfo.slot);
+      const leaderText=leader?`${leader[0]} led the round with ${leader[1]} picks.`:"";
+      const valueText=value?` Best value: ${pickName(value.p)} (${Math.round(value.delta)} past ADP).`:"";
+
+      candidates.push({
+        kicker:`ROUND ${i.round} COMPLETE`,
+        title:roundSummary(i.round)||"ROUND COMPLETE",
+        sub:`${leaderText}${valueText} Next: ${managerTitle(nextMgr)} at ${nextInfo.label}.`,
+        image:"",
+        fallback:"R",
+        tone:"",
+        duration:8000,
+        priority:100,
+        roundRecap:true
+      });
+    }
+
+    candidates.sort((a,b)=>(b.priority||0)-(a.priority||0));
+    const follow=candidates[0];
+
+    if(follow){
+      const isRound=Boolean(follow.roundRecap);
+      eventQueue.push({
+        ...follow,
+        kind:"followup",
+        pickNo:Number(i.ordinal || p.pick_no || currentLiveOrdinal),
+        storyKey:follow.storyKey || `${follow.kicker}:${follow.title}`,
+        createdAt:now,
+        expiresAt:now+(isRound?18000:FOLLOWUP_MAX_AGE_MS),
+        // End-of-round is a proper studio segment.
+        duration:isRound?8000:Math.min(Number(follow.duration||2800),3600)
+      });
+    }
+  }
+
+  function eventTick(){
+    const now=Date.now();
+
+    if(activeEvent && now>=activeUntil){
+      activeEvent=null;
+      renderTakeover();
+    }
+
+    if(!activeEvent && eventQueue.length){
+      while(eventQueue.length){
+        const candidate=eventQueue.shift();
+
+        // A follow-up attached to an old pick isn't shown immediately.
+        // Preserve it for a later studio lull instead of losing it.
+        if(candidate.kind==="followup" && Number(candidate.pickNo)!==Number(activePickNo)){
+          rememberDeferred(candidate);
+          continue;
+        }
+
+        if(candidate.expiresAt && now>candidate.expiresAt){
+          if(candidate.kind==="followup")rememberDeferred(candidate);
+          continue;
+        }
+
+        activeEvent=candidate;
+        activeUntil=now+candidate.duration;
+        renderTakeover();
+        return;
+      }
+    }
+
+    // If the draft has settled and the current manager still has plenty of time,
+    // bring back one worthwhile story that was bypassed by faster action.
+    if(safeToReplayDeferred()){
+      const replay=popDeferredStory();
+      if(replay){
+        activeEvent=replay;
+        activeUntil=now+replay.duration;
+        renderTakeover();
+      }
+    }
+  }
+
+  function renderTakeover(){
+    const t=$("t
