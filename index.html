@@ -452,7 +452,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   let zeroReactionPlayed = false;
   let lastZeroPollAt = 0;
   let warningCrowdStarted = false;
-  const SOUND_CATALOG = [{"id":"whistle_attention","tags":["whistle","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/256552__skiggz__attention-whistle.wav"},{"id":"whistle_frisko","tags":["whistle","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/417392__frisko28i__whiste.wav"},{"id":"whistle_male","tags":["whistle","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/132294__j_bond__male-whistle.wav"},{"id":"whistle_pfiff","tags":["whistle","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/19825__tommorawe__pfiff_whistle.wav"},{"id":"crowd_gasp1","tags":["crowd","gasp","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/232263__zerocarina__gasp.wav"},{"id":"crowd_gasp2","tags":["crowd","gasp","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/353924__dr_skitz__gasp.wav"},{"id":"crowd_aww1","tags":["crowd","aww","timeout"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/431134__quartetofantastico__aaww.wav"},{"id":"crowd_aww2","tags":["crowd","aww","timeout"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/752706__nox_sound__voice_crowd_small_expression_awww_stereo.wav"},{"id":"crowd_boo","tags":["crowd","boo","jeer","timeout"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/403060__valeriebbb96__boooh.wav"},{"id":"crowd_protest","tags":["crowd","boo","jeer","protest","timeout"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/271425__karymronda__protest02.wav"},{"id":"crowd_applause","tags":["crowd","applause","pick"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/277022__sandermotions__applause-1.wav"},{"id":"crowd_arena","tags":["crowd","arena","pick"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/113698__huubjeroen__goalloop.wav"},{"id":"clock_click","tags":["tick","clock"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/107806__j1987__metallicclick.wav"},{"id":"finger_click","tags":["tick","clock"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/151214__owlstorm__click-finger-snap.wav"}];
+  const SOUND_CATALOG = [{"id":"whistle_attention","tags":["whistle","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/256552__skiggz__attention-whistle.wav"},{"id":"whistle_frisko","tags":["whistle","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/417392__frisko28i__whiste.wav"},{"id":"whistle_male","tags":["whistle","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/132294__j_bond__male-whistle.wav"},{"id":"whistle_pfiff","tags":["whistle","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/19825__tommorawe__pfiff_whistle.wav"},{"id":"crowd_gasp1","tags":["crowd","gasp","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/232263__zerocarina__gasp.wav"},{"id":"crowd_gasp2","tags":["crowd","gasp","pressure"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/353924__dr_skitz__gasp.wav"},{"id":"crowd_aww1","tags":["crowd","aww","timeout"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/431134__quartetofantastico__aaww.wav"},{"id":"crowd_aww2","tags":["crowd","aww","timeout"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/752706__nox_sound__voice_crowd_small_expression_awww_stereo.wav"},{"id":"crowd_boo","tags":["crowd","boo","jeer","timeout"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/403060__valeriebbb96__boooh.wav"},{"id":"crowd_protest","tags":["crowd","boo","jeer","protest","timeout"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/271425__karymronda__protest02.wav"},{"id":"crowd_applause","tags":["crowd","applause","pick"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/277022__sandermotions__applause-1.wav"},{"id":"clock_click","tags":["tick","clock"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/107806__j1987__metallicclick.wav"},{"id":"finger_click","tags":["tick","clock"],"url":"https://raw.githubusercontent.com/Wh1teDuke/WilhelmSFX/master/Samples/151214__owlstorm__click-finger-snap.wav"}];
   let lastSoundEventAt = 0;
   let insightIndex = 0;
   let insightSlides = [];
@@ -1584,15 +1584,41 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     return SOUND_CATALOG.filter(s=>wanted.every(t=>s.tags.includes(t)));
   }
 
-  function chooseSound(tags){
+  const soundDecks=new Map();
+  let lastReactionFamily="";
+
+  function shuffledSounds(items){
+    const x=[...items];
+    for(let i=x.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [x[i],x[j]]=[x[j],x[i]];
+    }
+    return x;
+  }
+
+  function chooseSound(tags,deckKey=null){
     const matches=soundsWithTags(tags);
     if(!matches.length)return null;
-    let choices=matches.filter(s=>!soundRecentIds.includes(s.id));
-    if(!choices.length)choices=matches;
-    const chosen=choices[Math.floor(Math.random()*choices.length)];
-    soundRecentIds.push(chosen.id);
-    while(soundRecentIds.length>4)soundRecentIds.shift();
-    return chosen;
+    const key=deckKey||tags.join(":");
+    let deck=soundDecks.get(key)||[];
+    deck=deck.filter(id=>matches.some(s=>s.id===id));
+    if(!deck.length)deck=shuffledSounds(matches).map(s=>s.id);
+    const id=deck.shift();
+    soundDecks.set(key,deck);
+    return matches.find(s=>s.id===id)||matches[0];
+  }
+
+  function chooseReactionFamily(allowed,deckKey){
+    let deck=soundDecks.get(deckKey)||[];
+    deck=deck.filter(x=>allowed.includes(x));
+    if(!deck.length){
+      deck=shuffledSounds(allowed.filter(x=>x!==lastReactionFamily));
+      if(!deck.length)deck=shuffledSounds(allowed);
+    }
+    const family=deck.shift();
+    soundDecks.set(deckKey,deck);
+    lastReactionFamily=family;
+    return family;
   }
 
   function makeRepoAudio(sound,volume=1,rate=1,group="general"){
@@ -1638,10 +1664,10 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     activeClipAudios.forEach(a=>fadeOutAudio(a,duration));
   }
 
-  async function playTags(tags,volume=1,rate=1,group="general"){
+  async function playTags(tags,volume=1,rate=1,group="general",deckKey=null){
     if(!soundEnabled)return null;
     cleanupFinishedClips();
-    const chosen=chooseSound(tags);
+    const chosen=chooseSound(tags,deckKey);
     if(!chosen)return null;
     const a=makeRepoAudio(chosen,volume,rate,group);
     activeClipAudios.push(a);
@@ -1671,25 +1697,18 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
 
   async function playAudioTest(){
     if(!soundEnabled)return;
-    await playTags(["whistle"],.72,1,"test");
-    setTimeout(()=>playTags(["crowd","boo"],.70,1,"test"),1200);
-    setTimeout(()=>playTags(["crowd","pick"],.42,1,"test"),3000);
+    await playTags(["whistle","pressure"],.72,1,"test","test-whistle");
+    setTimeout(()=>{
+      const family=chooseReactionFamily(["boo","protest","aww","gasp"],"test-reaction-families");
+      playTags(["crowd",family],.62,1,"test",`test-${family}`);
+    },1200);
   }
 
   function playTinyConfirm(){}
 
   function playPickStinger(){
-    if(!soundEnabled)return;
-
-    // Very fast picks are intentionally silent. If this turn already reached
-    // the warning-crowd phase, the crowd reaction itself is enough and we do
-    // not add a separate pick sound on top.
-    const elapsed=(Date.now()-turnStartedAt)/1000;
-    if(elapsed<=8 || warningCrowdStarted)return;
-
-    // Keep ordinary pick audio rare and avoid the repetitive hand-clap sample.
-    fadeOutAudioGroup("pick",240);
-    if(Math.random()<.15)setTimeout(()=>playTags(["crowd","arena"],.28,1,"pick"),90);
+    // Intentionally silent. Pick reveals do not need a generic audio sting.
+    // If the clock created pressure, those warning sounds fade when the pick lands.
   }
 
   function playClockTick(second){
@@ -1703,21 +1722,20 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     if(!soundEnabled)return;
     if(stage===1){
       fadeOutAudioGroup("pressure",260);
-      playTags(["whistle","pressure"],.56,1,"pressure");
+      playTags(["whistle","pressure"],.56,1,"pressure","pressure-whistle");
     }else if(stage===2){
       fadeOutAudioGroup("pressure",260);
-      if(Math.random()<.58)playTags(["crowd","gasp"],.56,1,"pressure");
-      else playTags(["crowd","aww"],.56,1,"pressure");
+      const family=chooseReactionFamily(["gasp","aww"],"pressure-reaction-families");
+      playTags(["crowd",family],.56,1,"pressure",`pressure-${family}`);
     }
   }
 
   function playTimeoutReaction(){
     if(!soundEnabled||zeroReactionPlayed)return;
     zeroReactionPlayed=true;
-    const r=Math.random();
-    if(r<.50)playTags(["crowd","boo"],.82,1,"timeout");
-    else if(r<.80)playTags(["crowd","protest"],.72,1,"timeout");
-    else playTags(["crowd","aww"],.72,1,"timeout");
+    const family=chooseReactionFamily(["boo","protest","aww","gasp"],"timeout-reaction-families");
+    const volume=(family==="boo"?.82:family==="protest"?.72:.68);
+    playTags(["crowd",family],volume,1,"timeout",`timeout-${family}`);
   }
 
   function resetPressureSound(){
@@ -1922,7 +1940,9 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     if(draft.status==="drafting" && secs<=20 && secs>0 && soundEnabled && !warningCrowdStarted){
       warningCrowdStarted=true;
       fadeOutAudioGroup("warning",220);
-      playTags(["crowd","boo"],.32,1,"warning");
+      const family=chooseReactionFamily(["boo","protest","aww","gasp"],"warning-reaction-families");
+      const volume=(family==="boo"?.34:family==="protest"?.30:.28);
+      playTags(["crowd",family],volume,1,"warning",`warning-${family}`);
     }
 
     renderPressure(secs);
