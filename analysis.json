@@ -1,28 +1,28 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T01:37:18.727008+00:00",
-  "revision": "1389688986275938305:10:1788572238",
+  "updatedAt": "2026-09-05T01:40:49.060482+00:00",
+  "revision": "1389688986275938305:11:1788572449",
   "round": 1,
-  "nextOverallPick": 10,
-  "headline": "Bowers crashes the first round party",
+  "nextOverallPick": 11,
+  "headline": "Early Tight End Splash Shakes Opening Round",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
       "id": "first:TE:5",
       "title": "FIRST TE: Brock Bowers",
-      "detail": "The first TE came off the board at overall pick 5. \u2014 Spicy start, tight end drama already brewing",
+      "detail": "The first TE came off the board at overall pick 5. \u2014 Spicy start, folks love bold brilliance",
       "tone": ""
     },
     {
       "id": "round:1:RB",
       "title": "1 RB in Round 1",
-      "detail": "2 of 12 picks are complete in the round. \u2014 Backfields taking shape nice and early",
+      "detail": "2 of 12 picks are complete in the round. \u2014 Backfield buzz building beautifully already",
       "tone": ""
     },
     {
       "id": "round:1:WR",
       "title": "1 WR in Round 1",
-      "detail": "2 of 12 picks are complete in the round. \u2014 Wideouts just getting warmed up folks",
+      "detail": "2 of 12 picks are complete in the round. \u2014 Pass catchers bringing early fireworks",
       "tone": ""
     }
   ]
