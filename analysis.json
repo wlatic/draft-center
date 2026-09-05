@@ -1,23 +1,29 @@
 {
   "draftId": "1401758025210990592",
-  "updatedAt": "2026-09-05T00:34:21.076763+00:00",
-  "revision": "1401758025210990592:10:1788568461",
-  "round": 1,
-  "nextOverallPick": 10,
-  "headline": "Backfield Bonanza Headlines Round One",
+  "updatedAt": "2026-09-05T00:34:48.513793+00:00",
+  "revision": "1401758025210990592:13:1788568488",
+  "round": 2,
+  "nextOverallPick": 13,
+  "headline": "Positional drought meets running back frenzy",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "round:1:RB",
-      "title": "5 RBs in Round 1",
-      "detail": "9 of 12 picks are complete in the round. \u2014 Ground game stealing the show tonight",
+      "id": "run:12:RB",
+      "title": "RB RUN: 4 of the last 6",
+      "detail": "The room has been hammering the same position lately. \u2014 Everyone wants beef up front, folks",
       "tone": "hot"
     },
     {
-      "id": "round:1:WR",
-      "title": "4 WRs in Round 1",
-      "detail": "9 of 12 picks are complete in the round. \u2014 Pass catchers keeping things spicy too",
-      "tone": "hot"
+      "id": "none:QB:2",
+      "title": "NO QB YET",
+      "detail": "No QB has been selected through 12 live picks. \u2014 Patience is brave and slightly chaotic",
+      "tone": "good"
+    },
+    {
+      "id": "none:TE:2",
+      "title": "NO TE YET",
+      "detail": "No TE has been selected through 12 live picks. \u2014 Tight ends waiting for their spotlight",
+      "tone": "good"
     }
   ]
 }
