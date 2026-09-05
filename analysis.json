@@ -1,12 +1,18 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:03:00.169550+00:00",
-  "revision": "1389688986275938305:106:1788580980",
+  "updatedAt": "2026-09-05T04:03:21.198499+00:00",
+  "revision": "1389688986275938305:107:1788581001",
   "round": 9,
-  "nextOverallPick": 106,
+  "nextOverallPick": 107,
   "headline": "DRAFTCENTER DESK",
   "model": "deterministic",
   "items": [
+    {
+      "id": "run:106:RB",
+      "title": "RB RUN: 4 of the last 6",
+      "detail": "The room has been hammering the same position lately.",
+      "tone": "hot"
+    },
     {
       "id": "build:1124837422895935488:wrheavy:9",
       "title": "WR-HEAVY: Nakye",
@@ -14,21 +20,15 @@
       "tone": ""
     },
     {
-      "id": "build:722634945050247168:wrheavy:8",
+      "id": "build:722634945050247168:wrheavy:9",
       "title": "WR-HEAVY: Kevin",
-      "detail": "Through 8 selections: 5 WR and 1 RB.",
+      "detail": "Through 9 selections: 5 WR and 2 RB.",
       "tone": ""
     },
     {
       "id": "build:736089286075621376:rbheavy:10",
       "title": "RB-HEAVY: O'Hara",
       "detail": "Through 10 selections: 5 RB and 3 WR.",
-      "tone": ""
-    },
-    {
-      "id": "build:461715450028355584:wrheavy:9",
-      "title": "WR-HEAVY: Shaylon",
-      "detail": "Through 9 selections: 4 WR and 4 RB.",
       "tone": ""
     }
   ]
