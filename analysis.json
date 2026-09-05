@@ -1,34 +1,34 @@
 {
   "draftId": "1401758025210990592",
-  "updatedAt": "2026-09-05T00:48:28.569993+00:00",
-  "revision": "1401758025210990592:94:1788569308",
+  "updatedAt": "2026-09-05T00:48:48.190063+00:00",
+  "revision": "1401758025210990592:95:1788569328",
   "round": 8,
-  "nextOverallPick": 94,
-  "headline": "DRAFTCENTER DESK",
-  "model": "deterministic",
+  "nextOverallPick": 95,
+  "headline": "Fresh builds crash the Round 8 party",
+  "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "build:1391896288479420417:wrheavy:8",
-      "title": "WR-HEAVY: hvpro",
-      "detail": "Through 8 selections: 4 WR and 4 RB.",
+      "id": "build:996590331443486720:wrheavy:8",
+      "title": "WR-HEAVY: osvaldo7",
+      "detail": "Through 8 selections: 4 WR and 2 RB. \u2014 Pure vibes and pass catchers everywhere",
       "tone": ""
     },
     {
-      "id": "build:605969777449598976:wrheavy:8",
-      "title": "WR-HEAVY: tsdrew",
-      "detail": "Through 8 selections: 4 WR and 3 RB.",
+      "id": "round:8:WR",
+      "title": "4 WRs in Round 8",
+      "detail": "10 of 12 picks are complete in the round. \u2014 Receivers flying off the board lately",
+      "tone": "hot"
+    },
+    {
+      "id": "round:8:TE",
+      "title": "2 TEs in Round 8",
+      "detail": "10 of 12 picks are complete in the round. \u2014 Finally some spice at tight end",
       "tone": ""
     },
     {
-      "id": "build:609911451653877760:wrheavy:8",
-      "title": "WR-HEAVY: bucketsnbodies",
-      "detail": "Through 8 selections: 4 WR and 4 RB.",
-      "tone": ""
-    },
-    {
-      "id": "build:866356581414100992:rbheavy:8",
-      "title": "RB-HEAVY: CollectNPlay",
-      "detail": "Through 8 selections: 4 RB and 2 WR.",
+      "id": "build:988320883141935104:wrheavy:8",
+      "title": "WR-HEAVY: EIijah",
+      "detail": "Through 8 selections: 4 WR and 2 RB. \u2014 Bold beautiful and built for shootouts",
       "tone": ""
     }
   ]
