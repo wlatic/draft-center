@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:04:49.825385+00:00",
-  "revision": "1389688986275938305:109:1788581089",
+  "updatedAt": "2026-09-05T04:05:44.763531+00:00",
+  "revision": "1389688986275938305:110:1788581144",
   "round": 10,
-  "nextOverallPick": 109,
-  "headline": "DRAFTCENTER DESK",
-  "model": "deterministic",
+  "nextOverallPick": 110,
+  "headline": "Backs flying, Welshy stacking wideouts late",
+  "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "run:108:RB",
+      "id": "run:109:RB",
       "title": "RB RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately.",
+      "detail": "The room has been hammering the same position lately. \u2014 Room cannot resist shiny new backfields",
       "tone": "hot"
     },
     {
-      "id": "build:1124837422895935488:wrheavy:9",
-      "title": "WR-HEAVY: Nakye",
-      "detail": "Through 9 selections: 5 WR and 3 RB.",
+      "id": "build:1134235688095932416:wrheavy:9",
+      "title": "WR-HEAVY: Welshy",
+      "detail": "Through 9 selections: 4 WR and 3 RB. \u2014 Welshy living that pass-happy life",
       "tone": ""
     },
     {
-      "id": "build:722634945050247168:wrheavy:9",
-      "title": "WR-HEAVY: Kevin",
-      "detail": "Through 9 selections: 5 WR and 2 RB.",
+      "id": "build:464274355744927744:rbheavy:9",
+      "title": "RB-HEAVY: Bryan",
+      "detail": "Through 9 selections: 4 RB and 3 WR. \u2014 Bryan bulldozing with pure ground force",
       "tone": ""
     },
     {
-      "id": "build:736089286075621376:rbheavy:10",
-      "title": "RB-HEAVY: O'Hara",
-      "detail": "Through 10 selections: 5 RB and 3 WR.",
+      "id": "build:735268317480226816:wrheavy:9",
+      "title": "WR-HEAVY: Brandwagon",
+      "detail": "Through 9 selections: 4 WR and 2 RB. \u2014 Brandwagon riding vibes all the way",
       "tone": ""
     }
   ]
