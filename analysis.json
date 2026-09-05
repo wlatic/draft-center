@@ -1,0 +1,35 @@
+{
+  "draftId": "1401752680711323648",
+  "updatedAt": "2026-09-05T00:19:14.661148+00:00",
+  "revision": "1401752680711323648:77:1788567554",
+  "round": 8,
+  "nextOverallPick": 77,
+  "headline": "DRAFTCENTER DESK",
+  "model": "deterministic",
+  "items": [
+    {
+      "id": "run:76:WR",
+      "title": "WR RUN: 5 of the last 6",
+      "detail": "The room has been hammering the same position lately.",
+      "tone": "hot"
+    },
+    {
+      "id": "build:1225093344615464960:wrheavy:7",
+      "title": "WR-HEAVY: mikechiarappa",
+      "detail": "Through 7 selections: 5 WR and 2 RB.",
+      "tone": ""
+    },
+    {
+      "id": "build:1254312823291379712:wrheavy:7",
+      "title": "WR-HEAVY: RileyCork",
+      "detail": "Through 7 selections: 4 WR and 2 RB.",
+      "tone": ""
+    },
+    {
+      "id": "build:1400143380893192192:wrheavy:8",
+      "title": "WR-HEAVY: CDTheKiid",
+      "detail": "Through 8 selections: 4 WR and 3 RB.",
+      "tone": ""
+    }
+  ]
+}
