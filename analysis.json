@@ -1,18 +1,12 @@
 {
   "draftId": "1401758025210990592",
-  "updatedAt": "2026-09-05T00:50:47.779074+00:00",
-  "revision": "1401758025210990592:119:1788569447",
-  "round": 10,
-  "nextOverallPick": 119,
+  "updatedAt": "2026-09-05T00:51:06.702145+00:00",
+  "revision": "1401758025210990592:122:1788569466",
+  "round": 11,
+  "nextOverallPick": 122,
   "headline": "DRAFTCENTER DESK",
   "model": "deterministic",
   "items": [
-    {
-      "id": "run:118:WR",
-      "title": "WR RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately.",
-      "tone": "hot"
-    },
     {
       "id": "build:1391896288479420417:wrheavy:10",
       "title": "WR-HEAVY: hvpro",
@@ -20,9 +14,15 @@
       "tone": ""
     },
     {
-      "id": "build:483427149810757632:rbheavy:9",
+      "id": "build:483427149810757632:rbheavy:11",
       "title": "RB-HEAVY: xainshawty",
-      "detail": "Through 9 selections: 5 RB and 2 WR.",
+      "detail": "Through 11 selections: 5 RB and 2 WR.",
+      "tone": ""
+    },
+    {
+      "id": "build:595861056119697408:wrheavy:10",
+      "title": "WR-HEAVY: Giantsmm",
+      "detail": "Through 10 selections: 5 WR and 3 RB.",
       "tone": ""
     },
     {
