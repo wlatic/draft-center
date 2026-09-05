@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:36:09.954949+00:00",
-  "revision": "1389688986275938305:155:1788582969",
+  "updatedAt": "2026-09-05T04:37:54.648473+00:00",
+  "revision": "1389688986275938305:156:1788583074",
   "round": 13,
-  "nextOverallPick": 155,
-  "headline": "Fresh faces crash the receiver party late",
+  "nextOverallPick": 156,
+  "headline": "Late Round Flurry Shakes DraftCenter Desk",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "build:1124837422895935488:wrheavy:13",
-      "title": "WR-HEAVY: Nakye",
-      "detail": "Through 13 selections: 5 WR and 4 RB. \u2014 Quietly stacking playmakers like a sneaky genius",
+      "id": "round:13:TE",
+      "title": "2 TEs in Round 13",
+      "detail": "10 of 12 picks are complete in the round. \u2014 Tight ends crashing the party now",
       "tone": ""
     },
     {
-      "id": "build:1134235688095932416:wrheavy:12",
-      "title": "WR-HEAVY: Welshy",
-      "detail": "Through 12 selections: 5 WR and 4 RB. \u2014 Smooth operator building something spicy here",
+      "id": "first:QB:22",
+      "title": "FIRST QB: Josh Allen",
+      "detail": "The first QB came off the board at overall pick 22. \u2014 Patience paid off beautifully there",
       "tone": ""
     },
     {
-      "id": "build:736082966396133376:wrheavy:12",
-      "title": "WR-HEAVY: Jim",
-      "detail": "Through 12 selections: 5 WR and 4 RB. \u2014 Loving this bold beautiful bench energy",
+      "id": "first:TE:20",
+      "title": "FIRST TE: Trey McBride",
+      "detail": "The first TE came off the board at overall pick 20. \u2014 Finally some sizzle at tight end",
       "tone": ""
     },
     {
-      "id": "round:13:QB",
-      "title": "2 QBs in Round 13",
-      "detail": "9 of 12 picks are complete in the round. \u2014 Late quarterback chaos is my favorite drama",
+      "id": "build:736089286075621376:wrheavy:14",
+      "title": "WR-HEAVY: O'Hara",
+      "detail": "Through 14 selections: 7 WR and 5 RB. \u2014 Someone really loves wide receivers",
       "tone": ""
     }
   ]
