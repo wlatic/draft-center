@@ -1,34 +1,34 @@
 {
   "draftId": "1401760906391601152",
-  "updatedAt": "2026-09-05T01:16:12.286001+00:00",
-  "revision": "1401760906391601152:133:1788570972",
+  "updatedAt": "2026-09-05T01:16:32.917312+00:00",
+  "revision": "1401760906391601152:133:1788570992",
   "round": 12,
   "nextOverallPick": 133,
-  "headline": "Receivers Everywhere While Tight Ends Started Early",
-  "model": "muse-spark-1.3-contributor",
+  "headline": "DRAFTCENTER DESK",
+  "model": "deterministic",
   "items": [
     {
       "id": "build:464331840719679488:wrheavy:11",
       "title": "WR-HEAVY: asotzrocky",
-      "detail": "Through 11 selections: 6 WR and 2 RB. \u2014 Absolutely refusing to leave the receiver aisle",
+      "detail": "Through 11 selections: 6 WR and 2 RB.",
       "tone": ""
     },
     {
-      "id": "build:854916553202847744:rbheavy:11",
-      "title": "RB-HEAVY: Jakito",
-      "detail": "Through 11 selections: 4 RB and 3 WR. \u2014 Quietly building that old school bully ball",
+      "id": "build:1391896288479420417:wrheavy:11",
+      "title": "WR-HEAVY: hvpro",
+      "detail": "Through 11 selections: 5 WR and 4 RB.",
       "tone": ""
     },
     {
-      "id": "first:TE:21",
-      "title": "FIRST TE: Brock Bowers",
-      "detail": "The first TE came off the board at overall pick 21. \u2014 Spicy start at a sleepy position",
+      "id": "build:398720124246331392:wrheavy:11",
+      "title": "WR-HEAVY: pranitdas96",
+      "detail": "Through 11 selections: 5 WR and 6 RB.",
       "tone": ""
     },
     {
-      "id": "first:QB:51",
-      "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 51. \u2014 Patience finally paid off beautifully here",
+      "id": "build:711639117267554304:wrheavy:11",
+      "title": "WR-HEAVY: richiesouders",
+      "detail": "Through 11 selections: 5 WR and 2 RB.",
       "tone": ""
     }
   ]
