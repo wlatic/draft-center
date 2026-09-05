@@ -1,35 +1,35 @@
 {
   "draftId": "1401760906391601152",
-  "updatedAt": "2026-09-05T00:55:16.299556+00:00",
-  "revision": "1401760906391601152:16:1788569716",
+  "updatedAt": "2026-09-05T00:55:33.665262+00:00",
+  "revision": "1401760906391601152:20:1788569733",
   "round": 2,
-  "nextOverallPick": 16,
-  "headline": "RB Fever Cools While Pass Catchers Wait Their Turn",
+  "nextOverallPick": 20,
+  "headline": "Wideouts flying off the board in Round 2",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "round:2:RB",
-      "title": "1 RB in Round 2",
-      "detail": "3 of 12 picks are complete in the round. \u2014 Lone back standing tall amid chaos",
-      "tone": ""
-    },
-    {
-      "id": "run:15:RB",
-      "title": "RB RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly wants their own workhorse",
+      "id": "run:19:WR",
+      "title": "WR RUN: 4 of the last 6",
+      "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly craves pass catchers badly",
       "tone": "hot"
     },
     {
       "id": "none:QB:2",
       "title": "NO QB YET",
-      "detail": "No QB has been selected through 15 live picks. \u2014 Signal callers collecting dust on the board",
+      "detail": "No QB has been selected through 19 live picks. \u2014 Patience at quarterback is getting spicy",
       "tone": "good"
     },
     {
       "id": "none:TE:2",
       "title": "NO TE YET",
-      "detail": "No TE has been selected through 15 live picks. \u2014 Tight ends still waiting for love",
+      "detail": "No TE has been selected through 19 live picks. \u2014 Tight ends still waiting for love",
       "tone": "good"
+    },
+    {
+      "id": "round:2:WR",
+      "title": "4 WRs in Round 2",
+      "detail": "7 of 12 picks are complete in the round. \u2014 This receiver party refuses to slow",
+      "tone": "hot"
     }
   ]
 }
