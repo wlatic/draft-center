@@ -1,34 +1,34 @@
 {
   "draftId": "1401758025210990592",
-  "updatedAt": "2026-09-05T00:51:23.402418+00:00",
-  "revision": "1401758025210990592:130:1788569483",
-  "round": 11,
-  "nextOverallPick": 130,
-  "headline": "Receivers Everywhere While Wait On Quarterback Pays",
+  "updatedAt": "2026-09-05T00:51:40.435847+00:00",
+  "revision": "1401758025210990592:140:1788569500",
+  "round": 12,
+  "nextOverallPick": 140,
+  "headline": "Wideouts everywhere as Round 12 heats up",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "build:988320883141935104:wrheavy:11",
+      "id": "build:605969777449598976:wrheavy:12",
+      "title": "WR-HEAVY: tsdrew",
+      "detail": "Through 12 selections: 6 WR and 4 RB. \u2014 Pass catchers galore, pure box office fun",
+      "tone": ""
+    },
+    {
+      "id": "build:988320883141935104:wrheavy:12",
       "title": "WR-HEAVY: EIijah",
-      "detail": "Through 11 selections: 6 WR and 2 RB. \u2014 Absolutely refusing to leave the candy aisle",
+      "detail": "Through 12 selections: 6 WR and 2 RB. \u2014 Bold, brash, and beautifully receiver obsessed",
       "tone": ""
     },
     {
-      "id": "build:1001086146597777408:wrheavy:11",
+      "id": "build:1001086146597777408:wrheavy:12",
       "title": "WR-HEAVY: GaryNeville666",
-      "detail": "Through 11 selections: 5 WR and 3 RB. \u2014 Vibes are immaculate at this party",
+      "detail": "Through 12 selections: 5 WR and 4 RB. \u2014 Style points for days at this desk",
       "tone": ""
     },
     {
-      "id": "first:TE:22",
-      "title": "FIRST TE: Brock Bowers",
-      "detail": "The first TE came off the board at overall pick 22. \u2014 Patience finally met pure star power",
-      "tone": ""
-    },
-    {
-      "id": "first:QB:30",
-      "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 30. \u2014 Cool, calm, and fashionably late indeed",
+      "id": "build:861703480941862912:wrheavy:12",
+      "title": "WR-HEAVY: LamineYamalllll",
+      "detail": "Through 12 selections: 5 WR and 4 RB. \u2014 Never met a wideout he did not love",
       "tone": ""
     }
   ]
