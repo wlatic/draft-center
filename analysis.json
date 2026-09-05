@@ -1,34 +1,34 @@
 {
   "draftId": "1401758025210990592",
-  "updatedAt": "2026-09-05T00:43:20.828430+00:00",
-  "revision": "1401758025210990592:67:1788569000",
+  "updatedAt": "2026-09-05T00:43:38.929813+00:00",
+  "revision": "1401758025210990592:68:1788569018",
   "round": 6,
-  "nextOverallPick": 67,
-  "headline": "DRAFTCENTER DESK",
-  "model": "deterministic",
+  "nextOverallPick": 68,
+  "headline": "Round 6 fireworks as pass catchers dominate the board",
+  "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "build:409633893885431808:wrheavy:5",
-      "title": "WR-HEAVY: streetvulture",
-      "detail": "Through 5 selections: 4 WR and 1 RB.",
+      "id": "round:6:WR",
+      "title": "3 WRs in Round 6",
+      "detail": "7 of 12 picks are complete in the round. \u2014 Receivers stealing the spotlight again tonight",
+      "tone": ""
+    },
+    {
+      "id": "round:6:QB",
+      "title": "2 QBs in Round 6",
+      "detail": "7 of 12 picks are complete in the round. \u2014 Signal callers finally crashing the party",
+      "tone": ""
+    },
+    {
+      "id": "round:6:RB",
+      "title": "1 RB in Round 6",
+      "detail": "7 of 12 picks are complete in the round. \u2014 Lone back standing tall amid chaos",
       "tone": ""
     },
     {
       "id": "build:605969777449598976:wrheavy:6",
       "title": "WR-HEAVY: tsdrew",
-      "detail": "Through 6 selections: 4 WR and 1 RB.",
-      "tone": ""
-    },
-    {
-      "id": "first:QB:30",
-      "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 30.",
-      "tone": ""
-    },
-    {
-      "id": "first:TE:22",
-      "title": "FIRST TE: Brock Bowers",
-      "detail": "The first TE came off the board at overall pick 22.",
+      "detail": "Through 6 selections: 4 WR and 1 RB. \u2014 Bold beautiful and unapologetically pass happy",
       "tone": ""
     }
   ]
