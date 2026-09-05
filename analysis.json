@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:35:40.913997+00:00",
-  "revision": "1389688986275938305:155:1788582940",
+  "updatedAt": "2026-09-05T04:36:09.954949+00:00",
+  "revision": "1389688986275938305:155:1788582969",
   "round": 13,
   "nextOverallPick": 155,
-  "headline": "Fresh faces crash the receiver party",
+  "headline": "Fresh faces crash the receiver party late",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "build:722634945050247168:wrheavy:13",
-      "title": "WR-HEAVY: Kevin",
-      "detail": "Through 13 selections: 5 WR and 6 RB. \u2014 Balance is beautiful, baby",
+      "id": "build:1124837422895935488:wrheavy:13",
+      "title": "WR-HEAVY: Nakye",
+      "detail": "Through 13 selections: 5 WR and 4 RB. \u2014 Quietly stacking playmakers like a sneaky genius",
       "tone": ""
     },
     {
-      "id": "build:469620457826414592:wrheavy:13",
-      "title": "WR-HEAVY: Trently",
-      "detail": "Through 13 selections: 4 WR and 5 RB. \u2014 Zigging while everyone else zags",
+      "id": "build:1134235688095932416:wrheavy:12",
+      "title": "WR-HEAVY: Welshy",
+      "detail": "Through 12 selections: 5 WR and 4 RB. \u2014 Smooth operator building something spicy here",
       "tone": ""
     },
     {
-      "id": "build:736092553857843200:wrheavy:13",
-      "title": "WR-HEAVY: Tyke",
-      "detail": "Through 13 selections: 4 WR and 4 RB. \u2014 Cool, calm, and contrarian",
+      "id": "build:736082966396133376:wrheavy:12",
+      "title": "WR-HEAVY: Jim",
+      "detail": "Through 12 selections: 5 WR and 4 RB. \u2014 Loving this bold beautiful bench energy",
       "tone": ""
     },
     {
-      "id": "round:13:DB",
-      "title": "1 DB in Round 13",
-      "detail": "9 of 12 picks are complete in the round. \u2014 Lone wolf alert downstairs",
+      "id": "round:13:QB",
+      "title": "2 QBs in Round 13",
+      "detail": "9 of 12 picks are complete in the round. \u2014 Late quarterback chaos is my favorite drama",
       "tone": ""
     }
   ]
