@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:44:22.330199+00:00",
-  "revision": "1389688986275938305:164:1788583462",
+  "updatedAt": "2026-09-05T04:44:50.626536+00:00",
+  "revision": "1389688986275938305:165:1788583490",
   "round": 14,
-  "nextOverallPick": 164,
-  "headline": "Round 14 fireworks as builds tilt receiver crazy",
+  "nextOverallPick": 165,
+  "headline": "Late Round Scramble Steals The Show",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "build:735268317480226816:wrheavy:14",
-      "title": "WR-HEAVY: Brandwagon",
-      "detail": "Through 14 selections: 6 WR and 3 RB. \u2014 Pure chaos in the best possible way",
+      "id": "first:TE:20",
+      "title": "FIRST TE: Trey McBride",
+      "detail": "The first TE came off the board at overall pick 20. \u2014 Patience pays, then panic spreads fast",
       "tone": ""
     },
     {
-      "id": "build:736082966396133376:wrheavy:14",
-      "title": "WR-HEAVY: Jim",
-      "detail": "Through 14 selections: 6 WR and 4 RB. \u2014 Vibes are immaculate at this desk",
+      "id": "first:QB:22",
+      "title": "FIRST QB: Josh Allen",
+      "detail": "The first QB came off the board at overall pick 22. \u2014 Waiting on quarterbacks never felt cooler",
       "tone": ""
     },
     {
-      "id": "build:722634945050247168:wrheavy:14",
-      "title": "WR-HEAVY: Kevin",
-      "detail": "Through 14 selections: 5 WR and 7 RB. \u2014 Someone loves a crowded locker room",
+      "id": "round:14:RB",
+      "title": "3 RBs in Round 14",
+      "detail": "8 of 12 picks are complete in the round. \u2014 Bench depth season is officially here",
       "tone": ""
     },
     {
-      "id": "build:1124837422895935488:wrheavy:14",
-      "title": "WR-HEAVY: Nakye",
-      "detail": "Through 14 selections: 5 WR and 4 RB. \u2014 Spicy strategy unfolding live folks",
+      "id": "build:1134235688095932416:wrheavy:14",
+      "title": "WR-HEAVY: Welshy",
+      "detail": "Through 14 selections: 5 WR and 4 RB. \u2014 Someone really loves their wideouts",
       "tone": ""
     }
   ]
