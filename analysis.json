@@ -1,28 +1,28 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T03:13:55.928068+00:00",
-  "revision": "1389688986275938305:40:1788578035",
+  "updatedAt": "2026-09-05T03:14:12.904025+00:00",
+  "revision": "1389688986275938305:42:1788578052",
   "round": 4,
-  "nextOverallPick": 40,
-  "headline": "Backfield frenzy takes over the room",
+  "nextOverallPick": 42,
+  "headline": "RB Run Continues as Early QB and TE Picks Loom",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "run:39:RB",
+      "id": "run:41:RB",
       "title": "RB RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly wants ground game glory",
+      "detail": "The room has been hammering the same position lately. \u2014 Everyone is thirsty and the well is drying fast",
       "tone": "hot"
-    },
-    {
-      "id": "first:QB:22",
-      "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 22.",
-      "tone": ""
     },
     {
       "id": "first:TE:20",
       "title": "FIRST TE: Trey McBride",
-      "detail": "The first TE came off the board at overall pick 20.",
+      "detail": "The first TE came off the board at overall pick 20. \u2014 Classic early bird getting the fancy worm",
+      "tone": ""
+    },
+    {
+      "id": "first:QB:22",
+      "title": "FIRST QB: Josh Allen",
+      "detail": "The first QB came off the board at overall pick 22. \u2014 Bold move, love the swagger here",
       "tone": ""
     }
   ]
