@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:25:23.779473+00:00",
-  "revision": "1389688986275938305:139:1788582323",
+  "updatedAt": "2026-09-05T04:25:54.494645+00:00",
+  "revision": "1389688986275938305:140:1788582354",
   "round": 12,
-  "nextOverallPick": 139,
-  "headline": "Fresh Builds Crash the WR Party",
+  "nextOverallPick": 140,
+  "headline": "Round 12 fireworks as boards tilt wideout wild",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "build:736089286075621376:wrheavy:13",
-      "title": "WR-HEAVY: O'Hara",
-      "detail": "Through 13 selections: 6 WR and 5 RB. \u2014 Pure chaos, loving every second",
-      "tone": ""
-    },
-    {
-      "id": "build:736082966396133376:wrheavy:12",
-      "title": "WR-HEAVY: Jim",
-      "detail": "Through 12 selections: 5 WR and 4 RB. \u2014 Bold, beautiful, totally unhinged drafting",
-      "tone": ""
-    },
-    {
-      "id": "build:736092553857843200:wrheavy:11",
-      "title": "WR-HEAVY: Tyke",
-      "detail": "Through 11 selections: 4 WR and 4 RB. \u2014 Someone call the league office",
+      "id": "round:12:WR",
+      "title": "2 WRs in Round 12",
+      "detail": "6 of 12 picks are complete in the round. \u2014 Wideouts flying, popcorn ready, folks",
       "tone": ""
     },
     {
       "id": "round:12:RB",
       "title": "2 RBs in Round 12",
-      "detail": "5 of 12 picks are complete in the round. \u2014 Late round fireworks incoming folks",
+      "detail": "6 of 12 picks are complete in the round. \u2014 Backfield buzz keeps everyone guessing",
+      "tone": ""
+    },
+    {
+      "id": "round:12:QB",
+      "title": "1 QB in Round 12",
+      "detail": "6 of 12 picks are complete in the round. \u2014 Late signal caller spice is delicious",
+      "tone": ""
+    },
+    {
+      "id": "build:736089286075621376:wrheavy:13",
+      "title": "WR-HEAVY: O'Hara",
+      "detail": "Through 13 selections: 6 WR and 5 RB. \u2014 Absolutely relentless pass catcher energy",
       "tone": ""
     }
   ]
