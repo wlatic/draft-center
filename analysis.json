@@ -1,10 +1,10 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T03:01:45.341896+00:00",
-  "revision": "1389688986275938305:15:1788577305",
+  "updatedAt": "2026-09-05T03:02:01.122274+00:00",
+  "revision": "1389688986275938305:15:1788577321",
   "round": 2,
   "nextOverallPick": 15,
-  "headline": "RB Frenzy Hits While QBs Wait",
+  "headline": "RB Frenzy While QBs Wait",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
@@ -14,16 +14,16 @@
       "tone": "hot"
     },
     {
-      "id": "first:TE:8",
-      "title": "FIRST TE: Brock Bowers",
-      "detail": "The first TE came off the board at overall pick 8. \u2014 Finally some love for tight ends",
-      "tone": ""
-    },
-    {
       "id": "none:QB:2",
       "title": "NO QB YET",
-      "detail": "No QB has been selected through 14 live picks. \u2014 Patience or pure quarterback chaos brewing",
+      "detail": "No QB has been selected through 14 live picks. \u2014 Patience at quarterback is getting spicy",
       "tone": "good"
+    },
+    {
+      "id": "first:TE:8",
+      "title": "FIRST TE: Brock Bowers",
+      "detail": "The first TE came off the board at overall pick 8. \u2014 Early tight end splash shakes things up",
+      "tone": ""
     }
   ]
 }
