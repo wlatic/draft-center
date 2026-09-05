@@ -1,34 +1,34 @@
 {
   "draftId": "1401760906391601152",
-  "updatedAt": "2026-09-05T01:12:13.372208+00:00",
-  "revision": "1401760906391601152:104:1788570733",
+  "updatedAt": "2026-09-05T01:12:43.835171+00:00",
+  "revision": "1401760906391601152:107:1788570763",
   "round": 9,
-  "nextOverallPick": 104,
-  "headline": "Round 9 brings balance shifts and rare QB TE action",
-  "model": "muse-spark-1.3-contributor",
+  "nextOverallPick": 107,
+  "headline": "DRAFTCENTER DESK",
+  "model": "deterministic",
   "items": [
     {
-      "id": "build:485142648391200768:rbheavy:9",
-      "title": "RB-HEAVY: pilikus",
-      "detail": "Through 9 selections: 4 RB and 3 WR. \u2014 Old school smash mouth vibes here",
+      "id": "build:398720124246331392:wrheavy:9",
+      "title": "WR-HEAVY: pranitdas96",
+      "detail": "Through 9 selections: 5 WR and 4 RB.",
       "tone": ""
     },
     {
-      "id": "build:886342178404827136:rbheavy:9",
-      "title": "RB-HEAVY: darrenca",
-      "detail": "Through 9 selections: 4 RB and 2 WR. \u2014 Bullying the trenches with style",
+      "id": "build:464331840719679488:wrheavy:9",
+      "title": "WR-HEAVY: asotzrocky",
+      "detail": "Through 9 selections: 5 WR and 2 RB.",
       "tone": ""
     },
     {
-      "id": "round:9:QB",
-      "title": "1 QB in Round 9",
-      "detail": "7 of 12 picks are complete in the round. \u2014 Finally some quarterback spice folks",
+      "id": "build:997969350734807040:wrheavy:9",
+      "title": "WR-HEAVY: ojsimpin1804",
+      "detail": "Through 9 selections: 5 WR and 2 RB.",
       "tone": ""
     },
     {
-      "id": "round:9:TE",
-      "title": "1 TE in Round 9",
-      "detail": "7 of 12 picks are complete in the round. \u2014 Tight ends crashing the party",
+      "id": "build:1391896288479420417:wrheavy:8",
+      "title": "WR-HEAVY: hvpro",
+      "detail": "Through 8 selections: 4 WR and 4 RB.",
       "tone": ""
     }
   ]
