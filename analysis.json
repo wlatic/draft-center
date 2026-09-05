@@ -1,35 +1,35 @@
 {
   "draftId": "1401758025210990592",
-  "updatedAt": "2026-09-05T00:35:37.518699+00:00",
-  "revision": "1401758025210990592:18:1788568537",
+  "updatedAt": "2026-09-05T00:35:53.053659+00:00",
+  "revision": "1401758025210990592:22:1788568553",
   "round": 2,
-  "nextOverallPick": 18,
-  "headline": "Waiting Game Continues Early In Round Two",
+  "nextOverallPick": 22,
+  "headline": "Waiting on QBs while Round 2 runs wild",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
       "id": "none:QB:2",
       "title": "NO QB YET",
-      "detail": "No QB has been selected through 17 live picks. \u2014 Patience, friends, chaos loves a late entrance",
+      "detail": "No QB has been selected through 21 live picks. \u2014 Patience now, panic later folks",
       "tone": "good"
     },
     {
       "id": "none:TE:2",
       "title": "NO TE YET",
-      "detail": "No TE has been selected through 17 live picks. \u2014 Tight ends chilling while everyone else panics",
+      "detail": "No TE has been selected through 21 live picks. \u2014 Tight ends chilling in green room",
       "tone": "good"
     },
     {
       "id": "round:2:RB",
-      "title": "3 RBs in Round 2",
-      "detail": "5 of 12 picks are complete in the round. \u2014 Ground game grinding with quiet swagger",
-      "tone": ""
+      "title": "5 RBs in Round 2",
+      "detail": "9 of 12 picks are complete in the round. \u2014 Backfield buffet remains wide open",
+      "tone": "hot"
     },
     {
       "id": "round:2:WR",
-      "title": "2 WRs in Round 2",
-      "detail": "5 of 12 picks are complete in the round. \u2014 Pass catchers keeping things spicy and fun",
-      "tone": ""
+      "title": "4 WRs in Round 2",
+      "detail": "9 of 12 picks are complete in the round. \u2014 Pass catchers crashing the party",
+      "tone": "hot"
     }
   ]
 }
