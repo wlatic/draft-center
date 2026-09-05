@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T03:44:46.125249+00:00",
-  "revision": "1389688986275938305:77:1788579886",
+  "updatedAt": "2026-09-05T03:45:04.363025+00:00",
+  "revision": "1389688986275938305:80:1788579904",
   "round": 7,
-  "nextOverallPick": 77,
-  "headline": "Tight ends crash early while running backs fly late",
+  "nextOverallPick": 80,
+  "headline": "RB run heats up as builds diverge",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "first:TE:20",
-      "title": "FIRST TE: Trey McBride",
-      "detail": "The first TE came off the board at overall pick 20. \u2014 Spicy start at a sleepy position",
+      "id": "run:79:RB",
+      "title": "RB RUN: 4 of the last 6",
+      "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly wants ground game glory",
+      "tone": "hot"
+    },
+    {
+      "id": "build:461715450028355584:wrheavy:6",
+      "title": "WR-HEAVY: Shaylon",
+      "detail": "Through 6 selections: 4 WR and 1 RB. \u2014 Shaylon is living that air raid life",
       "tone": ""
     },
     {
-      "id": "run:76:RB",
-      "title": "RB RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly thirsty for backfield chaos",
-      "tone": "hot"
+      "id": "first:QB:22",
+      "title": "FIRST QB: Josh Allen",
+      "detail": "The first QB came off the board at overall pick 22. \u2014 Patience at quarterback finally paid off",
+      "tone": ""
     },
     {
-      "id": "build:722634945050247168:zerorb:6",
-      "title": "ZERO-RB WATCH: Kevin",
-      "detail": "Through 6 selections: 5 WR, 0 RB. \u2014 Living dangerously and loving every minute",
-      "tone": "hot"
-    },
-    {
-      "id": "build:469620457826414592:rbheavy:7",
-      "title": "RB-HEAVY: Trently",
-      "detail": "Through 7 selections: 4 RB and 1 WR. \u2014 Smash mouth football never goes out",
+      "id": "first:TE:20",
+      "title": "FIRST TE: Trey McBride",
+      "detail": "The first TE came off the board at overall pick 20. \u2014 Elite tight end fever is real",
       "tone": ""
     }
   ]
