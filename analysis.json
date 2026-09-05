@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:02:16.950147+00:00",
-  "revision": "1389688986275938305:106:1788580936",
+  "updatedAt": "2026-09-05T04:03:00.169550+00:00",
+  "revision": "1389688986275938305:106:1788580980",
   "round": 9,
   "nextOverallPick": 106,
-  "headline": "Round 9 Turns Into a Ground Game",
-  "model": "muse-spark-1.3-contributor",
+  "headline": "DRAFTCENTER DESK",
+  "model": "deterministic",
   "items": [
+    {
+      "id": "build:1124837422895935488:wrheavy:9",
+      "title": "WR-HEAVY: Nakye",
+      "detail": "Through 9 selections: 5 WR and 3 RB.",
+      "tone": ""
+    },
+    {
+      "id": "build:722634945050247168:wrheavy:8",
+      "title": "WR-HEAVY: Kevin",
+      "detail": "Through 8 selections: 5 WR and 1 RB.",
+      "tone": ""
+    },
     {
       "id": "build:736089286075621376:rbheavy:10",
       "title": "RB-HEAVY: O'Hara",
-      "detail": "Through 10 selections: 5 RB and 3 WR. \u2014 Pure smashmouth theater, folks love it",
+      "detail": "Through 10 selections: 5 RB and 3 WR.",
       "tone": ""
     },
     {
-      "id": "build:469620457826414592:rbheavy:9",
-      "title": "RB-HEAVY: Trently",
-      "detail": "Through 9 selections: 4 RB and 3 WR. \u2014 Old school grind with flair",
-      "tone": ""
-    },
-    {
-      "id": "round:9:RB",
-      "title": "5 RBs in Round 9",
-      "detail": "8 of 12 picks are complete in the round. \u2014 Backfield buffet is officially open",
-      "tone": "hot"
-    },
-    {
-      "id": "round:9:QB",
-      "title": "1 QB in Round 9",
-      "detail": "8 of 12 picks are complete in the round. \u2014 Lone gunslinger steals spotlight briefly",
+      "id": "build:461715450028355584:wrheavy:9",
+      "title": "WR-HEAVY: Shaylon",
+      "detail": "Through 9 selections: 4 WR and 4 RB.",
       "tone": ""
     }
   ]
