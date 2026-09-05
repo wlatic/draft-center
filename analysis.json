@@ -1,35 +1,35 @@
 {
   "draftId": "1401760906391601152",
-  "updatedAt": "2026-09-05T00:58:08.067707+00:00",
-  "revision": "1401760906391601152:35:1788569888",
-  "round": 3,
-  "nextOverallPick": 35,
-  "headline": "WR Frenzy Meets QB Ghost Town",
+  "updatedAt": "2026-09-05T00:58:25.431073+00:00",
+  "revision": "1401760906391601152:41:1788569905",
+  "round": 4,
+  "nextOverallPick": 41,
+  "headline": "Wideouts Wild While QBs Wait",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "run:34:WR",
+      "id": "run:40:WR",
       "title": "WR RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly wants the same shiny toy",
+      "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly wants a shiny new wideout",
       "tone": "hot"
     },
     {
-      "id": "none:QB:3",
+      "id": "none:QB:4",
       "title": "NO QB YET",
-      "detail": "No QB has been selected through 34 live picks. \u2014 Patience or pure chaos brewing here",
+      "detail": "No QB has been selected through 40 live picks. \u2014 Patience or pure quarterback chaos brewing",
       "tone": "good"
     },
     {
-      "id": "round:3:WR",
-      "title": "6 WRs in Round 3",
-      "detail": "10 of 12 picks are complete in the round. \u2014 Draft room has serious fever right now",
-      "tone": "hot"
+      "id": "round:4:RB",
+      "title": "2 RBs in Round 4",
+      "detail": "4 of 12 picks are complete in the round. \u2014 Backfield bargains still slipping through cracks",
+      "tone": ""
     },
     {
-      "id": "round:3:RB",
-      "title": "4 RBs in Round 3",
-      "detail": "10 of 12 picks are complete in the round. \u2014 Meanwhile workhorses quietly slipping through cracks",
-      "tone": "hot"
+      "id": "round:4:WR",
+      "title": "2 WRs in Round 4",
+      "detail": "4 of 12 picks are complete in the round. \u2014 Pass catchers keep stealing the spotlight",
+      "tone": ""
     }
   ]
 }
