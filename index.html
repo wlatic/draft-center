@@ -425,6 +425,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   let observedPickAt = null;
   let picksBusy = false;
   let draftBusy = false;
+  let draftNotFound = false;
   let eventQueue = [];
   let activeEvent = null;
   let activeUntil = 0;
@@ -603,6 +604,15 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     if(!r.ok) throw new Error(`Sleeper API ${r.status}`);
     lastApiAt=Date.now();
     return r.json();
+  }
+
+  async function validateDraftCandidate(id){
+    const r=await fetch(cb(`${API}/draft/${encodeURIComponent(id)}`),{cache:"no-store",credentials:"omit",headers:{"Accept":"application/json"}});
+    if(r.status===404)throw new Error(`Sleeper does not recognize draft ${id}. Nothing was saved.`);
+    if(!r.ok)throw new Error(`Sleeper draft check failed with HTTP ${r.status}. Nothing was saved.`);
+    const d=await r.json();
+    if(!d || String(d.draft_id||"")!==String(id))throw new Error(`Sleeper returned an invalid draft response for ${id}. Nothing was saved.`);
+    return d;
   }
 
   function pickName(p){
@@ -2383,6 +2393,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   }
 
   async function pollDraft(){
+    if(draftNotFound)return;
     if(draftBusy)return;draftBusy=true;
     try{
       const oldOrder=JSON.stringify(draft?.draft_order||{});
@@ -2400,11 +2411,21 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
         loadSleeperADP();
       }
       renderAll();
-    }catch(e){$("status").textContent=`Draft API error: ${e.message}`;$("status").classList.add("bad");}
+    }catch(e){
+      if(String(e?.message||e).includes("Sleeper API 404")){
+        draftNotFound=true;
+        const msg=`Sleeper does not recognize draft ${draftId}. Change the draft in Settings.`;
+        $("status").textContent=msg;$("status").classList.add("bad");
+        debugLogOnce(`draft404:${draftId}`,"DRAFT!",msg);
+      }else{
+        $("status").textContent=`Draft API error: ${e.message}`;$("status").classList.add("bad");
+      }
+    }
     finally{draftBusy=false;}
   }
 
   async function pollPicks(){
+    if(draftNotFound)return;
     if(picksBusy)return;picksBusy=true;
     try{
       const arr=await apiGet(`/draft/${draftId}/picks`);
@@ -2507,9 +2528,25 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
       $("status").classList.add("bad");
       return;
     }
+
     const nextDraftId=m[1];
+    $("status").classList.remove("bad");
+    $("status").textContent=`Checking Sleeper draft ${nextDraftId}…`;
+
+    let checkedDraft;
+    try{
+      checkedDraft=await validateDraftCandidate(nextDraftId);
+    }catch(e){
+      const msg=e?.message||String(e);
+      $("status").textContent=msg;
+      $("status").classList.add("bad");
+      debugLog("DRAFT!",msg);
+      return;
+    }
+
     const draftChanged=nextDraftId!==draftId;
     draftId=nextDraftId;
+    draftNotFound=false;
 
     if(draftChanged){
       broadcastNames={};
@@ -2520,7 +2557,34 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     }
 
     roastLevel=$("roastLevel").value;
-    await saveSharedSettings({reload:true});
+    const saved=await saveSharedSettings({reload:false});
+    if(!saved)return;
+
+    // Switch the running app immediately. GitHub Pages can update whenever it
+    // updates; the saving browser does not need to reload through stale config.
+    stopAudioGroup("warning");
+    hidePressure();
+    draft=checkedDraft;
+    picks=[];
+    users={};
+    leagueUsers={};
+    lastPickCount=null;
+    observedPickAt=null;
+    lastLivePickKey="";
+    currentLiveOrdinal=1;
+    marketReady=false;
+    adpRows=[];
+    sleeperAdpById={};
+    adpAttemptedFor="";
+    turnStartedAt=Date.now();
+    warningCrowdStarted=false;
+    $("draftInput").value=`https://sleeper.com/draft/nfl/${draftId}`;
+    $("settings").classList.remove("open");
+    debugLog("DRAFT",`validated and switched to ${draftId} · status ${draft?.status||"unknown"}`);
+    renderAll();
+    hydrate();
+    loadSleeperADP();
+    pollPicks();
   }
 
 
@@ -2593,22 +2657,9 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
         const cfg=await fetchJsonWithTimeout(url);
         applySharedSettings(cfg);
 
-        // Immediately after saving a new draft, Pages may still serve the old
-        // config for a few seconds. Keep the saving browser on the new draft for
-        // this one session; once the shared config catches up, discard the hint.
-        let pending="";
-        try{pending=String(sessionStorage.getItem(PENDING_DRAFT_SESSION_KEY)||"").trim()}catch(_){}
-        if(pending){
-          if(String(cfg?.draftId||"")===pending){
-            try{sessionStorage.removeItem(PENDING_DRAFT_SESSION_KEY)}catch(_){}
-          }else{
-            draftId=pending;
-            broadcastNames={};
-            absentUsernames=new Set();
-            autodraftUsernames=new Set();
-            debugLog("CONFIG",`using just-saved draft ${pending} while ${label} catches up`);
-          }
-        }
+        // Shared config is the only draft source on startup. Clear any stale
+        // one-session override left by older builds.
+        try{sessionStorage.removeItem(PENDING_DRAFT_SESSION_KEY)}catch(_){}
 
         debugLog("CONFIG",`loaded from ${label}: draft ${draftId}, ${Object.keys(broadcastNames).length} names, ${absentUsernames.size} absent, ${autodraftUsernames.size} auto`);
         updateSharedConfigSummary();
