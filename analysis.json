@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:14:39.535075+00:00",
-  "revision": "1389688986275938305:124:1788581679",
+  "updatedAt": "2026-09-05T04:14:58.433360+00:00",
+  "revision": "1389688986275938305:124:1788581698",
   "round": 11,
   "nextOverallPick": 124,
-  "headline": "...",
-  "model": "muse-spark-1.3-contributor",
+  "headline": "DRAFTCENTER DESK",
+  "model": "deterministic",
   "items": [
     {
       "id": "run:123:WR",
       "title": "WR RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately. \u2014 Room clearly caught serious receiver fever lately",
+      "detail": "The room has been hammering the same position lately.",
       "tone": "hot"
     },
     {
-      "id": "build:464274355744927744:wrheavy:11",
-      "title": "WR-HEAVY: Bryan",
-      "detail": "Through 11 selections: 5 WR and 4 RB. \u2014 Bryan stacking pass catchers like party favors",
+      "id": "build:1124837422895935488:wrheavy:10",
+      "title": "WR-HEAVY: Nakye",
+      "detail": "Through 10 selections: 5 WR and 3 RB.",
       "tone": ""
     },
     {
-      "id": "build:469620457826414592:rbheavy:10",
-      "title": "RB-HEAVY: Trently",
-      "detail": "Through 10 selections: 4 RB and 3 WR. \u2014 Trently bulldozing while everyone else gets cute",
+      "id": "build:1134235688095932416:wrheavy:10",
+      "title": "WR-HEAVY: Welshy",
+      "detail": "Through 10 selections: 5 WR and 3 RB.",
       "tone": ""
     },
     {
-      "id": "round:11:WR",
-      "title": "2 WRs in Round 11",
-      "detail": "2 of 12 picks are complete in the round. \u2014 Late round still serving spicy receiver drama",
+      "id": "build:461715450028355584:wrheavy:10",
+      "title": "WR-HEAVY: Shaylon",
+      "detail": "Through 10 selections: 5 WR and 4 RB.",
       "tone": ""
     }
   ]
