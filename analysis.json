@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:23:55.359094+00:00",
-  "revision": "1389688986275938305:136:1788582235",
+  "updatedAt": "2026-09-05T04:24:13.579190+00:00",
+  "revision": "1389688986275938305:136:1788582253",
   "round": 12,
   "nextOverallPick": 136,
-  "headline": "Round 12 Live: Pass-Catchers Everywhere",
-  "model": "muse-spark-1.3-contributor",
+  "headline": "DRAFTCENTER DESK",
+  "model": "deterministic",
   "items": [
+    {
+      "id": "build:1124837422895935488:wrheavy:11",
+      "title": "WR-HEAVY: Nakye",
+      "detail": "Through 11 selections: 5 WR and 4 RB.",
+      "tone": ""
+    },
     {
       "id": "build:1134235688095932416:wrheavy:12",
       "title": "WR-HEAVY: Welshy",
-      "detail": "Through 12 selections: 5 WR and 4 RB. \u2014 Welshy clearly loves weekend shootouts",
+      "detail": "Through 12 selections: 5 WR and 4 RB.",
       "tone": ""
     },
     {
-      "id": "build:736082966396133376:wrheavy:12",
-      "title": "WR-HEAVY: Jim",
-      "detail": "Through 12 selections: 5 WR and 4 RB. \u2014 Jim is cooking pure fireworks",
+      "id": "build:461715450028355584:wrheavy:11",
+      "title": "WR-HEAVY: Shaylon",
+      "detail": "Through 11 selections: 5 WR and 5 RB.",
       "tone": ""
     },
     {
-      "id": "round:12:RB",
-      "title": "1 RB in Round 12",
-      "detail": "2 of 12 picks are complete in the round. \u2014 Backfields getting spicy down here",
-      "tone": ""
-    },
-    {
-      "id": "round:12:WR",
-      "title": "1 WR in Round 12",
-      "detail": "2 of 12 picks are complete in the round. \u2014 Receivers flying off shelves again",
+      "id": "build:464274355744927744:wrheavy:11",
+      "title": "WR-HEAVY: Bryan",
+      "detail": "Through 11 selections: 5 WR and 4 RB.",
       "tone": ""
     }
   ]
