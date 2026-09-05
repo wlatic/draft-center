@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:47:56.820166+00:00",
-  "revision": "1389688986275938305:171:1788583676",
+  "updatedAt": "2026-09-05T04:48:26.079548+00:00",
+  "revision": "1389688986275938305:173:1788583706",
   "round": 15,
-  "nextOverallPick": 171,
-  "headline": "Late rounds bring fresh twists and bold builds",
+  "nextOverallPick": 173,
+  "headline": "Wideouts everywhere as Round 15 takes shape",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "build:464274355744927744:wrheavy:15",
-      "title": "WR-HEAVY: Bryan",
-      "detail": "Through 15 selections: 7 WR and 4 RB. \u2014 Pure fireworks, zero apologies needed here",
+      "id": "build:461715450028355584:wrheavy:15",
+      "title": "WR-HEAVY: Shaylon",
+      "detail": "Through 15 selections: 7 WR and 5 RB. \u2014 Shaylon is truly living that receiver life",
       "tone": ""
     },
     {
-      "id": "build:736092553857843200:wrheavy:15",
-      "title": "WR-HEAVY: Tyke",
-      "detail": "Through 15 selections: 5 WR and 5 RB. \u2014 Beautifully balanced chaos we absolutely love",
+      "id": "build:1133150840920875008:wrheavy:15",
+      "title": "WR-HEAVY: Drew",
+      "detail": "Through 15 selections: 6 WR and 5 RB. \u2014 Drew keeps stacking pass catchers relentlessly",
       "tone": ""
     },
     {
-      "id": "build:739329016837890048:rbheavy:14",
-      "title": "RB-HEAVY: Tight End Guy",
-      "detail": "Through 14 selections: 4 RB and 2 WR. \u2014 Old school muscle with modern swagger",
+      "id": "build:735268317480226816:wrheavy:14",
+      "title": "WR-HEAVY: Brandwagon",
+      "detail": "Through 14 selections: 6 WR and 3 RB. \u2014 Brandwagon clearly loves a good shootout",
       "tone": ""
     },
     {
-      "id": "round:15:TE",
-      "title": "1 TE in Round 15",
-      "detail": "2 of 12 picks are complete in the round. \u2014 Spicy finish brewing down the stretch",
+      "id": "round:15:DEF",
+      "title": "1 DEF in Round 15",
+      "detail": "4 of 12 picks are complete in the round. \u2014 Spicy little twist for late drafters",
       "tone": ""
     }
   ]
