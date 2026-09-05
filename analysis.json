@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:24:49.687379+00:00",
-  "revision": "1389688986275938305:137:1788582289",
+  "updatedAt": "2026-09-05T04:25:07.565443+00:00",
+  "revision": "1389688986275938305:138:1788582307",
   "round": 12,
-  "nextOverallPick": 137,
-  "headline": "Round 12 ticks on as builds diverge",
+  "nextOverallPick": 138,
+  "headline": "Wideouts Everywhere As Round Twelve Takes Shape",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "round:12:QB",
-      "title": "1 QB in Round 12",
-      "detail": "3 of 12 picks are complete in the round. \u2014 Signal callers finally crashing the party",
+      "id": "build:722634945050247168:wrheavy:12",
+      "title": "WR-HEAVY: Kevin",
+      "detail": "Through 12 selections: 5 WR and 5 RB. \u2014 So much flash, so little bench room left",
       "tone": ""
     },
     {
-      "id": "build:735268317480226816:wrheavy:11",
-      "title": "WR-HEAVY: Brandwagon",
-      "detail": "Through 11 selections: 5 WR and 3 RB. \u2014 All gas, no brakes out wide",
+      "id": "build:736089286075621376:wrheavy:12",
+      "title": "WR-HEAVY: O'Hara",
+      "detail": "Through 12 selections: 5 WR and 5 RB. \u2014 Bold, brash, and built for Sunday chaos",
       "tone": ""
     },
     {
-      "id": "first:TE:20",
-      "title": "FIRST TE: Trey McBride",
-      "detail": "The first TE came off the board at overall pick 20. \u2014 Early splurge still raising eyebrows",
+      "id": "build:1133150840920875008:wrheavy:11",
+      "title": "WR-HEAVY: Drew",
+      "detail": "Through 11 selections: 4 WR and 4 RB. \u2014 Balanced, sneaky, quietly ready to strike",
       "tone": ""
     },
     {
-      "id": "first:QB:22",
-      "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 22. \u2014 Patience paid off beautifully there",
+      "id": "build:469620457826414592:wrheavy:11",
+      "title": "WR-HEAVY: Trently",
+      "detail": "Through 11 selections: 4 WR and 4 RB. \u2014 Smooth operator with serious late style",
       "tone": ""
     }
   ]
