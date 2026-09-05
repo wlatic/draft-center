@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T03:16:27.291862+00:00",
-  "revision": "1389688986275938305:45:1788578187",
+  "updatedAt": "2026-09-05T03:17:08.448147+00:00",
+  "revision": "1389688986275938305:45:1788578228",
   "round": 4,
   "nextOverallPick": 45,
-  "headline": "RB fever hits while Kevin stays fearless",
+  "headline": "RB rush meets patience at the turn",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
       "id": "run:44:RB",
       "title": "RB RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly needs running backs badly",
+      "detail": "The room has been hammering the same position lately. \u2014 Everybody wants ground game suddenly, folks",
       "tone": "hot"
     },
     {
       "id": "build:722634945050247168:zerorb:4",
       "title": "ZERO-RB WATCH: Kevin",
-      "detail": "Through 4 selections: 4 WR, 0 RB. \u2014 Living dangerously and loving every minute",
+      "detail": "Through 4 selections: 4 WR, 0 RB. \u2014 Bold, breezy, and beautifully stubborn drafting",
       "tone": "hot"
     },
     {
       "id": "first:QB:22",
       "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 22. \u2014 Patience finally paid off beautifully there",
+      "detail": "The first QB came off the board at overall pick 22. \u2014 Finally, someone blinked under center",
       "tone": ""
     },
     {
       "id": "first:TE:20",
       "title": "FIRST TE: Trey McBride",
-      "detail": "The first TE came off the board at overall pick 20. \u2014 Bold early swing at premium position",
+      "detail": "The first TE came off the board at overall pick 20. \u2014 Tight end luxury, early and unapologetic",
       "tone": ""
     }
   ]
