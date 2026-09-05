@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T03:57:08.418242+00:00",
-  "revision": "1389688986275938305:96:1788580628",
+  "updatedAt": "2026-09-05T03:57:25.618013+00:00",
+  "revision": "1389688986275938305:96:1788580645",
   "round": 8,
   "nextOverallPick": 96,
-  "headline": "DRAFTCENTER DESK",
-  "model": "deterministic",
+  "headline": "Fresh angles as Round 8 rolls on",
+  "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "run:95:RB",
-      "title": "RB RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately.",
-      "tone": "hot"
-    },
-    {
-      "id": "build:1124837422895935488:wrheavy:8",
-      "title": "WR-HEAVY: Nakye",
-      "detail": "Through 8 selections: 5 WR and 3 RB.",
+      "id": "build:469620457826414592:rbheavy:9",
+      "title": "RB-HEAVY: Trently",
+      "detail": "Through 9 selections: 4 RB and 3 WR. \u2014 Trently is smashing the ground game vibe",
       "tone": ""
     },
     {
-      "id": "build:722634945050247168:wrheavy:8",
-      "title": "WR-HEAVY: Kevin",
-      "detail": "Through 8 selections: 5 WR and 1 RB.",
+      "id": "first:TE:20",
+      "title": "FIRST TE: Trey McBride",
+      "detail": "The first TE came off the board at overall pick 20. \u2014 Fashionably early for the elite tier",
       "tone": ""
     },
     {
-      "id": "build:461715450028355584:wrheavy:7",
-      "title": "WR-HEAVY: Shaylon",
-      "detail": "Through 7 selections: 4 WR and 2 RB.",
+      "id": "round:8:TE",
+      "title": "2 TEs in Round 8",
+      "detail": "8 of 12 picks are complete in the round. \u2014 Late-round spice is officially brewing",
+      "tone": ""
+    },
+    {
+      "id": "round:8:RB",
+      "title": "2 RBs in Round 8",
+      "detail": "8 of 12 picks are complete in the round. \u2014 Workhorses still finding cozy new homes",
       "tone": ""
     }
   ]
