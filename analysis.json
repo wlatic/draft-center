@@ -1,9 +1,9 @@
 {
   "draftId": "1401752680711323648",
-  "updatedAt": "2026-09-05T00:21:45.021970+00:00",
-  "revision": "1401752680711323648:93:1788567705",
+  "updatedAt": "2026-09-05T00:22:27.603379+00:00",
+  "revision": "1401752680711323648:94:1788567747",
   "round": 10,
-  "nextOverallPick": 93,
+  "nextOverallPick": 94,
   "headline": "DRAFTCENTER DESK",
   "model": "deterministic",
   "items": [
@@ -14,15 +14,15 @@
       "tone": ""
     },
     {
-      "id": "build:435350285523611648:rbheavy:10",
-      "title": "RB-HEAVY: EDDIE8816",
-      "detail": "Through 10 selections: 5 RB and 3 WR.",
+      "id": "build:474098103616532480:wrheavy:10",
+      "title": "WR-HEAVY: MindMischief",
+      "detail": "Through 10 selections: 6 WR and 4 RB.",
       "tone": ""
     },
     {
-      "id": "build:474098103616532480:wrheavy:9",
-      "title": "WR-HEAVY: MindMischief",
-      "detail": "Through 9 selections: 5 WR and 4 RB.",
+      "id": "build:435350285523611648:rbheavy:10",
+      "title": "RB-HEAVY: EDDIE8816",
+      "detail": "Through 10 selections: 5 RB and 3 WR.",
       "tone": ""
     },
     {
