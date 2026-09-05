@@ -1,34 +1,34 @@
 {
   "draftId": "1401760906391601152",
-  "updatedAt": "2026-09-05T01:17:25.931435+00:00",
-  "revision": "1401760906391601152:151:1788571045",
+  "updatedAt": "2026-09-05T01:17:44.348549+00:00",
+  "revision": "1401760906391601152:151:1788571064",
   "round": 13,
   "nextOverallPick": 151,
-  "headline": "Wideouts Everywhere As Round Thirteen Heats Up",
+  "headline": "Late-round arms race meets receiver room overload",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "build:485142648391200768:wrheavy:13",
-      "title": "WR-HEAVY: pilikus",
-      "detail": "Through 13 selections: 6 WR and 4 RB. \u2014 Pure chaos, beautifully organized",
+      "id": "build:471692236304674816:wrheavy:13",
+      "title": "WR-HEAVY: virmen",
+      "detail": "Through 13 selections: 4 WR and 5 RB. \u2014 Beautiful chaos, fully stocked and feeling fancy",
       "tone": ""
     },
     {
-      "id": "build:711639117267554304:wrheavy:13",
-      "title": "WR-HEAVY: richiesouders",
-      "detail": "Through 13 selections: 6 WR and 2 RB. \u2014 Commitment to the bit",
+      "id": "build:886342178404827136:wrheavy:13",
+      "title": "WR-HEAVY: darrenca",
+      "detail": "Through 13 selections: 4 WR and 4 RB. \u2014 Balance is boring until it wins leagues",
       "tone": ""
     },
     {
-      "id": "round:13:QB",
-      "title": "2 QBs in Round 13",
-      "detail": "6 of 12 picks are complete in the round. \u2014 Late-round quarterback party time",
+      "id": "build:997969350734807040:wrheavy:13",
+      "title": "WR-HEAVY: ojsimpin1804",
+      "detail": "Through 13 selections: 5 WR and 4 RB. \u2014 Someone loves options, and honestly same",
       "tone": ""
     },
     {
-      "id": "round:13:WR",
-      "title": "2 WRs in Round 13",
-      "detail": "6 of 12 picks are complete in the round. \u2014 Receivers flying off shelves",
+      "id": "round:13:RB",
+      "title": "1 RB in Round 13",
+      "detail": "6 of 12 picks are complete in the round. \u2014 Late value hunting season is officially open",
       "tone": ""
     }
   ]
