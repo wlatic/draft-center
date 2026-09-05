@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:03:21.198499+00:00",
-  "revision": "1389688986275938305:107:1788581001",
+  "updatedAt": "2026-09-05T04:03:50.887200+00:00",
+  "revision": "1389688986275938305:108:1788581030",
   "round": 9,
-  "nextOverallPick": 107,
-  "headline": "DRAFTCENTER DESK",
-  "model": "deterministic",
+  "nextOverallPick": 108,
+  "headline": "Fresh builds crash the Round 9 party",
+  "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "run:106:RB",
-      "title": "RB RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately.",
-      "tone": "hot"
-    },
-    {
-      "id": "build:1124837422895935488:wrheavy:9",
-      "title": "WR-HEAVY: Nakye",
-      "detail": "Through 9 selections: 5 WR and 3 RB.",
+      "id": "build:464274355744927744:rbheavy:9",
+      "title": "RB-HEAVY: Bryan",
+      "detail": "Through 9 selections: 4 RB and 3 WR. \u2014 Old school muscle, beautifully stubborn draft room energy",
       "tone": ""
     },
     {
-      "id": "build:722634945050247168:wrheavy:9",
-      "title": "WR-HEAVY: Kevin",
-      "detail": "Through 9 selections: 5 WR and 2 RB.",
+      "id": "build:736092553857843200:rbheavy:9",
+      "title": "RB-HEAVY: Tyke",
+      "detail": "Through 9 selections: 4 RB and 3 WR. \u2014 Smash mouth forever, never apologize for it",
       "tone": ""
     },
     {
-      "id": "build:736089286075621376:rbheavy:10",
-      "title": "RB-HEAVY: O'Hara",
-      "detail": "Through 10 selections: 5 RB and 3 WR.",
+      "id": "build:736082966396133376:wrheavy:8",
+      "title": "WR-HEAVY: Jim",
+      "detail": "Through 8 selections: 4 WR and 3 RB. \u2014 Pass happy and proudly living that life",
+      "tone": ""
+    },
+    {
+      "id": "first:QB:22",
+      "title": "FIRST QB: Josh Allen",
+      "detail": "The first QB came off the board at overall pick 22. \u2014 Patience paid off in spectacular fashion",
       "tone": ""
     }
   ]
