@@ -1,34 +1,34 @@
 {
   "draftId": "1401760906391601152",
-  "updatedAt": "2026-09-05T01:02:28.288365+00:00",
-  "revision": "1401760906391601152:57:1788570148",
+  "updatedAt": "2026-09-05T01:02:48.107441+00:00",
+  "revision": "1401760906391601152:59:1788570168",
   "round": 5,
-  "nextOverallPick": 57,
-  "headline": "Late QB Rush Shakes Up DraftCenter Desk",
+  "nextOverallPick": 59,
+  "headline": "Round 5 fireworks as patience meets panic",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "first:QB:51",
-      "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 51. \u2014 Patience paid off beautifully there",
-      "tone": ""
-    },
-    {
-      "id": "first:TE:21",
-      "title": "FIRST TE: Brock Bowers",
-      "detail": "The first TE came off the board at overall pick 21. \u2014 Elite tight ends fly early",
+      "id": "round:5:RB",
+      "title": "3 RBs in Round 5",
+      "detail": "10 of 12 picks are complete in the round. \u2014 Finally some muscle in this shootout",
       "tone": ""
     },
     {
       "id": "round:5:QB",
       "title": "3 QBs in Round 5",
-      "detail": "8 of 12 picks are complete in the round. \u2014 Suddenly everyone wants a quarterback",
+      "detail": "10 of 12 picks are complete in the round. \u2014 Wow, what a wild ride lately",
+      "tone": ""
+    },
+    {
+      "id": "first:QB:51",
+      "title": "FIRST QB: Josh Allen",
+      "detail": "The first QB came off the board at overall pick 51. \u2014 Patience truly paid off beautifully here",
       "tone": ""
     },
     {
       "id": "round:5:TE",
       "title": "2 TEs in Round 5",
-      "detail": "8 of 12 picks are complete in the round. \u2014 Tight end fever is contagious",
+      "detail": "10 of 12 picks are complete in the round. \u2014 Love the chaos, keep it coming",
       "tone": ""
     }
   ]
