@@ -17,6 +17,16 @@
   --cyan:#56cfff;
   --green:#58e2a5;
 
+  /* High-contrast TV palette: positions should read instantly from across a room. */
+  --qb:#60a5fa;
+  --rb:#34d399;
+  --wr:#f59e0b;
+  --te:#a78bfa;
+  --k:#fde047;
+  --def:#f87171;
+  --other:#a9c4d8;
+}
+body.sleeper-palette{
   --qb:#ee9dca;
   --rb:#55d1bb;
   --wr:#58d0dc;
@@ -322,6 +332,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   <div class="settings-tabs">
     <button class="settings-tab active" type="button" data-pane="draftPane">Draft</button>
     <button class="settings-tab" type="button" data-pane="peoplePane">People</button>
+    <button class="settings-tab" type="button" data-pane="displayPane">Display</button>
     <button class="settings-tab" type="button" data-pane="audioPane">Audio</button>
     <button class="settings-tab" type="button" data-pane="debugPane">Debug</button>
   </div>
@@ -363,6 +374,19 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     <div class="settings-actions">
       <button class="tool" id="savePeople" type="button">Save shared people</button>
     </div>
+  </section>
+
+  <section class="settings-pane" id="displayPane">
+    <div class="settings-grid">
+      <label>Position colors
+        <select id="positionPalette">
+          <option value="tv" selected>High Contrast TV</option>
+          <option value="sleeper">Sleeper-style</option>
+        </select>
+      </label>
+      <div></div>
+    </div>
+    <div class="people-help">High Contrast TV separates RB green and WR amber so they remain obvious from across the room. This setting is saved only on this device/browser.</div>
   </section>
 
   <section class="settings-pane" id="audioPane">
@@ -460,6 +484,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   let autodraftUsernames = new Set();
   let broadcastNames = {};
   let roastLevel = "spicy";
+  let positionPalette = "tv";
   const roastMemory = new Map();
   const roastDecks = new Map();
   let pressureShowing = false;
@@ -519,6 +544,25 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   const $ = id => document.getElementById(id);
   const esc = v => String(v ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const initials = s => String(s||"").trim().split(/\s+/).filter(Boolean).map(x=>x[0]).join("").slice(0,2).toUpperCase() || "—";
+
+  function loadPositionPalette(){
+    try{
+      const saved=localStorage.getItem("draftcenterPositionPalette");
+      positionPalette=saved==="sleeper"?"sleeper":"tv";
+    }catch(_){positionPalette="tv"}
+    applyPositionPalette(false);
+  }
+
+  function applyPositionPalette(save=true){
+    const sleeper=positionPalette==="sleeper";
+    document.body.classList.toggle("sleeper-palette",sleeper);
+    const select=$("positionPalette");
+    if(select)select.value=positionPalette;
+    if(save){
+      try{localStorage.setItem("draftcenterPositionPalette",positionPalette)}catch(_){}
+      debugLog("DISPLAY",`position colors → ${sleeper?"Sleeper-style":"High Contrast TV"}`);
+    }
+  }
 
   function renderDebugLog(){
     const out=$("debugOutput");
@@ -2853,6 +2897,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     $("draftInput").value=`https://sleeper.com/draft/nfl/${draftId}`;
     $("adminTokenInput").value=adminToken();
     $("roastLevel").value=roastLevel;
+    $("positionPalette").value=positionPalette;
     $("volumeInput").value=Math.round(masterVolume*100);
     updateAudioState();
     renderPeopleSettings();
@@ -2865,6 +2910,11 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   function setMasterVolume(percent){
     masterVolume=Math.max(0,Math.min(100,Number(percent)||0))/100;
   }
+
+  $("positionPalette").addEventListener("change",e=>{
+    positionPalette=e.currentTarget.value==="sleeper"?"sleeper":"tv";
+    applyPositionPalette(true);
+  });
 
   $("volumeInput").addEventListener("input",e=>{
     setMasterVolume(e.currentTarget.value);
@@ -2918,6 +2968,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   window.addEventListener("resize",renderBoard);
 
   async function boot(){
+    loadPositionPalette();
     // Shared league settings are loaded once per page load. There is deliberately
     // no config polling: refresh another device when you want it to pick up changes.
     $("status").textContent="Loading shared DraftCenter settings…";
