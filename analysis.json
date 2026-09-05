@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:01:48.442136+00:00",
-  "revision": "1389688986275938305:105:1788580908",
+  "updatedAt": "2026-09-05T04:02:16.950147+00:00",
+  "revision": "1389688986275938305:106:1788580936",
   "round": 9,
-  "nextOverallPick": 105,
-  "headline": "Ninth-round fireworks shake the board",
+  "nextOverallPick": 106,
+  "headline": "Round 9 Turns Into a Ground Game",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "build:1124837422895935488:wrheavy:9",
-      "title": "WR-HEAVY: Nakye",
-      "detail": "Through 9 selections: 5 WR and 3 RB. \u2014 Pure fireworks, absolutely no apologies needed",
+      "id": "build:736089286075621376:rbheavy:10",
+      "title": "RB-HEAVY: O'Hara",
+      "detail": "Through 10 selections: 5 RB and 3 WR. \u2014 Pure smashmouth theater, folks love it",
       "tone": ""
     },
     {
-      "id": "build:735268317480226816:wrheavy:9",
-      "title": "WR-HEAVY: Brandwagon",
-      "detail": "Through 9 selections: 4 WR and 2 RB. \u2014 Bold, brash, and beautifully entertaining television",
+      "id": "build:469620457826414592:rbheavy:9",
+      "title": "RB-HEAVY: Trently",
+      "detail": "Through 9 selections: 4 RB and 3 WR. \u2014 Old school grind with flair",
       "tone": ""
     },
     {
-      "id": "first:TE:20",
-      "title": "FIRST TE: Trey McBride",
-      "detail": "The first TE came off the board at overall pick 20. \u2014 Fashionably early with serious swagger",
-      "tone": ""
+      "id": "round:9:RB",
+      "title": "5 RBs in Round 9",
+      "detail": "8 of 12 picks are complete in the round. \u2014 Backfield buffet is officially open",
+      "tone": "hot"
     },
     {
-      "id": "round:9:DEF",
-      "title": "2 DEFs in Round 9",
-      "detail": "7 of 12 picks are complete in the round. \u2014 Chaos loves company, folks",
+      "id": "round:9:QB",
+      "title": "1 QB in Round 9",
+      "detail": "8 of 12 picks are complete in the round. \u2014 Lone gunslinger steals spotlight briefly",
       "tone": ""
     }
   ]
