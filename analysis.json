@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T03:08:40.791102+00:00",
-  "revision": "1389688986275938305:28:1788577720",
+  "updatedAt": "2026-09-05T03:09:08.747805+00:00",
+  "revision": "1389688986275938305:29:1788577748",
   "round": 3,
-  "nextOverallPick": 28,
-  "headline": "RB Frenzy Meets Zero QB Drama",
+  "nextOverallPick": 29,
+  "headline": "RB Fever Hits While QBs Wait Their Turn",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "run:27:RB",
+      "id": "run:28:RB",
       "title": "RB RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately. \u2014 What a wonderfully chaotic draft room tonight!",
+      "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly wants ground game glory",
       "tone": "hot"
     },
     {
       "id": "none:QB:3",
       "title": "NO QB YET",
-      "detail": "No QB has been selected through 27 live picks. \u2014 Patience, friends, pure glorious stubborn patience indeed.",
+      "detail": "No QB has been selected through 28 live picks. \u2014 Patience or pure quarterback chaos brewing",
       "tone": "good"
     },
     {
-      "id": "first:TE:21",
+      "id": "first:TE:22",
       "title": "FIRST TE: Brock Bowers",
-      "detail": "The first TE came off the board at overall pick 21. \u2014 Finally some spice at the party! Woohoo!",
+      "detail": "The first TE came off the board at overall pick 22. \u2014 Finally someone broke the tight end ice",
       "tone": ""
     },
     {
       "id": "round:3:RB",
       "title": "1 RB in Round 3",
-      "detail": "1 of 12 picks are complete in the round. \u2014 Buckle up, this is getting fun!",
+      "detail": "1 of 12 picks are complete in the round. \u2014 Round three starting with familiar fireworks",
       "tone": ""
     }
   ]
