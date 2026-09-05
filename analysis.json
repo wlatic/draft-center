@@ -1,34 +1,34 @@
 {
   "draftId": "1401758025210990592",
-  "updatedAt": "2026-09-05T00:49:05.850008+00:00",
-  "revision": "1401758025210990592:100:1788569345",
+  "updatedAt": "2026-09-05T00:49:23.648817+00:00",
+  "revision": "1401758025210990592:103:1788569363",
   "round": 9,
-  "nextOverallPick": 100,
-  "headline": "Ninth round balance shifts as new builds emerge",
-  "model": "muse-spark-1.3-contributor",
+  "nextOverallPick": 103,
+  "headline": "DRAFTCENTER DESK",
+  "model": "deterministic",
   "items": [
     {
       "id": "build:483427149810757632:rbheavy:9",
       "title": "RB-HEAVY: xainshawty",
-      "detail": "Through 9 selections: 5 RB and 2 WR. \u2014 Pure smashmouth energy, love it",
+      "detail": "Through 9 selections: 5 RB and 2 WR.",
+      "tone": ""
+    },
+    {
+      "id": "build:609911451653877760:wrheavy:9",
+      "title": "WR-HEAVY: bucketsnbodies",
+      "detail": "Through 9 selections: 5 WR and 4 RB.",
+      "tone": ""
+    },
+    {
+      "id": "build:1391896288479420417:wrheavy:8",
+      "title": "WR-HEAVY: hvpro",
+      "detail": "Through 8 selections: 4 WR and 4 RB.",
       "tone": ""
     },
     {
       "id": "build:595861056119697408:wrheavy:9",
       "title": "WR-HEAVY: Giantsmm",
-      "detail": "Through 9 selections: 4 WR and 3 RB. \u2014 Finesse squad looking silky smooth",
-      "tone": ""
-    },
-    {
-      "id": "round:9:RB",
-      "title": "1 RB in Round 9",
-      "detail": "3 of 12 picks are complete in the round. \u2014 Ground game never goes outta style",
-      "tone": ""
-    },
-    {
-      "id": "round:9:TE",
-      "title": "1 TE in Round 9",
-      "detail": "3 of 12 picks are complete in the round. \u2014 Spicy late value hunters unite",
+      "detail": "Through 9 selections: 4 WR and 3 RB.",
       "tone": ""
     }
   ]
