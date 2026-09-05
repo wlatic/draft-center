@@ -1,35 +1,23 @@
 {
   "draftId": "1401758025210990592",
-  "updatedAt": "2026-09-05T00:36:10.720468+00:00",
-  "revision": "1401758025210990592:23:1788568570",
-  "round": 2,
-  "nextOverallPick": 23,
-  "headline": "Tight End Breaks Silence While QBs Keep Waiting",
+  "updatedAt": "2026-09-05T00:36:26.034309+00:00",
+  "revision": "1401758025210990592:25:1788568586",
+  "round": 3,
+  "nextOverallPick": 25,
+  "headline": "...",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "first:TE:22",
-      "title": "FIRST TE: Brock Bowers",
-      "detail": "The first TE came off the board at overall pick 22. \u2014 Finally some spice at the party",
-      "tone": ""
-    },
-    {
-      "id": "round:2:TE",
-      "title": "1 TE in Round 2",
-      "detail": "10 of 12 picks are complete in the round. \u2014 Lone wolf crashing a crowded room",
-      "tone": ""
-    },
-    {
-      "id": "none:QB:2",
+      "id": "none:QB:3",
       "title": "NO QB YET",
-      "detail": "No QB has been selected through 22 live picks. \u2014 Patience is wearing deliciously thin now",
+      "detail": "No QB has been selected through 24 live picks. \u2014 Quarterbacks waiting while chaos reigns supreme",
       "tone": "good"
     },
     {
-      "id": "round:2:RB",
-      "title": "5 RBs in Round 2",
-      "detail": "10 of 12 picks are complete in the round. \u2014 Ground game stealing the spotlight again",
-      "tone": "hot"
+      "id": "first:TE:22",
+      "title": "FIRST TE: Brock Bowers",
+      "detail": "The first TE came off the board at overall pick 22. \u2014 Finally some love for tight ends",
+      "tone": ""
     }
   ]
 }
