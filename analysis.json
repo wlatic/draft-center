@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T03:50:27.846255+00:00",
-  "revision": "1389688986275938305:86:1788580227",
+  "updatedAt": "2026-09-05T03:50:45.174583+00:00",
+  "revision": "1389688986275938305:87:1788580245",
   "round": 8,
-  "nextOverallPick": 86,
-  "headline": "DRAFTCENTER DESK",
-  "model": "deterministic",
+  "nextOverallPick": 87,
+  "headline": "RB run rages while builds diverge",
+  "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "run:85:RB",
+      "id": "run:86:RB",
       "title": "RB RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately.",
+      "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly thirsty for backfield chaos",
       "tone": "hot"
     },
     {
-      "id": "build:722634945050247168:zerorb:6",
-      "title": "ZERO-RB WATCH: Kevin",
-      "detail": "Through 6 selections: 5 WR, 0 RB.",
-      "tone": "hot"
-    },
-    {
-      "id": "build:1124837422895935488:wrheavy:8",
-      "title": "WR-HEAVY: Nakye",
-      "detail": "Through 8 selections: 5 WR and 3 RB.",
+      "id": "build:736082966396133376:wrheavy:7",
+      "title": "WR-HEAVY: Jim",
+      "detail": "Through 7 selections: 4 WR and 2 RB. \u2014 Finesse, flair, and plenty of swagger",
       "tone": ""
     },
     {
-      "id": "build:461715450028355584:wrheavy:7",
-      "title": "WR-HEAVY: Shaylon",
-      "detail": "Through 7 selections: 4 WR and 2 RB.",
+      "id": "build:736089286075621376:rbheavy:8",
+      "title": "RB-HEAVY: O'Hara",
+      "detail": "Through 8 selections: 4 RB and 2 WR. \u2014 Smashmouth vibes with a wink",
+      "tone": ""
+    },
+    {
+      "id": "build:736092553857843200:rbheavy:8",
+      "title": "RB-HEAVY: Tyke",
+      "detail": "Through 8 selections: 4 RB and 2 WR. \u2014 Ground and pound, popcorn included",
       "tone": ""
     }
   ]
