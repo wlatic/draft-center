@@ -2758,23 +2758,36 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     }
   }
 
+  function decodeGithubConfig(meta){
+    const encoded=String(meta?.content||"").replace(/\s/g,"");
+    if(!encoded)throw new Error("GitHub config response had no content");
+    const binary=atob(encoded);
+    const bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));
+    return JSON.parse(new TextDecoder().decode(bytes));
+  }
+
+  async function fetchSharedConfigFromMain(){
+    // Read the actual main-branch file through GitHub's API. This updates as
+    // soon as Save Shared Draft commits config.json and does NOT wait for a
+    // GitHub Pages deployment, which is what caused hard-refresh draft reverts.
+    const meta=await fetchJsonWithTimeout(`${GITHUB_CONFIG_API}?ref=main`,3500);
+    return decodeGithubConfig(meta);
+  }
+
   async function loadSharedSettings(){
-    // Same-origin config is the most reliable startup path, especially on TV
-    // browsers. Raw GitHub remains a bounded fallback, never a boot dependency.
+    // main/config.json is authoritative. Pages is only a fallback because its
+    // deployment can lag behind a just-saved draft by a minute or more.
     const sources=[
-      ["GitHub Pages",SHARED_CONFIG_URL],
-      ["GitHub raw fallback",SHARED_CONFIG_FALLBACK_URL]
+      ["GitHub main",fetchSharedConfigFromMain],
+      ["GitHub Pages fallback",()=>fetchJsonWithTimeout(SHARED_CONFIG_URL)],
+      ["GitHub raw fallback",()=>fetchJsonWithTimeout(SHARED_CONFIG_FALLBACK_URL)]
     ];
 
-    for(const [label,url] of sources){
+    for(const [label,loader] of sources){
       try{
-        const cfg=await fetchJsonWithTimeout(url);
+        const cfg=await loader();
         applySharedSettings(cfg);
-
-        // Shared config is the only draft source on startup. Clear any stale
-        // one-session override left by older builds.
         try{sessionStorage.removeItem(PENDING_DRAFT_SESSION_KEY)}catch(_){}
-
         debugLog("CONFIG",`loaded from ${label}: draft ${draftId}, ${Object.keys(broadcastNames).length} names, ${absentUsernames.size} absent, ${autodraftUsernames.size} auto`);
         updateSharedConfigSummary();
         return true;
