@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:27:55.054445+00:00",
-  "revision": "1389688986275938305:144:1788582475",
-  "round": 12,
-  "nextOverallPick": 144,
-  "headline": "Fresh Builds Crash The WR Party",
+  "updatedAt": "2026-09-05T04:28:14.009528+00:00",
+  "revision": "1389688986275938305:146:1788582494",
+  "round": 13,
+  "nextOverallPick": 146,
+  "headline": "Wideouts Everywhere As Round Thirteen Rolls On",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "build:1133150840920875008:wrheavy:12",
-      "title": "WR-HEAVY: Drew",
-      "detail": "Through 12 selections: 5 WR and 4 RB. \u2014 Pure chaos, loving every second",
+      "id": "build:464274355744927744:wrheavy:12",
+      "title": "WR-HEAVY: Bryan",
+      "detail": "Through 12 selections: 6 WR and 4 RB. \u2014 Pure fireworks and total showtime energy",
       "tone": ""
     },
     {
-      "id": "build:722634945050247168:wrheavy:12",
-      "title": "WR-HEAVY: Kevin",
-      "detail": "Through 12 selections: 5 WR and 5 RB. \u2014 Bold beautiful bench building brilliance",
+      "id": "build:461715450028355584:wrheavy:12",
+      "title": "WR-HEAVY: Shaylon",
+      "detail": "Through 12 selections: 5 WR and 5 RB. \u2014 Balance with swagger, love that vibe",
       "tone": ""
     },
     {
-      "id": "build:736082966396133376:wrheavy:12",
-      "title": "WR-HEAVY: Jim",
-      "detail": "Through 12 selections: 5 WR and 4 RB. \u2014 Spicy room, someone open windows",
-      "tone": ""
-    },
-    {
-      "id": "build:736092553857843200:wrheavy:11",
+      "id": "build:736092553857843200:wrheavy:12",
       "title": "WR-HEAVY: Tyke",
-      "detail": "Through 11 selections: 4 WR and 4 RB. \u2014 Certified league villain behavior here",
+      "detail": "Through 12 selections: 4 WR and 4 RB. \u2014 Patient, sneaky, and quietly dangerous",
+      "tone": ""
+    },
+    {
+      "id": "build:736089286075621376:wrheavy:13",
+      "title": "WR-HEAVY: O'Hara",
+      "detail": "Through 13 selections: 6 WR and 5 RB. \u2014 Fresh legs stealing the late spotlight",
       "tone": ""
     }
   ]
