@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:44:50.626536+00:00",
-  "revision": "1389688986275938305:165:1788583490",
+  "updatedAt": "2026-09-05T04:46:56.703925+00:00",
+  "revision": "1389688986275938305:166:1788583616",
   "round": 14,
-  "nextOverallPick": 165,
-  "headline": "Late Round Scramble Steals The Show",
+  "nextOverallPick": 166,
+  "headline": "Late-Round Twists Shake the Draft Room",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "first:TE:20",
-      "title": "FIRST TE: Trey McBride",
-      "detail": "The first TE came off the board at overall pick 20. \u2014 Patience pays, then panic spreads fast",
+      "id": "build:469620457826414592:wrheavy:14",
+      "title": "WR-HEAVY: Trently",
+      "detail": "Through 14 selections: 5 WR and 5 RB. \u2014 Beautifully balanced chaos unfolding live",
       "tone": ""
     },
     {
-      "id": "first:QB:22",
-      "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 22. \u2014 Waiting on quarterbacks never felt cooler",
+      "id": "build:736092553857843200:wrheavy:13",
+      "title": "WR-HEAVY: Tyke",
+      "detail": "Through 13 selections: 4 WR and 4 RB. \u2014 Quietly cooking something spicy here",
       "tone": ""
     },
     {
-      "id": "round:14:RB",
-      "title": "3 RBs in Round 14",
-      "detail": "8 of 12 picks are complete in the round. \u2014 Bench depth season is officially here",
+      "id": "round:14:QB",
+      "title": "2 QBs in Round 14",
+      "detail": "9 of 12 picks are complete in the round. \u2014 Quarterback drama finally wakes up",
       "tone": ""
     },
     {
-      "id": "build:1134235688095932416:wrheavy:14",
-      "title": "WR-HEAVY: Welshy",
-      "detail": "Through 14 selections: 5 WR and 4 RB. \u2014 Someone really loves their wideouts",
+      "id": "round:14:DEF",
+      "title": "1 DEF in Round 14",
+      "detail": "9 of 12 picks are complete in the round. \u2014 Someone just got delightfully bold",
       "tone": ""
     }
   ]
