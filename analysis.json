@@ -1,34 +1,34 @@
 {
   "draftId": "1401760906391601152",
-  "updatedAt": "2026-09-05T01:01:38.066533+00:00",
-  "revision": "1401760906391601152:56:1788570098",
+  "updatedAt": "2026-09-05T01:02:10.221546+00:00",
+  "revision": "1401760906391601152:57:1788570130",
   "round": 5,
-  "nextOverallPick": 56,
-  "headline": "Late QB Rush Shakes Up Round 5",
-  "model": "muse-spark-1.3-contributor",
+  "nextOverallPick": 57,
+  "headline": "DRAFTCENTER DESK",
+  "model": "deterministic",
   "items": [
     {
       "id": "first:QB:51",
       "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 51. \u2014 Patience pays, but my heart cannot handle it",
+      "detail": "The first QB came off the board at overall pick 51.",
       "tone": ""
     },
     {
       "id": "first:TE:21",
       "title": "FIRST TE: Brock Bowers",
-      "detail": "The first TE came off the board at overall pick 21. \u2014 Elite tight ends always sparkle brightest early",
+      "detail": "The first TE came off the board at overall pick 21.",
       "tone": ""
     },
     {
       "id": "round:5:QB",
-      "title": "2 QBs in Round 5",
-      "detail": "7 of 12 picks are complete in the round. \u2014 Suddenly everyone wants a quarterback, huh",
+      "title": "3 QBs in Round 5",
+      "detail": "8 of 12 picks are complete in the round.",
       "tone": ""
     },
     {
       "id": "round:5:TE",
       "title": "2 TEs in Round 5",
-      "detail": "7 of 12 picks are complete in the round. \u2014 Tight ends crashing the party in style",
+      "detail": "8 of 12 picks are complete in the round.",
       "tone": ""
     }
   ]
