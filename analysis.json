@@ -1,28 +1,34 @@
 {
   "draftId": "1401760906391601152",
-  "updatedAt": "2026-09-05T00:56:42.845241+00:00",
-  "revision": "1401760906391601152:26:1788569802",
+  "updatedAt": "2026-09-05T00:56:59.497752+00:00",
+  "revision": "1401760906391601152:29:1788569819",
   "round": 3,
-  "nextOverallPick": 26,
-  "headline": "Waiting game continues into round three",
+  "nextOverallPick": 29,
+  "headline": "Zero QBs, First TE Gone, Round 3 Heating Up",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
       "id": "none:QB:3",
       "title": "NO QB YET",
-      "detail": "No QB has been selected through 25 live picks. \u2014 Patience is wearing thin in here",
+      "detail": "No QB has been selected through 28 live picks. \u2014 Patience or pure madness unfolding live",
       "tone": "good"
     },
     {
       "id": "first:TE:21",
       "title": "FIRST TE: Brock Bowers",
-      "detail": "The first TE came off the board at overall pick 21. \u2014 That tight end run started spicy",
+      "detail": "The first TE came off the board at overall pick 21. \u2014 Tight ends finally crashing the party",
+      "tone": ""
+    },
+    {
+      "id": "round:3:RB",
+      "title": "2 RBs in Round 3",
+      "detail": "4 of 12 picks are complete in the round. \u2014 Backfields getting spicy down the stretch",
       "tone": ""
     },
     {
       "id": "round:3:WR",
-      "title": "1 WR in Round 3",
-      "detail": "1 of 12 picks are complete in the round. \u2014 Fresh round, fresh chaos brewing",
+      "title": "2 WRs in Round 3",
+      "detail": "4 of 12 picks are complete in the round. \u2014 Wideouts keeping this show rolling",
       "tone": ""
     }
   ]
