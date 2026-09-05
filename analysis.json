@@ -1,34 +1,34 @@
 {
   "draftId": "1401758025210990592",
-  "updatedAt": "2026-09-05T00:39:36.051456+00:00",
-  "revision": "1401758025210990592:45:1788568776",
+  "updatedAt": "2026-09-05T00:39:53.749616+00:00",
+  "revision": "1401758025210990592:47:1788568793",
   "round": 4,
-  "nextOverallPick": 45,
-  "headline": "QBs Waited, TEs Didn't, WRs Flooding Round 4",
+  "nextOverallPick": 47,
+  "headline": "QBs Waited, Tight Ends Didn't, Receivers Feast Late",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
       "id": "first:QB:30",
       "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 30. \u2014 Patience paid off for quarterback drafters everywhere",
+      "detail": "The first QB came off the board at overall pick 30. \u2014 Patience paid off beautifully there",
       "tone": ""
     },
     {
       "id": "first:TE:22",
       "title": "FIRST TE: Brock Bowers",
-      "detail": "The first TE came off the board at overall pick 22. \u2014 Elite tight end fever arrived fashionably early",
+      "detail": "The first TE came off the board at overall pick 22. \u2014 Elite tight end fever is real",
       "tone": ""
     },
     {
       "id": "round:4:WR",
       "title": "5 WRs in Round 4",
-      "detail": "8 of 12 picks are complete in the round. \u2014 Wideouts flying off shelves like hotcakes",
+      "detail": "10 of 12 picks are complete in the round. \u2014 Pass catchers flying off shelves everywhere",
       "tone": "hot"
     },
     {
-      "id": "round:4:TE",
-      "title": "2 TEs in Round 4",
-      "detail": "8 of 12 picks are complete in the round. \u2014 Sneaky tight end surge brewing nicely",
+      "id": "round:4:RB",
+      "title": "3 RBs in Round 4",
+      "detail": "10 of 12 picks are complete in the round. \u2014 Backfields getting spicy down the stretch",
       "tone": ""
     }
   ]
