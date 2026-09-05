@@ -11,61 +11,47 @@ def rep(old, new, label):
     s = s.replace(old, new, 1)
 
 
-# -----------------------------------------------------------------------------
-# Startup/config stability
-# Keep same-origin GitHub Pages config first because some TV/browser setups have
-# already shown problems reaching raw.githubusercontent.com during boot.
-# A one-session pending-draft override prevents a just-saved draft from reverting
-# while GitHub Pages catches up to the config commit.
-# -----------------------------------------------------------------------------
+# Track a draft-level 404 so a bad saved ID cannot hammer Sleeper forever.
 rep(
-'''  const SHARED_CONFIG_FALLBACK_URL = "https://raw.githubusercontent.com/wlatic/draft-center/main/config.json";\n  const GITHUB_CONFIG_API = "https://api.github.com/repos/wlatic/draft-center/contents/config.json";''',
-'''  const SHARED_CONFIG_FALLBACK_URL = "https://raw.githubusercontent.com/wlatic/draft-center/main/config.json";\n  const GITHUB_CONFIG_API = "https://api.github.com/repos/wlatic/draft-center/contents/config.json";\n  const PENDING_DRAFT_SESSION_KEY = "draftcenter.pendingDraftId";''',
-'pending draft session key'
-)
-
-rep(
-'''  async function loadSharedSettings(){\n    // Raw main is the source of truth. GitHub Pages can lag behind config.json\n    // while a Pages deployment is rebuilding, which previously made a newly\n    // saved draft appear to revert to the previous draft on reload.\n    const sources=[\n      ["GitHub raw",SHARED_CONFIG_FALLBACK_URL],\n      ["GitHub Pages fallback",SHARED_CONFIG_URL]\n    ];''',
-'''  async function loadSharedSettings(){\n    // Same-origin config is the most reliable startup path, especially on TV\n    // browsers. Raw GitHub remains a bounded fallback, never a boot dependency.\n    const sources=[\n      ["GitHub Pages",SHARED_CONFIG_URL],\n      ["GitHub raw fallback",SHARED_CONFIG_FALLBACK_URL]\n    ];''',
-'restore reliable config source order'
-)
-
-rep(
-'''        const cfg=await fetchJsonWithTimeout(url);\n        applySharedSettings(cfg);\n        debugLog("CONFIG",`loaded from ${label}: draft ${draftId}, ${Object.keys(broadcastNames).length} names, ${absentUsernames.size} absent, ${autodraftUsernames.size} auto`);\n        updateSharedConfigSummary();\n        return true;''',
-'''        const cfg=await fetchJsonWithTimeout(url);\n        applySharedSettings(cfg);\n\n        // Immediately after saving a new draft, Pages may still serve the old\n        // config for a few seconds. Keep the saving browser on the new draft for\n        // this one session; once the shared config catches up, discard the hint.\n        let pending="";\n        try{pending=String(sessionStorage.getItem(PENDING_DRAFT_SESSION_KEY)||"").trim()}catch(_){}\n        if(pending){\n          if(String(cfg?.draftId||"")===pending){\n            try{sessionStorage.removeItem(PENDING_DRAFT_SESSION_KEY)}catch(_){}\n          }else{\n            draftId=pending;\n            broadcastNames={};\n            absentUsernames=new Set();\n            autodraftUsernames=new Set();\n            debugLog("CONFIG",`using just-saved draft ${pending} while ${label} catches up`);\n          }\n        }\n\n        debugLog("CONFIG",`loaded from ${label}: draft ${draftId}, ${Object.keys(broadcastNames).length} names, ${absentUsernames.size} absent, ${autodraftUsernames.size} auto`);\n        updateSharedConfigSummary();\n        return true;''',
-'pending draft override'
-)
-
-rep(
-'''      if(reload){\n        // Raw/main updates before the Pages deployment, so reload after a short\n        // commit-settle delay rather than waiting for GitHub Pages to rebuild.\n        setTimeout(()=>location.reload(),1400);\n      }''',
-'''      if(reload){\n        // Remember the just-saved draft only for this browser session. This is\n        // not a second configuration source; it simply bridges the Pages deploy\n        // delay after a successful shared-config commit.\n        try{sessionStorage.setItem(PENDING_DRAFT_SESSION_KEY,String(draftId))}catch(_){}\n        setTimeout(()=>location.reload(),700);\n      }''',
-'stable post-save reload'
+'''  let picksBusy = false;\n  let draftBusy = false;\n  let eventQueue = [];''',
+'''  let picksBusy = false;\n  let draftBusy = false;\n  let draftNotFound = false;\n  let eventQueue = [];''',
+'draft not found state'
 )
 
 
-# -----------------------------------------------------------------------------
-# Audio stability
-# A pick should never sound like it is being booed. Warning crowd is a short cue
-# at ~20 seconds, is not allowed to start immediately after a new pick, and is
-# stopped instantly when a pick arrives.
-# -----------------------------------------------------------------------------
+# Validate a candidate against Sleeper before we ever replace the shared draft.
 rep(
-'''  function fadeOutAudioGroup(group,duration=350){\n    cleanupFinishedClips();\n    activeClipAudios.filter(a=>a._dcGroup===group).forEach(a=>fadeOutAudio(a,duration));\n  }\n\n  function fadeOutAllAudio(duration=350){''',
-'''  function fadeOutAudioGroup(group,duration=350){\n    cleanupFinishedClips();\n    activeClipAudios.filter(a=>a._dcGroup===group).forEach(a=>fadeOutAudio(a,duration));\n  }\n\n  function stopAudioGroup(group){\n    cleanupFinishedClips();\n    activeClipAudios.filter(a=>a._dcGroup===group).forEach(a=>{\n      try{a.pause();a.currentTime=0}catch(_){}\n    });\n    cleanupFinishedClips();\n  }\n\n  function fadeOutAllAudio(duration=350){''',
-'hard stop audio group'
+'''  async function apiGet(path){\n    const r = await fetch(cb(API+path),{cache:"no-store",credentials:"omit",headers:{"Accept":"application/json"}});\n    if(!r.ok) throw new Error(`Sleeper API ${r.status}`);\n    lastApiAt=Date.now();\n    return r.json();\n  }''',
+'''  async function apiGet(path){\n    const r = await fetch(cb(API+path),{cache:"no-store",credentials:"omit",headers:{"Accept":"application/json"}});\n    if(!r.ok) throw new Error(`Sleeper API ${r.status}`);\n    lastApiAt=Date.now();\n    return r.json();\n  }\n\n  async function validateDraftCandidate(id){\n    const r=await fetch(cb(`${API}/draft/${encodeURIComponent(id)}`),{cache:"no-store",credentials:"omit",headers:{"Accept":"application/json"}});\n    if(r.status===404)throw new Error(`Sleeper does not recognize draft ${id}. Nothing was saved.`);\n    if(!r.ok)throw new Error(`Sleeper draft check failed with HTTP ${r.status}. Nothing was saved.`);\n    const d=await r.json();\n    if(!d || String(d.draft_id||"")!==String(id))throw new Error(`Sleeper returned an invalid draft response for ${id}. Nothing was saved.`);\n    return d;\n  }''',
+'candidate validation'
+)
+
+
+# Same-origin config is authoritative on load. A stale pending-session override
+# caused an invalid draft to survive even after config.json was repaired.
+old_pending='''        // Immediately after saving a new draft, Pages may still serve the old\n        // config for a few seconds. Keep the saving browser on the new draft for\n        // this one session; once the shared config catches up, discard the hint.\n        let pending="";\n        try{pending=String(sessionStorage.getItem(PENDING_DRAFT_SESSION_KEY)||"").trim()}catch(_){}\n        if(pending){\n          if(String(cfg?.draftId||"")===pending){\n            try{sessionStorage.removeItem(PENDING_DRAFT_SESSION_KEY)}catch(_){}\n          }else{\n            draftId=pending;\n            broadcastNames={};\n            absentUsernames=new Set();\n            autodraftUsernames=new Set();\n            debugLog("CONFIG",`using just-saved draft ${pending} while ${label} catches up`);\n          }\n        }\n\n'''
+rep(old_pending, '''        // Shared config is the only draft source on startup. Clear any stale\n        // one-session override left by older builds.\n        try{sessionStorage.removeItem(PENDING_DRAFT_SESSION_KEY)}catch(_){}\n\n''', 'remove stale pending override')
+
+
+# A missing draft gets one clear failure instead of hundreds of 404s.
+rep(
+'''  async function pollDraft(){\n    if(draftBusy)return;draftBusy=true;''',
+'''  async function pollDraft(){\n    if(draftNotFound)return;\n    if(draftBusy)return;draftBusy=true;''',
+'poll draft guard'
 )
 
 rep(
-'''    // At 20 seconds the room starts getting restless. This is one crowd cue\n    // per turn, not a repeated sound on every render tick.\n    if(draft.status==="drafting" && secs<=20 && secs>0 && soundEnabled && !warningCrowdStarted){\n      warningCrowdStarted=true;\n      fadeOutAudioGroup("warning",220);\n      // Brief crowd impatience only: one low-level boo burst at 20 seconds,\n      // then quiet well before the final 10-second countdown.\n      playTags(["crowd","boo"],.26,1,"warning","warning-boo",2600);\n    }''',
-'''    // A little crowd impatience at ~20 seconds, never a reaction to a pick.\n    // The turn-age guard protects against stale timer data briefly making a new\n    // turn appear to be inside the warning window.\n    const turnAgeMs=Math.max(0,Date.now()-turnStartedAt);\n    if(draft.status==="drafting" && secs<=20 && secs>10 && turnAgeMs>=7500 && soundEnabled && !warningCrowdStarted){\n      warningCrowdStarted=true;\n      fadeOutAudioGroup("warning",120);\n      playTags(["crowd","boo"],.24,1,"warning","warning-boo",2400);\n    }''',
-'20 second warning guard'
+'''    }catch(e){$("status").textContent=`Draft API error: ${e.message}`;$("status").classList.add("bad");}\n    finally{draftBusy=false;}\n  }\n\n  async function pollPicks(){\n    if(picksBusy)return;picksBusy=true;''',
+'''    }catch(e){\n      if(String(e?.message||e).includes("Sleeper API 404")){\n        draftNotFound=true;\n        const msg=`Sleeper does not recognize draft ${draftId}. Change the draft in Settings.`;\n        $("status").textContent=msg;$("status").classList.add("bad");\n        debugLogOnce(`draft404:${draftId}`,"DRAFT!",msg);\n      }else{\n        $("status").textContent=`Draft API error: ${e.message}`;$("status").classList.add("bad");\n      }\n    }\n    finally{draftBusy=false;}\n  }\n\n  async function pollPicks(){\n    if(draftNotFound)return;\n    if(picksBusy)return;picksBusy=true;''',
+'404 stop loop'
 )
 
-rep(
-'''        hidePressure();\n        playPickStinger();\n        fadeOutAudioGroup("warning",120);\n        warningCrowdStarted=false;''',
-'''        hidePressure();\n        playPickStinger();\n        // A selection is never booed. Kill any tail of the 20-second warning\n        // immediately before the pick reveal/new turn is rendered.\n        stopAudioGroup("warning");\n        warningCrowdStarted=false;''',
-'kill warning on pick'
-)
+
+# Validate first, save second, then switch the live page in-place. No immediate
+# reload means GitHub Pages deploy lag cannot bounce us back to an old draft.
+old_load='''  async function loadDraft(v){\n    const m=String(v||"").match(/(\\d{10,})/);\n    if(!m){\n      $("status").textContent="Enter a valid Sleeper draft URL or draft ID.";\n      $("status").classList.add("bad");\n      return;\n    }\n    const nextDraftId=m[1];\n    const draftChanged=nextDraftId!==draftId;\n    draftId=nextDraftId;\n\n    if(draftChanged){\n      broadcastNames={};\n      absentUsernames=new Set();\n      autodraftUsernames=new Set();\n      roastDecks.clear();\n      debugLog("CONFIG",`new draft ${draftId}: cleared broadcast names, absent flags and auto-draft flags`);\n    }\n\n    roastLevel=$("roastLevel").value;\n    await saveSharedSettings({reload:true});\n  }'''
+new_load='''  async function loadDraft(v){\n    const m=String(v||"").match(/(\\d{10,})/);\n    if(!m){\n      $("status").textContent="Enter a valid Sleeper draft URL or draft ID.";\n      $("status").classList.add("bad");\n      return;\n    }\n\n    const nextDraftId=m[1];\n    $("status").classList.remove("bad");\n    $("status").textContent=`Checking Sleeper draft ${nextDraftId}…`;\n\n    let checkedDraft;\n    try{\n      checkedDraft=await validateDraftCandidate(nextDraftId);\n    }catch(e){\n      const msg=e?.message||String(e);\n      $("status").textContent=msg;\n      $("status").classList.add("bad");\n      debugLog("DRAFT!",msg);\n      return;\n    }\n\n    const draftChanged=nextDraftId!==draftId;\n    draftId=nextDraftId;\n    draftNotFound=false;\n\n    if(draftChanged){\n      broadcastNames={};\n      absentUsernames=new Set();\n      autodraftUsernames=new Set();\n      roastDecks.clear();\n      debugLog("CONFIG",`new draft ${draftId}: cleared broadcast names, absent flags and auto-draft flags`);\n    }\n\n    roastLevel=$("roastLevel").value;\n    const saved=await saveSharedSettings({reload:false});\n    if(!saved)return;\n\n    // Switch the running app immediately. GitHub Pages can update whenever it\n    // updates; the saving browser does not need to reload through stale config.\n    stopAudioGroup("warning");\n    hidePressure();\n    draft=checkedDraft;\n    picks=[];\n    users={};\n    leagueUsers={};\n    lastPickCount=null;\n    observedPickAt=null;\n    lastLivePickKey="";\n    currentLiveOrdinal=1;\n    marketReady=false;\n    adpRows=[];\n    sleeperAdpById={};\n    adpAttemptedFor="";\n    turnStartedAt=Date.now();\n    warningCrowdStarted=false;\n    $("draftInput").value=`https://sleeper.com/draft/nfl/${draftId}`;\n    $("settings").classList.remove("open");\n    debugLog("DRAFT",`validated and switched to ${draftId} · status ${draft?.status||"unknown"}`);\n    renderAll();\n    hydrate();\n    loadSleeperADP();\n    pollPicks();\n  }'''
+rep(old_load, new_load, 'safe draft switching')
 
 p.write_text(s, encoding='utf-8')
-print('stabilized config loading, post-save draft switching, and warning audio')
+print('validated draft saves, removed stale override, and stopped 404 polling loops')
