@@ -1,34 +1,34 @@
 {
   "draftId": "1401758025210990592",
-  "updatedAt": "2026-09-05T00:39:02.830254+00:00",
-  "revision": "1401758025210990592:43:1788568742",
+  "updatedAt": "2026-09-05T00:39:19.544469+00:00",
+  "revision": "1401758025210990592:44:1788568759",
   "round": 4,
-  "nextOverallPick": 43,
-  "headline": "Round 4 heats up as waiting rooms empty",
+  "nextOverallPick": 44,
+  "headline": "Round 4 fireworks steal the show",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
+      "id": "round:4:WR",
+      "title": "4 WRs in Round 4",
+      "detail": "7 of 12 picks are complete in the round. \u2014 Wideouts flying off shelves everywhere",
+      "tone": "hot"
+    },
+    {
       "id": "round:4:TE",
       "title": "2 TEs in Round 4",
-      "detail": "6 of 12 picks are complete in the round. \u2014 Tight ends finally crashing the party",
+      "detail": "7 of 12 picks are complete in the round. \u2014 Tight ends crashing the party",
       "tone": ""
     },
     {
       "id": "round:4:RB",
       "title": "1 RB in Round 4",
-      "detail": "6 of 12 picks are complete in the round. \u2014 Lone wolf energy in the backfield",
-      "tone": ""
-    },
-    {
-      "id": "round:4:WR",
-      "title": "3 WRs in Round 4",
-      "detail": "6 of 12 picks are complete in the round. \u2014 Pass catchers stealing the spotlight again",
+      "detail": "7 of 12 picks are complete in the round. \u2014 Lone back feeling extra lonely",
       "tone": ""
     },
     {
       "id": "first:QB:30",
       "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 30. \u2014 Patience paid off beautifully there",
+      "detail": "The first QB came off the board at overall pick 30. \u2014 Finally some quarterback drama brewing",
       "tone": ""
     }
   ]
