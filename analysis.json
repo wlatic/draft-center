@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:19:15.827133+00:00",
-  "revision": "1389688986275938305:130:1788581955",
+  "updatedAt": "2026-09-05T04:19:45.000745+00:00",
+  "revision": "1389688986275938305:130:1788581985",
   "round": 11,
   "nextOverallPick": 130,
-  "headline": "Fresh builds crash the WR party",
+  "headline": "Pass catchers everywhere as round eleven rolls on",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "build:736089286075621376:wrheavy:12",
-      "title": "WR-HEAVY: O'Hara",
-      "detail": "Through 12 selections: 5 WR and 5 RB. \u2014 Everyone loves extra spice late",
+      "id": "first:TE:20",
+      "title": "FIRST TE: Trey McBride",
+      "detail": "The first TE came off the board at overall pick 20. \u2014 Fashionably late to the tight end party",
       "tone": ""
     },
     {
-      "id": "build:464274355744927744:wrheavy:11",
-      "title": "WR-HEAVY: Bryan",
-      "detail": "Through 11 selections: 5 WR and 4 RB. \u2014 Bold beautiful and totally unapologetic",
+      "id": "first:QB:22",
+      "title": "FIRST QB: Josh Allen",
+      "detail": "The first QB came off the board at overall pick 22. \u2014 Patience finally paid off beautifully there",
       "tone": ""
     },
     {
-      "id": "build:735268317480226816:wrheavy:11",
-      "title": "WR-HEAVY: Brandwagon",
-      "detail": "Through 11 selections: 5 WR and 3 RB. \u2014 Pass catchers galore, buckle up",
+      "id": "round:11:RB",
+      "title": "3 RBs in Round 11",
+      "detail": "8 of 12 picks are complete in the round. \u2014 Quietly spicy little ground game brewing",
       "tone": ""
     },
     {
-      "id": "build:736092553857843200:wrheavy:11",
-      "title": "WR-HEAVY: Tyke",
-      "detail": "Through 11 selections: 4 WR and 4 RB. \u2014 Chaos never looked so fun",
+      "id": "build:1133150840920875008:wrheavy:11",
+      "title": "WR-HEAVY: Drew",
+      "detail": "Through 11 selections: 4 WR and 4 RB. \u2014 Beautifully balanced and dangerously boring",
       "tone": ""
     }
   ]
