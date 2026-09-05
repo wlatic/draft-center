@@ -1,34 +1,34 @@
 {
   "draftId": "1401752680711323648",
-  "updatedAt": "2026-09-05T00:25:35.809076+00:00",
-  "revision": "1401752680711323648:127:1788567935",
+  "updatedAt": "2026-09-05T00:25:54.029020+00:00",
+  "revision": "1401752680711323648:128:1788567954",
   "round": 13,
-  "nextOverallPick": 127,
-  "headline": "DRAFTCENTER DESK",
-  "model": "deterministic",
+  "nextOverallPick": 128,
+  "headline": "Round 13 QB rush steals the show",
+  "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "build:1400143380893192192:wrheavy:13",
-      "title": "WR-HEAVY: CDTheKiid",
-      "detail": "Through 13 selections: 7 WR and 3 RB.",
+      "id": "round:13:QB",
+      "title": "3 QBs in Round 13",
+      "detail": "7 of 10 picks are complete in the round. \u2014 Late round chaos is pure television gold",
       "tone": ""
     },
     {
-      "id": "build:1225093344615464960:wrheavy:13",
-      "title": "WR-HEAVY: mikechiarappa",
-      "detail": "Through 13 selections: 6 WR and 3 RB.",
+      "id": "first:QB:22",
+      "title": "FIRST QB: Josh Allen",
+      "detail": "The first QB came off the board at overall pick 22. \u2014 Patience paid off beautifully there folks",
       "tone": ""
     },
     {
-      "id": "build:1400639440040288256:wrheavy:12",
-      "title": "WR-HEAVY: Austin4642",
-      "detail": "Through 12 selections: 6 WR and 4 RB.",
+      "id": "build:1254312823291379712:wrheavy:13",
+      "title": "WR-HEAVY: RileyCork",
+      "detail": "Through 13 selections: 5 WR and 4 RB. \u2014 Balance with a spicy wideout lean",
       "tone": ""
     },
     {
-      "id": "build:474098103616532480:wrheavy:12",
-      "title": "WR-HEAVY: MindMischief",
-      "detail": "Through 12 selections: 6 WR and 4 RB.",
+      "id": "build:976672704789032960:wrheavy:13",
+      "title": "WR-HEAVY: FatManBandit",
+      "detail": "Through 13 selections: 4 WR and 6 RB. \u2014 Old school ground and pound vibes",
       "tone": ""
     }
   ]
