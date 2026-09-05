@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:16:44.784753+00:00",
-  "revision": "1389688986275938305:127:1788581804",
+  "updatedAt": "2026-09-05T04:17:39.847783+00:00",
+  "revision": "1389688986275938305:129:1788581859",
   "round": 11,
-  "nextOverallPick": 127,
-  "headline": "Fresh builds crash the WR party",
-  "model": "muse-spark-1.3-contributor",
+  "nextOverallPick": 129,
+  "headline": "DRAFTCENTER DESK",
+  "model": "deterministic",
   "items": [
     {
-      "id": "round:11:WR",
-      "title": "3 WRs in Round 11",
-      "detail": "5 of 12 picks are complete in the round. \u2014 Wideouts flying, popcorn ready folks",
+      "id": "run:128:RB",
+      "title": "RB RUN: 4 of the last 6",
+      "detail": "The room has been hammering the same position lately.",
+      "tone": "hot"
+    },
+    {
+      "id": "build:1124837422895935488:wrheavy:11",
+      "title": "WR-HEAVY: Nakye",
+      "detail": "Through 11 selections: 5 WR and 4 RB.",
       "tone": ""
     },
     {
-      "id": "build:469620457826414592:wrheavy:11",
-      "title": "WR-HEAVY: Trently",
-      "detail": "Through 11 selections: 4 WR and 4 RB. \u2014 Balance with swagger, love it",
+      "id": "build:1134235688095932416:wrheavy:10",
+      "title": "WR-HEAVY: Welshy",
+      "detail": "Through 10 selections: 5 WR and 3 RB.",
       "tone": ""
     },
     {
-      "id": "build:735268317480226816:wrheavy:10",
-      "title": "WR-HEAVY: Brandwagon",
-      "detail": "Through 10 selections: 4 WR and 3 RB. \u2014 Quietly cooking something spicy here",
-      "tone": ""
-    },
-    {
-      "id": "build:736082966396133376:wrheavy:10",
-      "title": "WR-HEAVY: Jim",
-      "detail": "Through 10 selections: 4 WR and 4 RB. \u2014 Steady hands, sneaky dangerous squad",
+      "id": "build:461715450028355584:wrheavy:11",
+      "title": "WR-HEAVY: Shaylon",
+      "detail": "Through 11 selections: 5 WR and 5 RB.",
       "tone": ""
     }
   ]
