@@ -1,35 +1,35 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T03:43:32.418271+00:00",
-  "revision": "1389688986275938305:76:1788579812",
+  "updatedAt": "2026-09-05T03:44:27.472818+00:00",
+  "revision": "1389688986275938305:77:1788579867",
   "round": 7,
-  "nextOverallPick": 76,
-  "headline": "RB rush continues as builds diverge",
+  "nextOverallPick": 77,
+  "headline": "...",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "run:75:RB",
+      "id": "run:76:RB",
       "title": "RB RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately. \u2014 Everyone wants ground game suddenly",
+      "detail": "The room has been hammering the same position lately. \u2014 Room cannot resist shiny backfields right now",
+      "tone": "hot"
+    },
+    {
+      "id": "build:722634945050247168:zerorb:6",
+      "title": "ZERO-RB WATCH: Kevin",
+      "detail": "Through 6 selections: 5 WR, 0 RB. \u2014 Patience level absolutely legendary stuff here",
       "tone": "hot"
     },
     {
       "id": "build:469620457826414592:rbheavy:7",
       "title": "RB-HEAVY: Trently",
-      "detail": "Through 7 selections: 4 RB and 1 WR. \u2014 Trently is smashing the run button",
+      "detail": "Through 7 selections: 4 RB and 1 WR. \u2014 Smash mouth with a wink included",
       "tone": ""
     },
     {
-      "id": "first:QB:22",
-      "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 22. \u2014 Patience finally broke at quarterback",
+      "id": "build:736082966396133376:wrheavy:7",
+      "title": "WR-HEAVY: Jim",
+      "detail": "Through 7 selections: 4 WR and 2 RB. \u2014 Vibes immaculate, popcorn ready folks",
       "tone": ""
-    },
-    {
-      "id": "build:722634945050247168:zerorb:6",
-      "title": "ZERO-RB WATCH: Kevin",
-      "detail": "Through 6 selections: 5 WR, 0 RB. \u2014 Kevin is living dangerously, folks",
-      "tone": "hot"
     }
   ]
 }
