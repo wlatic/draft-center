@@ -1,34 +1,28 @@
 {
   "draftId": "1401758025210990592",
-  "updatedAt": "2026-09-05T00:42:09.474302+00:00",
-  "revision": "1401758025210990592:59:1788568929",
-  "round": 5,
-  "nextOverallPick": 59,
-  "headline": "WR Frenzy Hits Round Five Live Desk",
+  "updatedAt": "2026-09-05T00:42:27.012580+00:00",
+  "revision": "1401758025210990592:61:1788568947",
+  "round": 6,
+  "nextOverallPick": 61,
+  "headline": "Receivers flying while premiums set the tone",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
       "id": "build:409633893885431808:wrheavy:5",
       "title": "WR-HEAVY: streetvulture",
-      "detail": "Through 5 selections: 4 WR and 1 RB. \u2014 Pure chaos, beautiful obsession with pass catchers",
-      "tone": ""
-    },
-    {
-      "id": "round:5:WR",
-      "title": "5 WRs in Round 5",
-      "detail": "10 of 12 picks are complete in the round. \u2014 Receivers flying like hotcakes tonight folks",
-      "tone": "hot"
-    },
-    {
-      "id": "first:QB:30",
-      "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 30. \u2014 Patience finally snapped at quarterback, wow",
+      "detail": "Through 5 selections: 4 WR and 1 RB. \u2014 Bold beautiful chaos we absolutely love watching",
       "tone": ""
     },
     {
       "id": "first:TE:22",
       "title": "FIRST TE: Brock Bowers",
-      "detail": "The first TE came off the board at overall pick 22. \u2014 Early tight end splash still echoing loudly",
+      "detail": "The first TE came off the board at overall pick 22. \u2014 Spicy early swing shaking up the room",
+      "tone": ""
+    },
+    {
+      "id": "first:QB:30",
+      "title": "FIRST QB: Josh Allen",
+      "detail": "The first QB came off the board at overall pick 30. \u2014 Patience paying off with serious swagger here",
       "tone": ""
     }
   ]
