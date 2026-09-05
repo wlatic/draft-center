@@ -1,14 +1,14 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T03:22:29.967675+00:00",
-  "revision": "1389688986275938305:53:1788578549",
+  "updatedAt": "2026-09-05T03:23:01.314984+00:00",
+  "revision": "1389688986275938305:54:1788578581",
   "round": 5,
-  "nextOverallPick": 53,
-  "headline": "Running backs flying while Kevin stays fearless",
+  "nextOverallPick": 54,
+  "headline": "RB frenzy meets lone wolf receivers",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "run:52:RB",
+      "id": "run:53:RB",
       "title": "RB RUN: 4 of the last 6",
       "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly thirsty for backfield chaos",
       "tone": "hot"
@@ -16,19 +16,19 @@
     {
       "id": "build:722634945050247168:zerorb:5",
       "title": "ZERO-RB WATCH: Kevin",
-      "detail": "Through 5 selections: 5 WR, 0 RB. \u2014 Living dangerously and loving every minute",
+      "detail": "Through 5 selections: 5 WR, 0 RB. \u2014 Living dangerously while others play safe",
       "tone": "hot"
     },
     {
-      "id": "first:QB:22",
-      "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 22. \u2014 Finally some courage under center arrives",
+      "id": "round:5:WR",
+      "title": "1 WR in Round 5",
+      "detail": "1 of 12 picks are complete in the round. \u2014 Lonely island at the receiver party",
       "tone": ""
     },
     {
       "id": "first:TE:20",
       "title": "FIRST TE: Trey McBride",
-      "detail": "The first TE came off the board at overall pick 20. \u2014 Spicy start for premium position collectors",
+      "detail": "The first TE came off the board at overall pick 20. \u2014 Early bird getting the spicy touchdown",
       "tone": ""
     }
   ]
