@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T03:56:34.838639+00:00",
-  "revision": "1389688986275938305:95:1788580594",
+  "updatedAt": "2026-09-05T03:57:08.418242+00:00",
+  "revision": "1389688986275938305:96:1788580628",
   "round": 8,
-  "nextOverallPick": 95,
-  "headline": "RB rush continues as builds diverge in Round 8",
-  "model": "muse-spark-1.3-contributor",
+  "nextOverallPick": 96,
+  "headline": "DRAFTCENTER DESK",
+  "model": "deterministic",
   "items": [
     {
-      "id": "run:94:RB",
+      "id": "run:95:RB",
       "title": "RB RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly wants ground game glory",
+      "detail": "The room has been hammering the same position lately.",
       "tone": "hot"
     },
     {
-      "id": "build:735268317480226816:wrheavy:8",
-      "title": "WR-HEAVY: Brandwagon",
-      "detail": "Through 8 selections: 4 WR and 2 RB. \u2014 Pass catchers piling up beautifully here",
+      "id": "build:1124837422895935488:wrheavy:8",
+      "title": "WR-HEAVY: Nakye",
+      "detail": "Through 8 selections: 5 WR and 3 RB.",
       "tone": ""
     },
     {
-      "id": "build:736092553857843200:rbheavy:8",
-      "title": "RB-HEAVY: Tyke",
-      "detail": "Through 8 selections: 4 RB and 2 WR. \u2014 Old school smash mouth vibes only",
+      "id": "build:722634945050247168:wrheavy:8",
+      "title": "WR-HEAVY: Kevin",
+      "detail": "Through 8 selections: 5 WR and 1 RB.",
       "tone": ""
     },
     {
-      "id": "first:QB:22",
-      "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 22. \u2014 Patience finally paid off nicely there",
+      "id": "build:461715450028355584:wrheavy:7",
+      "title": "WR-HEAVY: Shaylon",
+      "detail": "Through 7 selections: 4 WR and 2 RB.",
       "tone": ""
     }
   ]
