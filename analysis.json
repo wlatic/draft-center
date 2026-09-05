@@ -1,34 +1,34 @@
 {
   "draftId": "1401760906391601152",
-  "updatedAt": "2026-09-05T01:03:22.157645+00:00",
-  "revision": "1401760906391601152:64:1788570202",
+  "updatedAt": "2026-09-05T01:03:53.641701+00:00",
+  "revision": "1401760906391601152:66:1788570233",
   "round": 6,
-  "nextOverallPick": 64,
-  "headline": "Wideouts Everywhere As Round Six Takes Shape",
+  "nextOverallPick": 66,
+  "headline": "Tight ends flying as wideouts keep dominating",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
       "id": "build:730942645219762176:wrheavy:6",
       "title": "WR-HEAVY: JPCle216",
-      "detail": "Through 6 selections: 4 WR and 2 RB. \u2014 Pure fireworks, no apologies needed here",
+      "detail": "Through 6 selections: 4 WR and 2 RB. \u2014 Bold beautiful chaos we absolutely love",
+      "tone": ""
+    },
+    {
+      "id": "first:TE:21",
+      "title": "FIRST TE: Brock Bowers",
+      "detail": "The first TE came off the board at overall pick 21. \u2014 Early sparkle setting the tone nicely",
       "tone": ""
     },
     {
       "id": "round:6:WR",
-      "title": "2 WRs in Round 6",
-      "detail": "3 of 12 picks are complete in the round. \u2014 Pass catchers stealing the spotlight again",
+      "title": "3 WRs in Round 6",
+      "detail": "5 of 12 picks are complete in the round. \u2014 Pass catchers stealing the show again",
       "tone": ""
     },
     {
       "id": "round:6:TE",
-      "title": "1 TE in Round 6",
-      "detail": "3 of 12 picks are complete in the round. \u2014 Spicy pick, love the boldness",
-      "tone": ""
-    },
-    {
-      "id": "first:QB:51",
-      "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 51. \u2014 Patience finally paying off beautifully",
+      "title": "2 TEs in Round 6",
+      "detail": "5 of 12 picks are complete in the round. \u2014 Spicy late twist nobody saw coming",
       "tone": ""
     }
   ]
