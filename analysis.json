@@ -1,35 +1,35 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T03:38:54.061633+00:00",
-  "revision": "1389688986275938305:72:1788579534",
-  "round": 6,
-  "nextOverallPick": 72,
-  "headline": "Backs flying, Kevin says nah, Jim loads up",
+  "updatedAt": "2026-09-05T03:41:00.888210+00:00",
+  "revision": "1389688986275938305:73:1788579660",
+  "round": 7,
+  "nextOverallPick": 73,
+  "headline": "RB frenzy meets fresh tight end history",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "run:71:RB",
+      "id": "run:72:RB",
       "title": "RB RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately. \u2014 Everybody wants ground game suddenly",
+      "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly desperate for backfield magic",
       "tone": "hot"
     },
     {
-      "id": "build:736082966396133376:wrheavy:7",
-      "title": "WR-HEAVY: Jim",
-      "detail": "Through 7 selections: 4 WR and 2 RB. \u2014 Jim collecting pass catchers like candy",
+      "id": "first:TE:20",
+      "title": "FIRST TE: Trey McBride",
+      "detail": "The first TE came off the board at overall pick 20. \u2014 Finally some love for tight ends",
       "tone": ""
     },
     {
-      "id": "round:6:QB",
-      "title": "1 QB in Round 6",
-      "detail": "4 of 12 picks are complete in the round. \u2014 Spicy little quarterback cameo here",
+      "id": "round:7:TE",
+      "title": "1 TE in Round 7",
+      "detail": "2 of 12 picks are complete in the round. \u2014 Spicy start, stay tuned folks",
       "tone": ""
     },
     {
-      "id": "build:722634945050247168:zerorb:6",
-      "title": "ZERO-RB WATCH: Kevin",
-      "detail": "Through 6 selections: 5 WR, 0 RB. \u2014 Kevin is living dangerously, folks",
-      "tone": "hot"
+      "id": "round:7:WR",
+      "title": "1 WR in Round 7",
+      "detail": "2 of 12 picks are complete in the round. \u2014 Receivers crashing this party too",
+      "tone": ""
     }
   ]
 }
