@@ -1,28 +1,28 @@
 {
   "draftId": "1401758025210990592",
-  "updatedAt": "2026-09-05T00:34:48.513793+00:00",
-  "revision": "1401758025210990592:13:1788568488",
+  "updatedAt": "2026-09-05T00:35:04.232198+00:00",
+  "revision": "1401758025210990592:13:1788568504",
   "round": 2,
   "nextOverallPick": 13,
-  "headline": "Positional drought meets running back frenzy",
+  "headline": "Positional freeze meets running back frenzy",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
       "id": "run:12:RB",
       "title": "RB RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately. \u2014 Everyone wants beef up front, folks",
+      "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly wants the same shiny toy",
       "tone": "hot"
     },
     {
       "id": "none:QB:2",
       "title": "NO QB YET",
-      "detail": "No QB has been selected through 12 live picks. \u2014 Patience is brave and slightly chaotic",
+      "detail": "No QB has been selected through 12 live picks. \u2014 Patience, friends, chaos loves waiting quarterbacks",
       "tone": "good"
     },
     {
       "id": "none:TE:2",
       "title": "NO TE YET",
-      "detail": "No TE has been selected through 12 live picks. \u2014 Tight ends waiting for their spotlight",
+      "detail": "No TE has been selected through 12 live picks. \u2014 Tight ends chilling while madness unfolds",
       "tone": "good"
     }
   ]
