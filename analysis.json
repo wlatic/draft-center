@@ -1,28 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T03:14:12.904025+00:00",
-  "revision": "1389688986275938305:42:1788578052",
+  "updatedAt": "2026-09-05T03:15:06.642434+00:00",
+  "revision": "1389688986275938305:43:1788578106",
   "round": 4,
-  "nextOverallPick": 42,
-  "headline": "RB Run Continues as Early QB and TE Picks Loom",
+  "nextOverallPick": 43,
+  "headline": "RB Frenzy Hits Round Four",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "run:41:RB",
+      "id": "run:42:RB",
       "title": "RB RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately. \u2014 Everyone is thirsty and the well is drying fast",
+      "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly desperate for backfield magic",
       "tone": "hot"
     },
     {
-      "id": "first:TE:20",
-      "title": "FIRST TE: Trey McBride",
-      "detail": "The first TE came off the board at overall pick 20. \u2014 Classic early bird getting the fancy worm",
-      "tone": ""
+      "id": "build:722634945050247168:zerorb:4",
+      "title": "ZERO-RB WATCH: Kevin",
+      "detail": "Through 4 selections: 4 WR, 0 RB. \u2014 Bold, spicy, gloriously stubborn draft energy",
+      "tone": "hot"
     },
     {
       "id": "first:QB:22",
       "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 22. \u2014 Bold move, love the swagger here",
+      "detail": "The first QB came off the board at overall pick 22. \u2014 Finally some quarterback drama unfolding",
+      "tone": ""
+    },
+    {
+      "id": "first:TE:20",
+      "title": "FIRST TE: Trey McBride",
+      "detail": "The first TE came off the board at overall pick 20. \u2014 Tight end chaos always sparks joy",
       "tone": ""
     }
   ]
