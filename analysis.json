@@ -1,34 +1,34 @@
 {
   "draftId": "1401758025210990592",
-  "updatedAt": "2026-09-05T00:46:20.852211+00:00",
-  "revision": "1401758025210990592:83:1788569180",
-  "round": 7,
-  "nextOverallPick": 83,
-  "headline": "DRAFTCENTER DESK",
-  "model": "deterministic",
+  "updatedAt": "2026-09-05T00:46:39.071828+00:00",
+  "revision": "1401758025210990592:85:1788569199",
+  "round": 8,
+  "nextOverallPick": 85,
+  "headline": "Fresh builds crash the party late",
+  "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "build:605969777449598976:wrheavy:7",
-      "title": "WR-HEAVY: tsdrew",
-      "detail": "Through 7 selections: 4 WR and 2 RB.",
+      "id": "build:1391896288479420417:rbheavy:7",
+      "title": "RB-HEAVY: hvpro",
+      "detail": "Through 7 selections: 4 RB and 3 WR. \u2014 Smashmouth and proud, folks",
       "tone": ""
     },
     {
-      "id": "build:609911451653877760:rbheavy:7",
-      "title": "RB-HEAVY: bucketsnbodies",
-      "detail": "Through 7 selections: 4 RB and 3 WR.",
+      "id": "build:996590331443486720:wrheavy:7",
+      "title": "WR-HEAVY: osvaldo7",
+      "detail": "Through 7 selections: 4 WR and 2 RB. \u2014 Fancy footwork on display",
       "tone": ""
     },
     {
       "id": "first:QB:30",
       "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 30.",
+      "detail": "The first QB came off the board at overall pick 30. \u2014 Patience finally paid off beautifully",
       "tone": ""
     },
     {
       "id": "first:TE:22",
       "title": "FIRST TE: Brock Bowers",
-      "detail": "The first TE came off the board at overall pick 22.",
+      "detail": "The first TE came off the board at overall pick 22. \u2014 Early bird gets the touchdown",
       "tone": ""
     }
   ]
