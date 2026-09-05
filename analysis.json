@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:16:11.035396+00:00",
-  "revision": "1389688986275938305:125:1788581771",
+  "updatedAt": "2026-09-05T04:16:27.957763+00:00",
+  "revision": "1389688986275938305:127:1788581787",
   "round": 11,
-  "nextOverallPick": 125,
-  "headline": "DRAFTCENTER DESK",
-  "model": "deterministic",
+  "nextOverallPick": 127,
+  "headline": "...",
+  "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "build:1124837422895935488:wrheavy:10",
-      "title": "WR-HEAVY: Nakye",
-      "detail": "Through 10 selections: 5 WR and 3 RB.",
+      "id": "first:TE:20",
+      "title": "FIRST TE: Trey McBride",
+      "detail": "The first TE came off the board at overall pick 20. \u2014 Tight end drama always spices things up nicely",
       "tone": ""
     },
     {
-      "id": "build:1134235688095932416:wrheavy:10",
-      "title": "WR-HEAVY: Welshy",
-      "detail": "Through 10 selections: 5 WR and 3 RB.",
+      "id": "first:QB:22",
+      "title": "FIRST QB: Josh Allen",
+      "detail": "The first QB came off the board at overall pick 22. \u2014 Quarterback patience paying off beautifully right now",
       "tone": ""
     },
     {
-      "id": "build:461715450028355584:wrheavy:11",
-      "title": "WR-HEAVY: Shaylon",
-      "detail": "Through 11 selections: 5 WR and 5 RB.",
+      "id": "build:722634945050247168:wrheavy:10",
+      "title": "WR-HEAVY: Kevin",
+      "detail": "Through 10 selections: 5 WR and 3 RB. \u2014 Absolutely loving this bold receiver obsession energy",
       "tone": ""
     },
     {
-      "id": "build:464274355744927744:wrheavy:11",
-      "title": "WR-HEAVY: Bryan",
-      "detail": "Through 11 selections: 5 WR and 4 RB.",
+      "id": "build:1133150840920875008:wrheavy:11",
+      "title": "WR-HEAVY: Drew",
+      "detail": "Through 11 selections: 4 WR and 4 RB. \u2014 Balance with flair, what a vibe",
       "tone": ""
     }
   ]
