@@ -1,34 +1,34 @@
 {
   "draftId": "1401760906391601152",
-  "updatedAt": "2026-09-05T01:00:13.327454+00:00",
-  "revision": "1401760906391601152:48:1788570013",
+  "updatedAt": "2026-09-05T01:00:29.663505+00:00",
+  "revision": "1401760906391601152:48:1788570029",
   "round": 4,
   "nextOverallPick": 48,
-  "headline": "No QBs, Big TE Wait, Round 4 Run",
+  "headline": "QBs Ghosting While Round Four Runs Wild",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
       "id": "none:QB:4",
       "title": "NO QB YET",
-      "detail": "No QB has been selected through 47 live picks. \u2014 Patience is bold until panic hits everyone",
+      "detail": "No QB has been selected through 47 live picks. \u2014 Patience or pure chaos brewing here",
       "tone": "good"
     },
     {
       "id": "first:TE:21",
       "title": "FIRST TE: Brock Bowers",
-      "detail": "The first TE came off the board at overall pick 21. \u2014 Elite tight ends always start the party",
+      "detail": "The first TE came off the board at overall pick 21. \u2014 Bowers started the tight end party",
       "tone": ""
     },
     {
       "id": "round:4:RB",
       "title": "5 RBs in Round 4",
-      "detail": "11 of 12 picks are complete in the round. \u2014 Ground game getting love late and loud",
+      "detail": "11 of 12 picks are complete in the round. \u2014 Ground game getting serious love now",
       "tone": "hot"
     },
     {
       "id": "round:4:WR",
       "title": "5 WRs in Round 4",
-      "detail": "11 of 12 picks are complete in the round. \u2014 Pass catchers flying off shelves nightly",
+      "detail": "11 of 12 picks are complete in the round. \u2014 Pass catchers flying off shelves fast",
       "tone": "hot"
     }
   ]
