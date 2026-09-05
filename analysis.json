@@ -1,28 +1,28 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T03:12:27.644134+00:00",
-  "revision": "1389688986275938305:37:1788577947",
+  "updatedAt": "2026-09-05T03:13:20.377163+00:00",
+  "revision": "1389688986275938305:38:1788578000",
   "round": 4,
-  "nextOverallPick": 37,
-  "headline": "RB Frenzy Hits DraftCenter as Early QB TE Fall",
+  "nextOverallPick": 38,
+  "headline": "RB Frenzy Rolls Into Round Four",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "run:36:RB",
+      "id": "run:37:RB",
       "title": "RB RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly wants a backfield buddy badly",
+      "detail": "The room has been hammering the same position lately. \u2014 Everyone wants ground game glory right now",
       "tone": "hot"
     },
     {
       "id": "first:QB:22",
       "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 22. \u2014 Patience paid off beautifully there, folks",
+      "detail": "The first QB came off the board at overall pick 22. \u2014 Finally some fireworks under center folks",
       "tone": ""
     },
     {
       "id": "first:TE:20",
       "title": "FIRST TE: Trey McBride",
-      "detail": "The first TE came off the board at overall pick 20. \u2014 Bold, spicy, and absolutely box office",
+      "detail": "The first TE came off the board at overall pick 20. \u2014 Tight end island is officially open",
       "tone": ""
     }
   ]
