@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:23:26.072553+00:00",
-  "revision": "1389688986275938305:134:1788582206",
+  "updatedAt": "2026-09-05T04:23:55.359094+00:00",
+  "revision": "1389688986275938305:136:1788582235",
   "round": 12,
-  "nextOverallPick": 134,
-  "headline": "Receivers Everywhere As Draft Boards Tilt Pass-Happy",
+  "nextOverallPick": 136,
+  "headline": "Round 12 Live: Pass-Catchers Everywhere",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "build:722634945050247168:wrheavy:11",
-      "title": "WR-HEAVY: Kevin",
-      "detail": "Through 11 selections: 5 WR and 4 RB. \u2014 Pure chaos, and we love every second",
+      "id": "build:1134235688095932416:wrheavy:12",
+      "title": "WR-HEAVY: Welshy",
+      "detail": "Through 12 selections: 5 WR and 4 RB. \u2014 Welshy clearly loves weekend shootouts",
       "tone": ""
     },
     {
-      "id": "build:469620457826414592:wrheavy:11",
-      "title": "WR-HEAVY: Trently",
-      "detail": "Through 11 selections: 4 WR and 4 RB. \u2014 Balance schmalance, just score baby",
-      "tone": ""
-    },
-    {
-      "id": "build:736082966396133376:wrheavy:11",
+      "id": "build:736082966396133376:wrheavy:12",
       "title": "WR-HEAVY: Jim",
-      "detail": "Through 11 selections: 4 WR and 4 RB. \u2014 Someone fetch these managers a mirror",
+      "detail": "Through 12 selections: 5 WR and 4 RB. \u2014 Jim is cooking pure fireworks",
       "tone": ""
     },
     {
-      "id": "build:736089286075621376:wrheavy:12",
-      "title": "WR-HEAVY: O'Hara",
-      "detail": "Through 12 selections: 5 WR and 5 RB. \u2014 Stay spicy, draft room legends",
+      "id": "round:12:RB",
+      "title": "1 RB in Round 12",
+      "detail": "2 of 12 picks are complete in the round. \u2014 Backfields getting spicy down here",
+      "tone": ""
+    },
+    {
+      "id": "round:12:WR",
+      "title": "1 WR in Round 12",
+      "detail": "2 of 12 picks are complete in the round. \u2014 Receivers flying off shelves again",
       "tone": ""
     }
   ]
