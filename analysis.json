@@ -1,34 +1,34 @@
 {
   "draftId": "1401758025210990592",
-  "updatedAt": "2026-09-05T00:45:05.365054+00:00",
-  "revision": "1401758025210990592:74:1788569105",
+  "updatedAt": "2026-09-05T00:45:24.528900+00:00",
+  "revision": "1401758025210990592:77:1788569124",
   "round": 7,
-  "nextOverallPick": 74,
-  "headline": "Tight ends crash Round 7 as wideouts rule early",
+  "nextOverallPick": 77,
+  "headline": "Round 7 heats up as builds collide",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
+      "id": "build:609911451653877760:rbheavy:7",
+      "title": "RB-HEAVY: bucketsnbodies",
+      "detail": "Through 7 selections: 4 RB and 3 WR. \u2014 Smashmouth cinema, popcorn optional",
+      "tone": ""
+    },
+    {
+      "id": "round:7:RB",
+      "title": "2 RBs in Round 7",
+      "detail": "4 of 12 picks are complete in the round. \u2014 Ground game stealing the spotlight",
+      "tone": ""
+    },
+    {
+      "id": "round:7:WR",
+      "title": "1 WR in Round 7",
+      "detail": "4 of 12 picks are complete in the round. \u2014 Quietly spicy value territory",
+      "tone": ""
+    },
+    {
       "id": "round:7:TE",
       "title": "1 TE in Round 7",
-      "detail": "1 of 12 picks are complete in the round. \u2014 Stay frosty, managers love late drama",
-      "tone": ""
-    },
-    {
-      "id": "build:409633893885431808:wrheavy:6",
-      "title": "WR-HEAVY: streetvulture",
-      "detail": "Through 6 selections: 4 WR and 1 RB. \u2014 Bold, beautiful, and gloriously pass happy",
-      "tone": ""
-    },
-    {
-      "id": "build:605969777449598976:wrheavy:6",
-      "title": "WR-HEAVY: tsdrew",
-      "detail": "Through 6 selections: 4 WR and 1 RB. \u2014 Copycat energy with championship swagger",
-      "tone": ""
-    },
-    {
-      "id": "first:TE:22",
-      "title": "FIRST TE: Brock Bowers",
-      "detail": "The first TE came off the board at overall pick 22. \u2014 Early bird gets the touchdown party",
+      "detail": "4 of 12 picks are complete in the round. \u2014 Late love feels so right",
       "tone": ""
     }
   ]
