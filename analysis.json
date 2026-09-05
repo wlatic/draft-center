@@ -1,28 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T01:44:01.775802+00:00",
-  "revision": "1389688986275938305:13:1788572641",
-  "round": 2,
-  "nextOverallPick": 13,
-  "headline": "RB rush continues while QBs wait",
+  "updatedAt": "2026-09-05T01:47:10.614076+00:00",
+  "revision": "1389688986275938305:12:1788572830",
+  "round": 1,
+  "nextOverallPick": 12,
+  "headline": "Running Backs Crash the Early Party",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "run:12:RB",
-      "title": "RB RUN: 5 of the last 6",
-      "detail": "The room has been hammering the same position lately. \u2014 Everyone wants ground game glory right now",
+      "id": "run:11:RB",
+      "title": "RB RUN: 4 of the last 6",
+      "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly wants to run the rock downhill",
       "tone": "hot"
-    },
-    {
-      "id": "none:QB:2",
-      "title": "NO QB YET",
-      "detail": "No QB has been selected through 12 live picks. \u2014 Patience, patience, signal callers can wait",
-      "tone": "good"
     },
     {
       "id": "first:TE:5",
       "title": "FIRST TE: Brock Bowers",
-      "detail": "The first TE came off the board at overall pick 5.",
+      "detail": "The first TE came off the board at overall pick 5. \u2014 Spicy start, tight end lovers rejoice loudly",
+      "tone": ""
+    },
+    {
+      "id": "round:1:RB",
+      "title": "1 RB in Round 1",
+      "detail": "2 of 12 picks are complete in the round. \u2014 Slow simmer building at the big table",
+      "tone": ""
+    },
+    {
+      "id": "round:1:WR",
+      "title": "1 WR in Round 1",
+      "detail": "2 of 12 picks are complete in the round. \u2014 Plenty of fireworks still waiting backstage",
       "tone": ""
     }
   ]
