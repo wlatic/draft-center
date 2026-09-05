@@ -1,34 +1,34 @@
 {
   "draftId": "1401760906391601152",
-  "updatedAt": "2026-09-05T01:16:32.917312+00:00",
-  "revision": "1401760906391601152:133:1788570992",
+  "updatedAt": "2026-09-05T01:16:50.797406+00:00",
+  "revision": "1401760906391601152:143:1788571010",
   "round": 12,
-  "nextOverallPick": 133,
-  "headline": "DRAFTCENTER DESK",
-  "model": "deterministic",
+  "nextOverallPick": 143,
+  "headline": "Wideouts everywhere as Round 12 defenses crash party",
+  "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "build:464331840719679488:wrheavy:11",
+      "id": "build:464331840719679488:wrheavy:12",
       "title": "WR-HEAVY: asotzrocky",
-      "detail": "Through 11 selections: 6 WR and 2 RB.",
+      "detail": "Through 12 selections: 6 WR and 2 RB. \u2014 Unapologetic velvet rope for pass catchers only",
       "tone": ""
     },
     {
-      "id": "build:1391896288479420417:wrheavy:11",
-      "title": "WR-HEAVY: hvpro",
-      "detail": "Through 11 selections: 5 WR and 4 RB.",
+      "id": "build:997969350734807040:wrheavy:12",
+      "title": "WR-HEAVY: ojsimpin1804",
+      "detail": "Through 12 selections: 5 WR and 3 RB. \u2014 Quietly building a highlight reel machine",
       "tone": ""
     },
     {
-      "id": "build:398720124246331392:wrheavy:11",
-      "title": "WR-HEAVY: pranitdas96",
-      "detail": "Through 11 selections: 5 WR and 6 RB.",
+      "id": "build:854916553202847744:rbheavy:12",
+      "title": "RB-HEAVY: Jakito",
+      "detail": "Through 12 selections: 4 RB and 3 WR. \u2014 Old school smash mouth with flair",
       "tone": ""
     },
     {
-      "id": "build:711639117267554304:wrheavy:11",
-      "title": "WR-HEAVY: richiesouders",
-      "detail": "Through 11 selections: 5 WR and 2 RB.",
+      "id": "round:12:DEF",
+      "title": "3 DEFs in Round 12",
+      "detail": "10 of 12 picks are complete in the round. \u2014 Chaos gremlins stealing the spotlight late",
       "tone": ""
     }
   ]
