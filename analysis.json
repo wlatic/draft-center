@@ -1,35 +1,35 @@
 {
   "draftId": "1401758025210990592",
-  "updatedAt": "2026-09-05T00:52:14.152172+00:00",
-  "revision": "1401758025210990592:152:1788569534",
-  "round": 13,
-  "nextOverallPick": 152,
-  "headline": "Backfield frenzy takes over the draft room",
-  "model": "muse-spark-1.3-contributor",
+  "updatedAt": "2026-09-05T00:52:32.618080+00:00",
+  "revision": "1401758025210990592:157:1788569552",
+  "round": 14,
+  "nextOverallPick": 157,
+  "headline": "DRAFTCENTER DESK",
+  "model": "deterministic",
   "items": [
     {
-      "id": "run:151:RB",
-      "title": "RB RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly wants ground game glory",
-      "tone": "hot"
+      "id": "build:1001086146597777408:wrheavy:13",
+      "title": "WR-HEAVY: GaryNeville666",
+      "detail": "Through 13 selections: 6 WR and 4 RB.",
+      "tone": ""
     },
     {
       "id": "build:483427149810757632:rbheavy:13",
       "title": "RB-HEAVY: xainshawty",
-      "detail": "Through 13 selections: 6 RB and 2 WR. \u2014 Old school smashmouth with modern swagger",
+      "detail": "Through 13 selections: 6 RB and 2 WR.",
       "tone": ""
     },
     {
-      "id": "build:1001086146597777408:wrheavy:13",
-      "title": "WR-HEAVY: GaryNeville666",
-      "detail": "Through 13 selections: 6 WR and 4 RB. \u2014 Catch passes, cash checks, repeat forever",
+      "id": "build:988320883141935104:wrheavy:13",
+      "title": "WR-HEAVY: EIijah",
+      "detail": "Through 13 selections: 6 WR and 3 RB.",
       "tone": ""
     },
     {
-      "id": "round:13:RB",
-      "title": "4 RBs in Round 13",
-      "detail": "7 of 12 picks are complete in the round. \u2014 Late-round gold rush is officially on",
-      "tone": "hot"
+      "id": "build:595861056119697408:wrheavy:13",
+      "title": "WR-HEAVY: Giantsmm",
+      "detail": "Through 13 selections: 5 WR and 5 RB.",
+      "tone": ""
     }
   ]
 }
