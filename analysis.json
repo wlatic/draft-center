@@ -1,34 +1,34 @@
 {
   "draftId": "1401758025210990592",
-  "updatedAt": "2026-09-05T00:44:47.985242+00:00",
-  "revision": "1401758025210990592:73:1788569087",
+  "updatedAt": "2026-09-05T00:45:05.365054+00:00",
+  "revision": "1401758025210990592:74:1788569105",
   "round": 7,
-  "nextOverallPick": 73,
-  "headline": "Twin WR Heavies, Early TE and QB Splashes",
+  "nextOverallPick": 74,
+  "headline": "Tight ends crash Round 7 as wideouts rule early",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
+      "id": "round:7:TE",
+      "title": "1 TE in Round 7",
+      "detail": "1 of 12 picks are complete in the round. \u2014 Stay frosty, managers love late drama",
+      "tone": ""
+    },
+    {
       "id": "build:409633893885431808:wrheavy:6",
       "title": "WR-HEAVY: streetvulture",
-      "detail": "Through 6 selections: 4 WR and 1 RB. \u2014 Pure fireworks, all vibes and velvet hands",
+      "detail": "Through 6 selections: 4 WR and 1 RB. \u2014 Bold, beautiful, and gloriously pass happy",
       "tone": ""
     },
     {
       "id": "build:605969777449598976:wrheavy:6",
       "title": "WR-HEAVY: tsdrew",
-      "detail": "Through 6 selections: 4 WR and 1 RB. \u2014 Copycat chaos we absolutely live for",
-      "tone": ""
-    },
-    {
-      "id": "first:QB:30",
-      "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 30. \u2014 Finally, someone pushed the quarterback button",
+      "detail": "Through 6 selections: 4 WR and 1 RB. \u2014 Copycat energy with championship swagger",
       "tone": ""
     },
     {
       "id": "first:TE:22",
       "title": "FIRST TE: Brock Bowers",
-      "detail": "The first TE came off the board at overall pick 22. \u2014 Spicy early, love the bold swagger",
+      "detail": "The first TE came off the board at overall pick 22. \u2014 Early bird gets the touchdown party",
       "tone": ""
     }
   ]
