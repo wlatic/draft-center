@@ -1,14 +1,34 @@
 from pathlib import Path
 
-p = Path('index.html')
-s = p.read_text(encoding='utf-8')
+p = Path("index.html")
+s = p.read_text(encoding="utf-8")
 
-old = '''  async function loadSharedSettings(){\n    // Same-origin config is the most reliable startup path, especially on TV\n    // browsers. Raw GitHub remains a bounded fallback, never a boot dependency.\n    const sources=[\n      [\"GitHub Pages\",SHARED_CONFIG_URL],\n      [\"GitHub raw fallback\",SHARED_CONFIG_FALLBACK_URL]\n    ];\n\n    for(const [label,url] of sources){\n      try{\n        const cfg=await fetchJsonWithTimeout(url);\n        applySharedSettings(cfg);\n\n        // Shared config is the only draft source on startup. Clear any stale\n        // one-session override left by older builds.\n        try{sessionStorage.removeItem(PENDING_DRAFT_SESSION_KEY)}catch(_){}\n\n        debugLog(\"CONFIG\",`loaded from ${label}: draft ${draftId}, ${Object.keys(broadcastNames).length} names, ${absentUsernames.size} absent, ${autodraftUsernames.size} auto`);\n        updateSharedConfigSummary();\n        return true;\n      }catch(e){\n        console.warn(`DraftCenter config via ${label} failed`,e);\n      }\n    }\n\n    debugLog(\"CONFIG!\",`shared config unavailable; continuing with default draft ${draftId}`);\n    updateSharedConfigSummary();\n    return false;\n  }'''
-
-new = '''  function decodeGithubConfig(meta){\n    const encoded=String(meta?.content||\"\").replace(/\\s/g,\"\");\n    if(!encoded)throw new Error(\"GitHub config response had no content\");\n    const binary=atob(encoded);\n    const bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));\n    return JSON.parse(new TextDecoder().decode(bytes));\n  }\n\n  async function fetchSharedConfigFromMain(){\n    // Read the actual main-branch file through GitHub's API. This updates as\n    // soon as Save Shared Draft commits config.json and does NOT wait for a\n    // GitHub Pages deployment, which is what caused hard-refresh draft reverts.\n    const meta=await fetchJsonWithTimeout(`${GITHUB_CONFIG_API}?ref=main`,3500);\n    return decodeGithubConfig(meta);\n  }\n\n  async function loadSharedSettings(){\n    // main/config.json is authoritative. Pages is only a fallback because its\n    // deployment can lag behind a just-saved draft by a minute or more.\n    const sources=[\n      [\"GitHub main\",fetchSharedConfigFromMain],\n      [\"GitHub Pages fallback\",()=>fetchJsonWithTimeout(SHARED_CONFIG_URL)],\n      [\"GitHub raw fallback\",()=>fetchJsonWithTimeout(SHARED_CONFIG_FALLBACK_URL)]\n    ];\n\n    for(const [label,loader] of sources){\n      try{\n        const cfg=await loader();\n        applySharedSettings(cfg);\n        try{sessionStorage.removeItem(PENDING_DRAFT_SESSION_KEY)}catch(_){}\n        debugLog(\"CONFIG\",`loaded from ${label}: draft ${draftId}, ${Object.keys(broadcastNames).length} names, ${absentUsernames.size} absent, ${autodraftUsernames.size} auto`);\n        updateSharedConfigSummary();\n        return true;\n      }catch(e){\n        console.warn(`DraftCenter config via ${label} failed`,e);\n      }\n    }\n\n    debugLog(\"CONFIG!\",`shared config unavailable; continuing with default draft ${draftId}`);\n    updateSharedConfigSummary();\n    return false;\n  }'''
+old = '''  /* High-contrast TV palette: positions should read instantly from across a room. */
+  --qb:#60a5fa;
+  --rb:#34d399;
+  --wr:#f59e0b;
+  --te:#a78bfa;
+  --k:#fde047;
+  --def:#f87171;
+  --other:#a9c4d8;'''
+new = '''  /* TV palette: preserve Sleeper's familiar position families, but increase separation. */
+  --qb:#ee9dca;
+  --rb:#45d6a8;
+  --wr:#38bdf8;
+  --te:#f0c266;
+  --k:#b6a2ed;
+  --def:#f5a45d;
+  --other:#a9c4d8;'''
 
 if old not in s:
-    raise SystemExit('loadSharedSettings target not found')
+    raise SystemExit("TV palette block not found")
 s = s.replace(old, new, 1)
-p.write_text(s, encoding='utf-8')
-print('made GitHub main config authoritative on hard refresh')
+
+s = s.replace(
+    "High Contrast TV separates RB green and WR amber so they remain obvious from across the room. This setting is saved only on this device/browser.",
+    "High Contrast TV keeps Sleeper's familiar position color families, but pushes RB greener-teal and WR brighter blue so they remain obvious from across the room. This setting is saved only on this device/browser.",
+    1,
+)
+
+p.write_text(s, encoding="utf-8")
+print("refined TV palette while preserving Sleeper color families")
