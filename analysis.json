@@ -1,34 +1,34 @@
 {
   "draftId": "1401752680711323648",
-  "updatedAt": "2026-09-05T00:24:00.320040+00:00",
-  "revision": "1401752680711323648:105:1788567840",
+  "updatedAt": "2026-09-05T00:24:18.557215+00:00",
+  "revision": "1401752680711323648:105:1788567858",
   "round": 11,
   "nextOverallPick": 105,
-  "headline": "Tight ends flying as wideout builds keep growing",
+  "headline": "Tight ends flying as WR builds collide",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "build:1225093344615464960:wrheavy:11",
-      "title": "WR-HEAVY: mikechiarappa",
-      "detail": "Through 11 selections: 6 WR and 3 RB. \u2014 Absolutely refusing to leave the receiver candy store",
+      "id": "build:474098103616532480:wrheavy:10",
+      "title": "WR-HEAVY: MindMischief",
+      "detail": "Through 10 selections: 6 WR and 4 RB. \u2014 Pure chaos in the receiver aisle again",
       "tone": ""
     },
     {
-      "id": "round:11:TE",
-      "title": "3 TEs in Round 11",
-      "detail": "4 of 10 picks are complete in the round. \u2014 Suddenly everybody wants a slice of tight end pie",
+      "id": "build:1254312823291379712:wrheavy:11",
+      "title": "WR-HEAVY: RileyCork",
+      "detail": "Through 11 selections: 4 WR and 4 RB. \u2014 Balance with a little spicy flair",
       "tone": ""
     },
     {
-      "id": "build:974741404834426880:wrheavy:11",
-      "title": "WR-HEAVY: Oolian",
-      "detail": "Through 11 selections: 5 WR and 4 RB. \u2014 Pass catchers galore and loving every minute",
+      "id": "first:QB:22",
+      "title": "FIRST QB: Josh Allen",
+      "detail": "The first QB came off the board at overall pick 22. \u2014 Patience finally met pure fireworks",
       "tone": ""
     },
     {
-      "id": "build:976672704789032960:rbheavy:10",
-      "title": "RB-HEAVY: FatManBandit",
-      "detail": "Through 10 selections: 5 RB and 3 WR. \u2014 Smashing mouths while everyone else chases catches",
+      "id": "round:11:RB",
+      "title": "1 RB in Round 11",
+      "detail": "4 of 10 picks are complete in the round. \u2014 Lonely backfield bargain hunting season",
       "tone": ""
     }
   ]
