@@ -415,6 +415,10 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   const SHARED_CONFIG_FALLBACK_URL = "https://raw.githubusercontent.com/wlatic/draft-center/main/config.json";
   const GITHUB_CONFIG_API = "https://api.github.com/repos/wlatic/draft-center/contents/config.json";
   const PENDING_DRAFT_SESSION_KEY = "draftcenter.pendingDraftId";
+  // AI analysis is produced by a GitHub Actions watcher on a non-Pages branch.
+  // It is deliberately optional: if this feed is unavailable, the deterministic
+  // DraftCenter panels continue to work normally.
+  const AI_ANALYSIS_URL = "https://raw.githubusercontent.com/wlatic/draft-center/analysis/analysis.json";
 
   let draftId = DEFAULT_DRAFT_ID;
   let draft = null;
@@ -499,6 +503,8 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   let insightIndex = 0;
   let insightSlides = [];
   let lastInsightBuildPickCount = -1;
+  let aiAnalysis = null;
+  let lastAiRevision = "";
   let pressureSoundStage = 0;
   let pickSoundVariant = 0;
   const soundHistory = [];
@@ -543,6 +549,41 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     if(debugOnce.has(key))return;
     debugOnce.add(key);
     debugLog(type,message);
+  }
+
+  function aiAnalysisPanel(){
+    if(!aiAnalysis || String(aiAnalysis.draftId||"")!==String(draftId))return null;
+    const items=Array.isArray(aiAnalysis.items)?aiAnalysis.items:[];
+    if(!items.length)return null;
+    const age=Date.now()-Date.parse(aiAnalysis.updatedAt||0);
+    if(Number.isFinite(age) && age>20*60*1000)return null;
+    return {
+      label:"AI Draft Desk",
+      kicker:String(aiAnalysis.headline||"LIVE ANALYSIS").slice(0,72),
+      rows:items.slice(0,4).map(x=>({
+        title:String(x?.title||""),
+        detail:String(x?.detail||""),
+        tone:String(x?.tone||"")
+      }))
+    };
+  }
+
+  async function pollAIAnalysis(){
+    try{
+      const data=await fetchJsonWithTimeout(AI_ANALYSIS_URL,3500);
+      if(!data || String(data.draftId||"")!==String(draftId))return;
+      const revision=String(data.revision||data.updatedAt||"");
+      if(revision && revision===lastAiRevision)return;
+      aiAnalysis=data;
+      lastAiRevision=revision;
+      debugLog("AI",`analysis loaded · round ${data.round||"?"} · ${Array.isArray(data.items)?data.items.length:0} facts · ${data.model||"deterministic"}`);
+      // A newly-produced studio read is worth showing promptly; after that it
+      // rejoins the normal panel rotation.
+      insightIndex=0;
+      renderInsight();
+    }catch(e){
+      debugLogOnce(`ai-feed:${draftId}`,"AI!",`analysis feed unavailable; deterministic desk remains active`);
+    }
   }
 
   function logNameResolution(source="hydrate"){
@@ -1743,6 +1784,9 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   function buildInsightPanels(){
     const panels=[];
 
+    const ai=aiAnalysisPanel();
+    if(ai)panels.push(ai);
+
     const round=roundFacts();
     if(round.length) panels.push({label:"This Round",kicker:`ROUND ${currentRoundNumber()}`,rows:round});
 
@@ -2599,6 +2643,8 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     adpRows=[];
     sleeperAdpById={};
     adpAttemptedFor="";
+    aiAnalysis=null;
+    lastAiRevision="";
     turnStartedAt=Date.now();
     warningCrowdStarted=false;
     $("draftInput").value=`https://sleeper.com/draft/nfl/${draftId}`;
@@ -2608,6 +2654,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     hydrate();
     loadSleeperADP();
     pollPicks();
+    pollAIAnalysis();
   }
 
 
@@ -2901,6 +2948,10 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     setInterval(renderClock,100);
     setInterval(eventTick,100);
     setInterval(rotateInsight,10000);
+    // The Muse worker generally publishes within seconds of a new pick. Twelve
+    // seconds keeps the TV current without making AI a dependency of the draft.
+    pollAIAnalysis();
+    setInterval(pollAIAnalysis,12000);
   }
   boot();
 })();
