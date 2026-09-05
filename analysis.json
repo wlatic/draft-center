@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:04:29.448219+00:00",
-  "revision": "1389688986275938305:109:1788581069",
+  "updatedAt": "2026-09-05T04:04:49.825385+00:00",
+  "revision": "1389688986275938305:109:1788581089",
   "round": 10,
   "nextOverallPick": 109,
-  "headline": "RB frenzy hits as fresh builds emerge",
-  "model": "muse-spark-1.3-contributor",
+  "headline": "DRAFTCENTER DESK",
+  "model": "deterministic",
   "items": [
     {
       "id": "run:108:RB",
       "title": "RB RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly thirsty for backfield chaos",
+      "detail": "The room has been hammering the same position lately.",
       "tone": "hot"
     },
     {
-      "id": "first:TE:20",
-      "title": "FIRST TE: Trey McBride",
-      "detail": "The first TE came off the board at overall pick 20. \u2014 Finally, someone broke the tight end ice",
+      "id": "build:1124837422895935488:wrheavy:9",
+      "title": "WR-HEAVY: Nakye",
+      "detail": "Through 9 selections: 5 WR and 3 RB.",
       "tone": ""
     },
     {
-      "id": "build:469620457826414592:rbheavy:9",
-      "title": "RB-HEAVY: Trently",
-      "detail": "Through 9 selections: 4 RB and 3 WR. \u2014 Smashmouth soul with a wink and grin",
+      "id": "build:722634945050247168:wrheavy:9",
+      "title": "WR-HEAVY: Kevin",
+      "detail": "Through 9 selections: 5 WR and 2 RB.",
       "tone": ""
     },
     {
-      "id": "build:735268317480226816:wrheavy:9",
-      "title": "WR-HEAVY: Brandwagon",
-      "detail": "Through 9 selections: 4 WR and 2 RB. \u2014 Flair, fireworks, and plenty of swagger",
+      "id": "build:736089286075621376:rbheavy:10",
+      "title": "RB-HEAVY: O'Hara",
+      "detail": "Through 10 selections: 5 RB and 3 WR.",
       "tone": ""
     }
   ]
