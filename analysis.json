@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:38:11.197098+00:00",
-  "revision": "1389688986275938305:156:1788583091",
-  "round": 13,
-  "nextOverallPick": 156,
-  "headline": "Fresh Blood Leads The Receiver Revolution",
+  "updatedAt": "2026-09-05T04:38:43.584865+00:00",
+  "revision": "1389688986275938305:157:1788583123",
+  "round": 14,
+  "nextOverallPick": 157,
+  "headline": "Pass Catchers Everywhere While QBs Waited Their Turn",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
       "id": "build:464274355744927744:wrheavy:13",
       "title": "WR-HEAVY: Bryan",
-      "detail": "Through 13 selections: 7 WR and 4 RB. \u2014 Pure chaos, and we absolutely love it",
+      "detail": "Through 13 selections: 7 WR and 4 RB. \u2014 Bryan is living that air raid life",
       "tone": ""
     },
     {
-      "id": "build:1133150840920875008:wrheavy:13",
-      "title": "WR-HEAVY: Drew",
-      "detail": "Through 13 selections: 6 WR and 4 RB. \u2014 Bold, brash, beautifully box office stuff",
+      "id": "first:QB:22",
+      "title": "FIRST QB: Josh Allen",
+      "detail": "The first QB came off the board at overall pick 22. \u2014 Patience finally paid off under center",
       "tone": ""
     },
     {
-      "id": "build:461715450028355584:wrheavy:13",
-      "title": "WR-HEAVY: Shaylon",
-      "detail": "Through 13 selections: 6 WR and 5 RB. \u2014 Vibes immaculate, popcorn ready folks",
+      "id": "first:TE:20",
+      "title": "FIRST TE: Trey McBride",
+      "detail": "The first TE came off the board at overall pick 20. \u2014 Tight end drama started early folks",
       "tone": ""
     },
     {
-      "id": "build:735268317480226816:wrheavy:13",
-      "title": "WR-HEAVY: Brandwagon",
-      "detail": "Through 13 selections: 6 WR and 3 RB. \u2014 Cinema meets gridiron glory here",
+      "id": "round:14:RB",
+      "title": "1 RB in Round 14",
+      "detail": "1 of 12 picks are complete in the round. \u2014 Late round bargain hunting season begins",
       "tone": ""
     }
   ]
