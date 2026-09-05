@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:37:54.648473+00:00",
-  "revision": "1389688986275938305:156:1788583074",
+  "updatedAt": "2026-09-05T04:38:11.197098+00:00",
+  "revision": "1389688986275938305:156:1788583091",
   "round": 13,
   "nextOverallPick": 156,
-  "headline": "Late Round Flurry Shakes DraftCenter Desk",
+  "headline": "Fresh Blood Leads The Receiver Revolution",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "round:13:TE",
-      "title": "2 TEs in Round 13",
-      "detail": "10 of 12 picks are complete in the round. \u2014 Tight ends crashing the party now",
+      "id": "build:464274355744927744:wrheavy:13",
+      "title": "WR-HEAVY: Bryan",
+      "detail": "Through 13 selections: 7 WR and 4 RB. \u2014 Pure chaos, and we absolutely love it",
       "tone": ""
     },
     {
-      "id": "first:QB:22",
-      "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 22. \u2014 Patience paid off beautifully there",
+      "id": "build:1133150840920875008:wrheavy:13",
+      "title": "WR-HEAVY: Drew",
+      "detail": "Through 13 selections: 6 WR and 4 RB. \u2014 Bold, brash, beautifully box office stuff",
       "tone": ""
     },
     {
-      "id": "first:TE:20",
-      "title": "FIRST TE: Trey McBride",
-      "detail": "The first TE came off the board at overall pick 20. \u2014 Finally some sizzle at tight end",
+      "id": "build:461715450028355584:wrheavy:13",
+      "title": "WR-HEAVY: Shaylon",
+      "detail": "Through 13 selections: 6 WR and 5 RB. \u2014 Vibes immaculate, popcorn ready folks",
       "tone": ""
     },
     {
-      "id": "build:736089286075621376:wrheavy:14",
-      "title": "WR-HEAVY: O'Hara",
-      "detail": "Through 14 selections: 7 WR and 5 RB. \u2014 Someone really loves wide receivers",
+      "id": "build:735268317480226816:wrheavy:13",
+      "title": "WR-HEAVY: Brandwagon",
+      "detail": "Through 13 selections: 6 WR and 3 RB. \u2014 Cinema meets gridiron glory here",
       "tone": ""
     }
   ]
