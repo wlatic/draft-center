@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:53:03.051982+00:00",
-  "revision": "1389688986275938305:176:1788583983",
+  "updatedAt": "2026-09-05T04:54:45.094930+00:00",
+  "revision": "1389688986275938305:179:1788584085",
   "round": 15,
-  "nextOverallPick": 176,
-  "headline": "Late Round Twists and Early Position Runs",
+  "nextOverallPick": 179,
+  "headline": "...",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "round:15:RB",
-      "title": "2 RBs in Round 15",
-      "detail": "7 of 12 picks are complete in the round. \u2014 Late dart throws with real bench magic",
+      "id": "run:178:WR",
+      "title": "WR RUN: 4 of the last 6",
+      "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly wants pass catchers badly",
+      "tone": "hot"
+    },
+    {
+      "id": "round:15:WR",
+      "title": "4 WRs in Round 15",
+      "detail": "10 of 12 picks are complete in the round. \u2014 Late round fever is real folks",
+      "tone": "hot"
+    },
+    {
+      "id": "build:722634945050247168:wrheavy:15",
+      "title": "WR-HEAVY: Kevin",
+      "detail": "Through 15 selections: 6 WR and 7 RB. \u2014 Balance with a little flair there",
       "tone": ""
     },
     {
-      "id": "round:15:DEF",
-      "title": "1 DEF in Round 15",
-      "detail": "7 of 12 picks are complete in the round. \u2014 Spicy timing, love the chaos energy",
-      "tone": ""
-    },
-    {
-      "id": "build:736082966396133376:wrheavy:14",
-      "title": "WR-HEAVY: Jim",
-      "detail": "Through 14 selections: 6 WR and 4 RB. \u2014 Pass catchers galore, absolutely living lavishly",
-      "tone": ""
-    },
-    {
-      "id": "first:TE:20",
-      "title": "FIRST TE: Trey McBride",
-      "detail": "The first TE came off the board at overall pick 20. \u2014 Bold opening salvo, setting the tone",
+      "id": "build:1124837422895935488:wrheavy:15",
+      "title": "WR-HEAVY: Nakye",
+      "detail": "Through 15 selections: 6 WR and 4 RB. \u2014 Style points for roster construction nerds",
       "tone": ""
     }
   ]
