@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T03:10:41.436049+00:00",
-  "revision": "1389688986275938305:33:1788577841",
+  "updatedAt": "2026-09-05T03:11:35.807408+00:00",
+  "revision": "1389688986275938305:34:1788577895",
   "round": 3,
-  "nextOverallPick": 33,
-  "headline": "Backfield frenzy takes over the draft room",
+  "nextOverallPick": 34,
+  "headline": "RB rush continues as Round 3 begins",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "run:32:RB",
+      "id": "run:33:RB",
       "title": "RB RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately. \u2014 Pure chaos and we are absolutely here for it",
+      "detail": "The room has been hammering the same position lately. \u2014 Everyone wants ground game suddenly, folks",
       "tone": "hot"
     },
     {
       "id": "first:QB:22",
       "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 22. \u2014 Finally some courage at the big desk",
+      "detail": "The first QB came off the board at overall pick 22. \u2014 Finally, signal callers enter the chat",
       "tone": ""
     },
     {
       "id": "first:TE:20",
       "title": "FIRST TE: Trey McBride",
-      "detail": "The first TE came off the board at overall pick 20. \u2014 Spicy early and loving the bold energy",
+      "detail": "The first TE came off the board at overall pick 20. \u2014 Tight end island is officially open",
       "tone": ""
     },
     {
       "id": "round:3:RB",
       "title": "1 RB in Round 3",
-      "detail": "1 of 12 picks are complete in the round. \u2014 Buckle up because this ride is wild",
+      "detail": "1 of 12 picks are complete in the round. \u2014 Buckle up, middle rounds get spicy",
       "tone": ""
     }
   ]
