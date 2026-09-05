@@ -1,34 +1,34 @@
 {
   "draftId": "1401760906391601152",
-  "updatedAt": "2026-09-05T01:01:03.485866+00:00",
-  "revision": "1401760906391601152:53:1788570063",
+  "updatedAt": "2026-09-05T01:01:20.944882+00:00",
+  "revision": "1401760906391601152:55:1788570080",
   "round": 5,
-  "nextOverallPick": 53,
-  "headline": "Allen Breaks QB Seal in Round Five",
+  "nextOverallPick": 55,
+  "headline": "QBs Finally Crash the Party in Round 5",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
       "id": "first:QB:51",
       "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 51. \u2014 Finally, fireworks at quarterback, folks!",
+      "detail": "The first QB came off the board at overall pick 51. \u2014 Patience paid off beautifully there, wow",
       "tone": ""
     },
     {
       "id": "round:5:QB",
-      "title": "1 QB in Round 5",
-      "detail": "4 of 12 picks are complete in the round. \u2014 Patience pays, then panic starts brewing",
+      "title": "2 QBs in Round 5",
+      "detail": "6 of 12 picks are complete in the round. \u2014 Quarterbacks suddenly stealing the spotlight, baby",
+      "tone": ""
+    },
+    {
+      "id": "round:5:TE",
+      "title": "2 TEs in Round 5",
+      "detail": "6 of 12 picks are complete in the round. \u2014 Tight ends bringing sneaky fun energy",
       "tone": ""
     },
     {
       "id": "round:5:WR",
       "title": "2 WRs in Round 5",
-      "detail": "4 of 12 picks are complete in the round. \u2014 Wideouts flying like hotcakes again",
-      "tone": ""
-    },
-    {
-      "id": "round:5:TE",
-      "title": "1 TE in Round 5",
-      "detail": "4 of 12 picks are complete in the round. \u2014 Spicy little positional plot twist",
+      "detail": "6 of 12 picks are complete in the round. \u2014 Wideouts keeping things spicy as always",
       "tone": ""
     }
   ]
