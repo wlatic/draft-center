@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:14:58.433360+00:00",
-  "revision": "1389688986275938305:124:1788581698",
+  "updatedAt": "2026-09-05T04:15:52.167029+00:00",
+  "revision": "1389688986275938305:125:1788581752",
   "round": 11,
-  "nextOverallPick": 124,
-  "headline": "DRAFTCENTER DESK",
-  "model": "deterministic",
+  "nextOverallPick": 125,
+  "headline": "Balance Shifts as Round Eleven Grinds On",
+  "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "run:123:WR",
-      "title": "WR RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately.",
-      "tone": "hot"
-    },
-    {
-      "id": "build:1124837422895935488:wrheavy:10",
-      "title": "WR-HEAVY: Nakye",
-      "detail": "Through 10 selections: 5 WR and 3 RB.",
-      "tone": ""
-    },
-    {
-      "id": "build:1134235688095932416:wrheavy:10",
-      "title": "WR-HEAVY: Welshy",
-      "detail": "Through 10 selections: 5 WR and 3 RB.",
-      "tone": ""
-    },
-    {
-      "id": "build:461715450028355584:wrheavy:10",
+      "id": "build:461715450028355584:wrheavy:11",
       "title": "WR-HEAVY: Shaylon",
-      "detail": "Through 10 selections: 5 WR and 4 RB.",
+      "detail": "Through 11 selections: 5 WR and 5 RB. \u2014 Pure chaos, beautifully managed chaos",
+      "tone": ""
+    },
+    {
+      "id": "build:736089286075621376:wrheavy:11",
+      "title": "WR-HEAVY: O'Hara",
+      "detail": "Through 11 selections: 4 WR and 5 RB. \u2014 Someone loves options everywhere",
+      "tone": ""
+    },
+    {
+      "id": "build:736092553857843200:wrheavy:11",
+      "title": "WR-HEAVY: Tyke",
+      "detail": "Through 11 selections: 4 WR and 4 RB. \u2014 Steady hands win leagues",
+      "tone": ""
+    },
+    {
+      "id": "round:11:RB",
+      "title": "1 RB in Round 11",
+      "detail": "3 of 12 picks are complete in the round. \u2014 Spicy start, stay tuned",
       "tone": ""
     }
   ]
