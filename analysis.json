@@ -1,34 +1,34 @@
 {
   "draftId": "1401760906391601152",
-  "updatedAt": "2026-09-05T01:18:38.173818+00:00",
-  "revision": "1401760906391601152:166:1788571118",
-  "round": 14,
-  "nextOverallPick": 166,
-  "headline": "Twin WR stacks headline late-round board flip",
-  "model": "muse-spark-1.3-contributor",
+  "updatedAt": "2026-09-05T01:18:57.163149+00:00",
+  "revision": "1401760906391601152:169:1788571137",
+  "round": 15,
+  "nextOverallPick": 169,
+  "headline": "DRAFTCENTER DESK",
+  "model": "deterministic",
   "items": [
     {
       "id": "build:464331840719679488:wrheavy:14",
       "title": "WR-HEAVY: asotzrocky",
-      "detail": "Through 14 selections: 6 WR and 3 RB. \u2014 Pure fireworks, zero apologies needed here",
+      "detail": "Through 14 selections: 6 WR and 3 RB.",
+      "tone": ""
+    },
+    {
+      "id": "build:485142648391200768:wrheavy:14",
+      "title": "WR-HEAVY: pilikus",
+      "detail": "Through 14 selections: 6 WR and 4 RB.",
       "tone": ""
     },
     {
       "id": "build:711639117267554304:wrheavy:14",
       "title": "WR-HEAVY: richiesouders",
-      "detail": "Through 14 selections: 6 WR and 3 RB. \u2014 Vibes are immaculate and spicy",
+      "detail": "Through 14 selections: 6 WR and 3 RB.",
       "tone": ""
     },
     {
-      "id": "build:730942645219762176:wrheavy:14",
-      "title": "WR-HEAVY: JPCle216",
-      "detail": "Through 14 selections: 5 WR and 5 RB. \u2014 Beautiful chaos we absolutely love",
-      "tone": ""
-    },
-    {
-      "id": "first:TE:21",
-      "title": "FIRST TE: Brock Bowers",
-      "detail": "The first TE came off the board at overall pick 21. \u2014 Early bird gets the touchdown",
+      "id": "build:854916553202847744:rbheavy:14",
+      "title": "RB-HEAVY: Jakito",
+      "detail": "Through 14 selections: 6 RB and 3 WR.",
       "tone": ""
     }
   ]
