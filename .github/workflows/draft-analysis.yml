@@ -1,0 +1,33 @@
+name: DraftCenter AI Analysis
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'config.json'
+      - 'scripts/draft_analysis.py'
+      - '.github/workflows/draft-analysis.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: draftcenter-ai-analysis
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run live draft analysis watcher
+        env:
+          MUSE_API_KEY: ${{ secrets.MUSE }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ANALYSIS_BRANCH: analysis
+          POLL_SECONDS: '12'
+          MAX_SECONDS: '19800'
+        run: python scripts/draft_analysis.py
