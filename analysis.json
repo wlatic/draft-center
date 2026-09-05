@@ -1,34 +1,34 @@
 {
   "draftId": "1401760906391601152",
-  "updatedAt": "2026-09-05T01:07:04.535338+00:00",
-  "revision": "1401760906391601152:79:1788570424",
+  "updatedAt": "2026-09-05T01:07:22.216821+00:00",
+  "revision": "1401760906391601152:80:1788570442",
   "round": 7,
-  "nextOverallPick": 79,
-  "headline": "Round 7 Running Wild While Receivers Keep Coming",
-  "model": "muse-spark-1.3-contributor",
+  "nextOverallPick": 80,
+  "headline": "DRAFTCENTER DESK",
+  "model": "deterministic",
   "items": [
     {
-      "id": "round:7:RB",
-      "title": "3 RBs in Round 7",
-      "detail": "6 of 12 picks are complete in the round. \u2014 Ground game stealing the spotlight lately",
+      "id": "build:398720124246331392:wrheavy:7",
+      "title": "WR-HEAVY: pranitdas96",
+      "detail": "Through 7 selections: 4 WR and 3 RB.",
       "tone": ""
     },
     {
-      "id": "round:7:WR",
-      "title": "2 WRs in Round 7",
-      "detail": "6 of 12 picks are complete in the round. \u2014 Pass catchers just keep crashing party",
-      "tone": ""
-    },
-    {
-      "id": "round:7:QB",
-      "title": "1 QB in Round 7",
-      "detail": "6 of 12 picks are complete in the round. \u2014 Lone signal caller spices things up",
+      "id": "build:730942645219762176:wrheavy:6",
+      "title": "WR-HEAVY: JPCle216",
+      "detail": "Through 6 selections: 4 WR and 2 RB.",
       "tone": ""
     },
     {
       "id": "build:997969350734807040:wrheavy:7",
       "title": "WR-HEAVY: ojsimpin1804",
-      "detail": "Through 7 selections: 4 WR and 2 RB. \u2014 Bold beautiful and unapologetically receiver obsessed",
+      "detail": "Through 7 selections: 4 WR and 2 RB.",
+      "tone": ""
+    },
+    {
+      "id": "first:QB:51",
+      "title": "FIRST QB: Josh Allen",
+      "detail": "The first QB came off the board at overall pick 51.",
       "tone": ""
     }
   ]
