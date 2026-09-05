@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T03:52:20.272075+00:00",
-  "revision": "1389688986275938305:91:1788580340",
+  "updatedAt": "2026-09-05T03:53:38.094283+00:00",
+  "revision": "1389688986275938305:92:1788580418",
   "round": 8,
-  "nextOverallPick": 91,
-  "headline": "RB frenzy hits Round 8 as builds diverge",
+  "nextOverallPick": 92,
+  "headline": "RB run rolls on as new power builds emerge",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "run:90:RB",
-      "title": "RB RUN: 5 of the last 6",
+      "id": "run:91:RB",
+      "title": "RB RUN: 4 of the last 6",
       "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly wants ground game glory",
       "tone": "hot"
     },
     {
-      "id": "build:1124837422895935488:wrheavy:8",
-      "title": "WR-HEAVY: Nakye",
-      "detail": "Through 8 selections: 5 WR and 3 RB. \u2014 Bold, beautiful, and unapologetically pass-happy",
+      "id": "build:736089286075621376:rbheavy:8",
+      "title": "RB-HEAVY: O'Hara",
+      "detail": "Through 8 selections: 4 RB and 2 WR. \u2014 Smashmouth vibes with serious swagger",
       "tone": ""
     },
     {
-      "id": "first:QB:22",
-      "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 22. \u2014 Patience finally met pure fireworks potential",
+      "id": "build:736092553857843200:rbheavy:8",
+      "title": "RB-HEAVY: Tyke",
+      "detail": "Through 8 selections: 4 RB and 2 WR. \u2014 Old school muscle never goes stale",
       "tone": ""
     },
     {
-      "id": "first:TE:20",
-      "title": "FIRST TE: Trey McBride",
-      "detail": "The first TE came off the board at overall pick 20. \u2014 Early bird gets the touchdown dance",
+      "id": "round:8:TE",
+      "title": "1 TE in Round 8",
+      "detail": "4 of 12 picks are complete in the round. \u2014 Spicy little twist amid chaos",
       "tone": ""
     }
   ]
