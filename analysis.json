@@ -1,18 +1,12 @@
 {
   "draftId": "1401760906391601152",
-  "updatedAt": "2026-09-05T01:07:22.216821+00:00",
-  "revision": "1401760906391601152:80:1788570442",
+  "updatedAt": "2026-09-05T01:07:41.728591+00:00",
+  "revision": "1401760906391601152:79:1788570461",
   "round": 7,
-  "nextOverallPick": 80,
+  "nextOverallPick": 79,
   "headline": "DRAFTCENTER DESK",
   "model": "deterministic",
   "items": [
-    {
-      "id": "build:398720124246331392:wrheavy:7",
-      "title": "WR-HEAVY: pranitdas96",
-      "detail": "Through 7 selections: 4 WR and 3 RB.",
-      "tone": ""
-    },
     {
       "id": "build:730942645219762176:wrheavy:6",
       "title": "WR-HEAVY: JPCle216",
@@ -29,6 +23,12 @@
       "id": "first:QB:51",
       "title": "FIRST QB: Josh Allen",
       "detail": "The first QB came off the board at overall pick 51.",
+      "tone": ""
+    },
+    {
+      "id": "first:TE:21",
+      "title": "FIRST TE: Brock Bowers",
+      "detail": "The first TE came off the board at overall pick 21.",
       "tone": ""
     }
   ]
