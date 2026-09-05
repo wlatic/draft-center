@@ -1,34 +1,34 @@
 {
   "draftId": "1401758025210990592",
-  "updatedAt": "2026-09-05T00:44:32.156528+00:00",
-  "revision": "1401758025210990592:73:1788569072",
+  "updatedAt": "2026-09-05T00:44:47.985242+00:00",
+  "revision": "1401758025210990592:73:1788569087",
   "round": 7,
   "nextOverallPick": 73,
-  "headline": "Double WR-heavy builds as QBs and TEs wait",
+  "headline": "Twin WR Heavies, Early TE and QB Splashes",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
       "id": "build:409633893885431808:wrheavy:6",
       "title": "WR-HEAVY: streetvulture",
-      "detail": "Through 6 selections: 4 WR and 1 RB. \u2014 Pure aerial circus, and honestly delightful chaos",
+      "detail": "Through 6 selections: 4 WR and 1 RB. \u2014 Pure fireworks, all vibes and velvet hands",
       "tone": ""
     },
     {
       "id": "build:605969777449598976:wrheavy:6",
       "title": "WR-HEAVY: tsdrew",
-      "detail": "Through 6 selections: 4 WR and 1 RB. \u2014 Twin turbo receivers, zero apologies needed",
+      "detail": "Through 6 selections: 4 WR and 1 RB. \u2014 Copycat chaos we absolutely live for",
       "tone": ""
     },
     {
       "id": "first:QB:30",
       "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 30. \u2014 Patience paid off beautifully there",
+      "detail": "The first QB came off the board at overall pick 30. \u2014 Finally, someone pushed the quarterback button",
       "tone": ""
     },
     {
       "id": "first:TE:22",
       "title": "FIRST TE: Brock Bowers",
-      "detail": "The first TE came off the board at overall pick 22. \u2014 Early splash, bold and beautiful",
+      "detail": "The first TE came off the board at overall pick 22. \u2014 Spicy early, love the bold swagger",
       "tone": ""
     }
   ]
