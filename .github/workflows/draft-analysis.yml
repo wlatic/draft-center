@@ -7,6 +7,7 @@ on:
     paths:
       - 'config.json'
       - 'scripts/draft_analysis.py'
+      - 'scripts/muse_probe.py'
       - '.github/workflows/draft-analysis.yml'
   workflow_dispatch:
 
@@ -23,6 +24,12 @@ jobs:
     timeout-minutes: 330
     steps:
       - uses: actions/checkout@v4
+      - name: Probe Muse API safely
+        env:
+          MUSE_API_KEY: ${{ secrets.MUSE }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ANALYSIS_BRANCH: analysis
+        run: python scripts/muse_probe.py
       - name: Run live draft analysis watcher
         env:
           MUSE_API_KEY: ${{ secrets.MUSE }}
