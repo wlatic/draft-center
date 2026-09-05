@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T03:46:30.248779+00:00",
-  "revision": "1389688986275938305:81:1788579990",
+  "updatedAt": "2026-09-05T03:46:46.805743+00:00",
+  "revision": "1389688986275938305:83:1788580006",
   "round": 7,
-  "nextOverallPick": 81,
-  "headline": "RB Frenzy Meets Zero-RB Defiance",
+  "nextOverallPick": 83,
+  "headline": "RB run rages as Zero-RB Kevin holds the line",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "round:7:WR",
-      "title": "1 WR in Round 7",
-      "detail": "3 of 12 picks are complete in the round. \u2014 Lone wideout crashing the party tonight",
+      "id": "run:82:RB",
+      "title": "RB RUN: 4 of the last 6",
+      "detail": "The room has been hammering the same position lately. \u2014 Room clearly thirsty for backfield fireworks lately",
+      "tone": "hot"
+    },
+    {
+      "id": "build:736092553857843200:rbheavy:8",
+      "title": "RB-HEAVY: Tyke",
+      "detail": "Through 8 selections: 4 RB and 2 WR. \u2014 Tyke is smashing the ground game script",
       "tone": ""
     },
     {
-      "id": "run:80:RB",
-      "title": "RB RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly thirsty for backfield magic",
-      "tone": "hot"
+      "id": "build:736082966396133376:wrheavy:7",
+      "title": "WR-HEAVY: Jim",
+      "detail": "Through 7 selections: 4 WR and 2 RB. \u2014 Jim staying silky with those pass catchers",
+      "tone": ""
     },
     {
-      "id": "build:722634945050247168:zerorb:6",
-      "title": "ZERO-RB WATCH: Kevin",
-      "detail": "Through 6 selections: 5 WR, 0 RB. \u2014 Living dangerously and loving every minute",
-      "tone": "hot"
-    },
-    {
-      "id": "first:QB:22",
-      "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 22. \u2014 Finally some fireworks under center folks",
+      "id": "round:7:RB",
+      "title": "2 RBs in Round 7",
+      "detail": "5 of 12 picks are complete in the round. \u2014 Round heating up beautifully right now",
       "tone": ""
     }
   ]
