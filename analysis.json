@@ -1,34 +1,34 @@
 {
   "draftId": "1401758025210990592",
-  "updatedAt": "2026-09-05T00:47:49.256504+00:00",
-  "revision": "1401758025210990592:91:1788569269",
+  "updatedAt": "2026-09-05T00:48:08.543523+00:00",
+  "revision": "1401758025210990592:92:1788569288",
   "round": 8,
-  "nextOverallPick": 91,
-  "headline": "DRAFTCENTER DESK",
-  "model": "deterministic",
+  "nextOverallPick": 92,
+  "headline": "Tight Ends Early, Quarterbacks Late, Receivers Everywhere",
+  "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "build:1391896288479420417:wrheavy:8",
-      "title": "WR-HEAVY: hvpro",
-      "detail": "Through 8 selections: 4 WR and 4 RB.",
+      "id": "first:TE:22",
+      "title": "FIRST TE: Brock Bowers",
+      "detail": "The first TE came off the board at overall pick 22. \u2014 Bold move, beautiful chaos, love it",
       "tone": ""
     },
     {
-      "id": "build:605969777449598976:wrheavy:8",
-      "title": "WR-HEAVY: tsdrew",
-      "detail": "Through 8 selections: 4 WR and 3 RB.",
+      "id": "first:QB:30",
+      "title": "FIRST QB: Josh Allen",
+      "detail": "The first QB came off the board at overall pick 30. \u2014 Patience finally paid off handsomely",
       "tone": ""
     },
     {
-      "id": "build:609911451653877760:rbheavy:7",
-      "title": "RB-HEAVY: bucketsnbodies",
-      "detail": "Through 7 selections: 4 RB and 3 WR.",
+      "id": "build:988320883141935104:wrheavy:8",
+      "title": "WR-HEAVY: EIijah",
+      "detail": "Through 8 selections: 4 WR and 2 RB. \u2014 Catching passes like candy on Halloween",
       "tone": ""
     },
     {
-      "id": "build:866356581414100992:rbheavy:8",
-      "title": "RB-HEAVY: CollectNPlay",
-      "detail": "Through 8 selections: 4 RB and 2 WR.",
+      "id": "round:8:QB",
+      "title": "1 QB in Round 8",
+      "detail": "7 of 12 picks are complete in the round. \u2014 Spicy little twist in the script",
       "tone": ""
     }
   ]
