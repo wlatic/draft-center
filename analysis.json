@@ -1,9 +1,9 @@
 {
   "draftId": "1401752680711323648",
-  "updatedAt": "2026-09-05T00:20:36.521286+00:00",
-  "revision": "1401752680711323648:84:1788567636",
+  "updatedAt": "2026-09-05T00:20:53.648492+00:00",
+  "revision": "1401752680711323648:87:1788567653",
   "round": 9,
-  "nextOverallPick": 84,
+  "nextOverallPick": 87,
   "headline": "DRAFTCENTER DESK",
   "model": "deterministic",
   "items": [
@@ -14,21 +14,21 @@
       "tone": ""
     },
     {
+      "id": "build:735563366680084480:wrheavy:9",
+      "title": "WR-HEAVY: HoleInOne0327",
+      "detail": "Through 9 selections: 5 WR and 3 RB.",
+      "tone": ""
+    },
+    {
+      "id": "build:976672704789032960:rbheavy:9",
+      "title": "RB-HEAVY: FatManBandit",
+      "detail": "Through 9 selections: 5 RB and 2 WR.",
+      "tone": ""
+    },
+    {
       "id": "build:1254312823291379712:wrheavy:9",
       "title": "WR-HEAVY: RileyCork",
       "detail": "Through 9 selections: 4 WR and 3 RB.",
-      "tone": ""
-    },
-    {
-      "id": "build:1400143380893192192:wrheavy:8",
-      "title": "WR-HEAVY: CDTheKiid",
-      "detail": "Through 8 selections: 4 WR and 3 RB.",
-      "tone": ""
-    },
-    {
-      "id": "build:1400639440040288256:wrheavy:8",
-      "title": "WR-HEAVY: Austin4642",
-      "detail": "Through 8 selections: 4 WR and 3 RB.",
       "tone": ""
     }
   ]
