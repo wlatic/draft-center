@@ -1,35 +1,35 @@
 {
   "draftId": "1401760906391601152",
-  "updatedAt": "2026-09-05T00:56:59.497752+00:00",
-  "revision": "1401760906391601152:29:1788569819",
-  "round": 3,
-  "nextOverallPick": 29,
-  "headline": "Zero QBs, First TE Gone, Round 3 Heating Up",
+  "updatedAt": "2026-09-05T00:57:16.450301+00:00",
+  "revision": "1401760906391601152:23:1788569836",
+  "round": 2,
+  "nextOverallPick": 23,
+  "headline": "QBs Ghosting While Pass Catchers Party Early",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "none:QB:3",
+      "id": "none:QB:2",
       "title": "NO QB YET",
-      "detail": "No QB has been selected through 28 live picks. \u2014 Patience or pure madness unfolding live",
+      "detail": "No QB has been selected through 22 live picks. \u2014 Patience now, panic later, folks",
       "tone": "good"
     },
     {
       "id": "first:TE:21",
       "title": "FIRST TE: Brock Bowers",
-      "detail": "The first TE came off the board at overall pick 21. \u2014 Tight ends finally crashing the party",
+      "detail": "The first TE came off the board at overall pick 21. \u2014 Finally, tight end szn begins",
       "tone": ""
     },
     {
-      "id": "round:3:RB",
-      "title": "2 RBs in Round 3",
-      "detail": "4 of 12 picks are complete in the round. \u2014 Backfields getting spicy down the stretch",
-      "tone": ""
+      "id": "round:2:WR",
+      "title": "5 WRs in Round 2",
+      "detail": "10 of 12 picks are complete in the round. \u2014 Receivers flying off shelves fast",
+      "tone": "hot"
     },
     {
-      "id": "round:3:WR",
-      "title": "2 WRs in Round 3",
-      "detail": "4 of 12 picks are complete in the round. \u2014 Wideouts keeping this show rolling",
-      "tone": ""
+      "id": "round:2:RB",
+      "title": "4 RBs in Round 2",
+      "detail": "10 of 12 picks are complete in the round. \u2014 Backfields getting spicy already",
+      "tone": "hot"
     }
   ]
 }
