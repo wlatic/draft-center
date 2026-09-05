@@ -1,34 +1,34 @@
 {
   "draftId": "1401758025210990592",
-  "updatedAt": "2026-09-05T00:43:58.286648+00:00",
-  "revision": "1401758025210990592:71:1788569038",
+  "updatedAt": "2026-09-05T00:44:16.027808+00:00",
+  "revision": "1401758025210990592:72:1788569056",
   "round": 6,
-  "nextOverallPick": 71,
-  "headline": "DRAFTCENTER DESK",
-  "model": "deterministic",
+  "nextOverallPick": 72,
+  "headline": "Sixth Round Fireworks Shake the Board",
+  "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "build:409633893885431808:wrheavy:6",
-      "title": "WR-HEAVY: streetvulture",
-      "detail": "Through 6 selections: 4 WR and 1 RB.",
-      "tone": ""
-    },
-    {
-      "id": "build:605969777449598976:wrheavy:6",
-      "title": "WR-HEAVY: tsdrew",
-      "detail": "Through 6 selections: 4 WR and 1 RB.",
+      "id": "first:TE:22",
+      "title": "FIRST TE: Brock Bowers",
+      "detail": "The first TE came off the board at overall pick 22. \u2014 Early tight end splash always spices things up",
       "tone": ""
     },
     {
       "id": "first:QB:30",
       "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 30.",
+      "detail": "The first QB came off the board at overall pick 30. \u2014 Patience at quarterback finally paid off beautifully",
       "tone": ""
     },
     {
-      "id": "first:TE:22",
-      "title": "FIRST TE: Brock Bowers",
-      "detail": "The first TE came off the board at overall pick 22.",
+      "id": "round:6:QB",
+      "title": "4 QBs in Round 6",
+      "detail": "11 of 12 picks are complete in the round. \u2014 Signal callers flying off shelves everywhere lately",
+      "tone": "hot"
+    },
+    {
+      "id": "build:409633893885431808:wrheavy:6",
+      "title": "WR-HEAVY: streetvulture",
+      "detail": "Through 6 selections: 4 WR and 1 RB. \u2014 Catching passes like candy on Halloween night",
       "tone": ""
     }
   ]
