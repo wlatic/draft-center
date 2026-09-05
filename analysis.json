@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T03:44:27.472818+00:00",
-  "revision": "1389688986275938305:77:1788579867",
+  "updatedAt": "2026-09-05T03:44:46.125249+00:00",
+  "revision": "1389688986275938305:77:1788579886",
   "round": 7,
   "nextOverallPick": 77,
-  "headline": "...",
+  "headline": "Tight ends crash early while running backs fly late",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
+      "id": "first:TE:20",
+      "title": "FIRST TE: Trey McBride",
+      "detail": "The first TE came off the board at overall pick 20. \u2014 Spicy start at a sleepy position",
+      "tone": ""
+    },
+    {
       "id": "run:76:RB",
       "title": "RB RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately. \u2014 Room cannot resist shiny backfields right now",
+      "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly thirsty for backfield chaos",
       "tone": "hot"
     },
     {
       "id": "build:722634945050247168:zerorb:6",
       "title": "ZERO-RB WATCH: Kevin",
-      "detail": "Through 6 selections: 5 WR, 0 RB. \u2014 Patience level absolutely legendary stuff here",
+      "detail": "Through 6 selections: 5 WR, 0 RB. \u2014 Living dangerously and loving every minute",
       "tone": "hot"
     },
     {
       "id": "build:469620457826414592:rbheavy:7",
       "title": "RB-HEAVY: Trently",
-      "detail": "Through 7 selections: 4 RB and 1 WR. \u2014 Smash mouth with a wink included",
-      "tone": ""
-    },
-    {
-      "id": "build:736082966396133376:wrheavy:7",
-      "title": "WR-HEAVY: Jim",
-      "detail": "Through 7 selections: 4 WR and 2 RB. \u2014 Vibes immaculate, popcorn ready folks",
+      "detail": "Through 7 selections: 4 RB and 1 WR. \u2014 Smash mouth football never goes out",
       "tone": ""
     }
   ]
