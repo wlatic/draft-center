@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:22:16.969487+00:00",
-  "revision": "1389688986275938305:132:1788582136",
-  "round": 11,
-  "nextOverallPick": 132,
-  "headline": "Late-Round Chaos Meets Early Position Patience",
-  "model": "muse-spark-1.3-contributor",
+  "updatedAt": "2026-09-05T04:22:50.596213+00:00",
+  "revision": "1389688986275938305:133:1788582170",
+  "round": 12,
+  "nextOverallPick": 133,
+  "headline": "DRAFTCENTER DESK",
+  "model": "deterministic",
   "items": [
     {
-      "id": "first:TE:20",
-      "title": "FIRST TE: Trey McBride",
-      "detail": "The first TE came off the board at overall pick 20. \u2014 Patience paid off beautifully there",
-      "tone": ""
-    },
-    {
-      "id": "first:QB:22",
-      "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 22. \u2014 Waiting works when stars slide",
-      "tone": ""
-    },
-    {
-      "id": "round:11:DEF",
-      "title": "1 DEF in Round 11",
-      "detail": "10 of 12 picks are complete in the round. \u2014 Spicy move, love the chaos",
+      "id": "build:1124837422895935488:wrheavy:11",
+      "title": "WR-HEAVY: Nakye",
+      "detail": "Through 11 selections: 5 WR and 4 RB.",
       "tone": ""
     },
     {
       "id": "build:1134235688095932416:wrheavy:10",
       "title": "WR-HEAVY: Welshy",
-      "detail": "Through 10 selections: 5 WR and 3 RB. \u2014 Throwing passes like confetti everywhere",
+      "detail": "Through 10 selections: 5 WR and 3 RB.",
+      "tone": ""
+    },
+    {
+      "id": "build:461715450028355584:wrheavy:11",
+      "title": "WR-HEAVY: Shaylon",
+      "detail": "Through 11 selections: 5 WR and 5 RB.",
+      "tone": ""
+    },
+    {
+      "id": "build:464274355744927744:wrheavy:11",
+      "title": "WR-HEAVY: Bryan",
+      "detail": "Through 11 selections: 5 WR and 4 RB.",
       "tone": ""
     }
   ]
