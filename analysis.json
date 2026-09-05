@@ -1,34 +1,34 @@
 {
   "draftId": "1401758025210990592",
-  "updatedAt": "2026-09-05T00:41:17.311079+00:00",
-  "revision": "1401758025210990592:53:1788568877",
+  "updatedAt": "2026-09-05T00:41:35.367322+00:00",
+  "revision": "1401758025210990592:54:1788568895",
   "round": 5,
-  "nextOverallPick": 53,
-  "headline": "Round 5 Heats Up As Positions Fly Off Board",
+  "nextOverallPick": 54,
+  "headline": "WR Heavy Builds Collide With Live Round 5 Action",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
+      "id": "build:409633893885431808:wrheavy:5",
+      "title": "WR-HEAVY: streetvulture",
+      "detail": "Through 5 selections: 4 WR and 1 RB. \u2014 Bold beautiful chaos we absolutely love it",
+      "tone": ""
+    },
+    {
+      "id": "round:5:WR",
+      "title": "3 WRs in Round 5",
+      "detail": "5 of 12 picks are complete in the round. \u2014 Pass catchers flying and vibes soaring high",
+      "tone": ""
+    },
+    {
       "id": "round:5:QB",
       "title": "1 QB in Round 5",
-      "detail": "4 of 12 picks are complete in the round. \u2014 Quarterbacks finally crashing the party now",
+      "detail": "5 of 12 picks are complete in the round. \u2014 Spicy shakeup nobody saw coming tonight",
       "tone": ""
     },
     {
       "id": "round:5:RB",
       "title": "1 RB in Round 5",
-      "detail": "4 of 12 picks are complete in the round. \u2014 Ground game getting some love again",
-      "tone": ""
-    },
-    {
-      "id": "round:5:WR",
-      "title": "2 WRs in Round 5",
-      "detail": "4 of 12 picks are complete in the round. \u2014 Wideouts keep stealing the spotlight",
-      "tone": ""
-    },
-    {
-      "id": "first:QB:30",
-      "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 30. \u2014 What a wait for fireworks",
+      "detail": "5 of 12 picks are complete in the round. \u2014 Lone wolf grinding through the madness",
       "tone": ""
     }
   ]
