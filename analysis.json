@@ -1,34 +1,34 @@
 {
   "draftId": "1401760906391601152",
-  "updatedAt": "2026-09-05T01:18:20.750312+00:00",
-  "revision": "1401760906391601152:166:1788571100",
+  "updatedAt": "2026-09-05T01:18:38.173818+00:00",
+  "revision": "1401760906391601152:166:1788571118",
   "round": 14,
   "nextOverallPick": 166,
-  "headline": "Round 14 turns into a running back stampede",
+  "headline": "Twin WR stacks headline late-round board flip",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "round:14:RB",
-      "title": "5 RBs in Round 14",
-      "detail": "9 of 12 picks are complete in the round. \u2014 Ground and pound, baby, love it",
-      "tone": "hot"
-    },
-    {
-      "id": "round:14:WR",
-      "title": "1 WR in Round 14",
-      "detail": "9 of 12 picks are complete in the round. \u2014 Wideouts left waiting by the phone",
+      "id": "build:464331840719679488:wrheavy:14",
+      "title": "WR-HEAVY: asotzrocky",
+      "detail": "Through 14 selections: 6 WR and 3 RB. \u2014 Pure fireworks, zero apologies needed here",
       "tone": ""
     },
     {
-      "id": "round:14:QB",
-      "title": "2 QBs in Round 14",
-      "detail": "9 of 12 picks are complete in the round. \u2014 Late quarterback shopping gets spicy",
+      "id": "build:711639117267554304:wrheavy:14",
+      "title": "WR-HEAVY: richiesouders",
+      "detail": "Through 14 selections: 6 WR and 3 RB. \u2014 Vibes are immaculate and spicy",
       "tone": ""
     },
     {
-      "id": "build:854916553202847744:rbheavy:14",
-      "title": "RB-HEAVY: Jakito",
-      "detail": "Through 14 selections: 6 RB and 3 WR. \u2014 Absolute throwback smashmouth energy here",
+      "id": "build:730942645219762176:wrheavy:14",
+      "title": "WR-HEAVY: JPCle216",
+      "detail": "Through 14 selections: 5 WR and 5 RB. \u2014 Beautiful chaos we absolutely love",
+      "tone": ""
+    },
+    {
+      "id": "first:TE:21",
+      "title": "FIRST TE: Brock Bowers",
+      "detail": "The first TE came off the board at overall pick 21. \u2014 Early bird gets the touchdown",
       "tone": ""
     }
   ]
