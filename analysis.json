@@ -1,10 +1,10 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T03:02:59.633965+00:00",
-  "revision": "1389688986275938305:17:1788577379",
+  "updatedAt": "2026-09-05T03:03:16.879164+00:00",
+  "revision": "1389688986275938305:17:1788577396",
   "round": 2,
   "nextOverallPick": 17,
-  "headline": "Running Backs Flying While Quarterbacks Wait Patiently",
+  "headline": "Draft room trends taking shape early",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
@@ -16,13 +16,13 @@
     {
       "id": "none:QB:2",
       "title": "NO QB YET",
-      "detail": "No QB has been selected through 16 live picks. \u2014 Patience is truly a virtue here",
+      "detail": "No QB has been selected through 16 live picks. \u2014 Patience is bold, or just plain stubborn",
       "tone": "good"
     },
     {
       "id": "first:TE:10",
       "title": "FIRST TE: Brock Bowers",
-      "detail": "The first TE came off the board at overall pick 10. \u2014 Finally some spice at tight end",
+      "detail": "The first TE came off the board at overall pick 10. \u2014 Finally some love for the big playmaker",
       "tone": ""
     }
   ]
