@@ -1,34 +1,34 @@
 {
   "draftId": "1401758025210990592",
-  "updatedAt": "2026-09-05T00:38:45.158068+00:00",
-  "revision": "1401758025210990592:40:1788568725",
+  "updatedAt": "2026-09-05T00:39:02.830254+00:00",
+  "revision": "1401758025210990592:43:1788568742",
   "round": 4,
-  "nextOverallPick": 40,
-  "headline": "DRAFTCENTER DESK",
-  "model": "deterministic",
+  "nextOverallPick": 43,
+  "headline": "Round 4 heats up as waiting rooms empty",
+  "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "run:39:WR",
-      "title": "WR RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately.",
-      "tone": "hot"
-    },
-    {
-      "id": "first:QB:30",
-      "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 30.",
+      "id": "round:4:TE",
+      "title": "2 TEs in Round 4",
+      "detail": "6 of 12 picks are complete in the round. \u2014 Tight ends finally crashing the party",
       "tone": ""
     },
     {
-      "id": "first:TE:22",
-      "title": "FIRST TE: Brock Bowers",
-      "detail": "The first TE came off the board at overall pick 22.",
+      "id": "round:4:RB",
+      "title": "1 RB in Round 4",
+      "detail": "6 of 12 picks are complete in the round. \u2014 Lone wolf energy in the backfield",
       "tone": ""
     },
     {
       "id": "round:4:WR",
-      "title": "2 WRs in Round 4",
-      "detail": "3 of 12 picks are complete in the round.",
+      "title": "3 WRs in Round 4",
+      "detail": "6 of 12 picks are complete in the round. \u2014 Pass catchers stealing the spotlight again",
+      "tone": ""
+    },
+    {
+      "id": "first:QB:30",
+      "title": "FIRST QB: Josh Allen",
+      "detail": "The first QB came off the board at overall pick 30. \u2014 Patience paid off beautifully there",
       "tone": ""
     }
   ]
