@@ -1,34 +1,34 @@
 {
   "draftId": "1401760906391601152",
-  "updatedAt": "2026-09-05T01:10:25.705966+00:00",
-  "revision": "1401760906391601152:94:1788570625",
+  "updatedAt": "2026-09-05T01:10:43.106740+00:00",
+  "revision": "1401760906391601152:96:1788570643",
   "round": 8,
-  "nextOverallPick": 94,
-  "headline": "DRAFTCENTER DESK",
-  "model": "deterministic",
+  "nextOverallPick": 96,
+  "headline": "Round 8 turns into a positional tug-of-war",
+  "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "build:398720124246331392:wrheavy:8",
-      "title": "WR-HEAVY: pranitdas96",
-      "detail": "Through 8 selections: 5 WR and 3 RB.",
+      "id": "build:485142648391200768:rbheavy:8",
+      "title": "RB-HEAVY: pilikus",
+      "detail": "Through 8 selections: 4 RB and 2 WR. \u2014 Smashing mouths and winning boring beautifully",
       "tone": ""
     },
     {
-      "id": "build:1391896288479420417:wrheavy:8",
-      "title": "WR-HEAVY: hvpro",
-      "detail": "Through 8 selections: 4 WR and 4 RB.",
+      "id": "build:730942645219762176:wrheavy:8",
+      "title": "WR-HEAVY: JPCle216",
+      "detail": "Through 8 selections: 4 WR and 4 RB. \u2014 Spreading it out with serious style points",
       "tone": ""
     },
     {
-      "id": "build:464331840719679488:wrheavy:8",
-      "title": "WR-HEAVY: asotzrocky",
-      "detail": "Through 8 selections: 4 WR and 2 RB.",
-      "tone": ""
+      "id": "round:8:RB",
+      "title": "5 RBs in Round 8",
+      "detail": "11 of 12 picks are complete in the round. \u2014 Backfield buffet is officially open folks",
+      "tone": "hot"
     },
     {
-      "id": "build:471692236304674816:rbheavy:8",
-      "title": "RB-HEAVY: virmen",
-      "detail": "Through 8 selections: 4 RB and 3 WR.",
+      "id": "round:8:TE",
+      "title": "2 TEs in Round 8",
+      "detail": "11 of 12 picks are complete in the round. \u2014 Finally some love for tight ends",
       "tone": ""
     }
   ]
