@@ -414,6 +414,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   const SHARED_CONFIG_URL = new URL("config.json", window.location.href).toString();
   const SHARED_CONFIG_FALLBACK_URL = "https://raw.githubusercontent.com/wlatic/draft-center/main/config.json";
   const GITHUB_CONFIG_API = "https://api.github.com/repos/wlatic/draft-center/contents/config.json";
+  const PENDING_DRAFT_SESSION_KEY = "draftcenter.pendingDraftId";
 
   let draftId = DEFAULT_DRAFT_ID;
   let draft = null;
@@ -1912,6 +1913,14 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     activeClipAudios.filter(a=>a._dcGroup===group).forEach(a=>fadeOutAudio(a,duration));
   }
 
+  function stopAudioGroup(group){
+    cleanupFinishedClips();
+    activeClipAudios.filter(a=>a._dcGroup===group).forEach(a=>{
+      try{a.pause();a.currentTime=0}catch(_){}
+    });
+    cleanupFinishedClips();
+  }
+
   function fadeOutAllAudio(duration=350){
     cleanupFinishedClips();
     activeClipAudios.forEach(a=>fadeOutAudio(a,duration));
@@ -2209,14 +2218,14 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     const rem=Math.max(0,timer*1000-Math.max(0,Date.now()-start));
     const secs=rem/1000;
 
-    // At 20 seconds the room starts getting restless. This is one crowd cue
-    // per turn, not a repeated sound on every render tick.
-    if(draft.status==="drafting" && secs<=20 && secs>0 && soundEnabled && !warningCrowdStarted){
+    // A little crowd impatience at ~20 seconds, never a reaction to a pick.
+    // The turn-age guard protects against stale timer data briefly making a new
+    // turn appear to be inside the warning window.
+    const turnAgeMs=Math.max(0,Date.now()-turnStartedAt);
+    if(draft.status==="drafting" && secs<=20 && secs>10 && turnAgeMs>=7500 && soundEnabled && !warningCrowdStarted){
       warningCrowdStarted=true;
-      fadeOutAudioGroup("warning",220);
-      // Brief crowd impatience only: one low-level boo burst at 20 seconds,
-      // then quiet well before the final 10-second countdown.
-      playTags(["crowd","boo"],.26,1,"warning","warning-boo",2600);
+      fadeOutAudioGroup("warning",120);
+      playTags(["crowd","boo"],.24,1,"warning","warning-boo",2400);
     }
 
     renderPressure(secs);
@@ -2422,7 +2431,9 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
 
         hidePressure();
         playPickStinger();
-        fadeOutAudioGroup("warning",120);
+        // A selection is never booed. Kill any tail of the 20-second warning
+        // immediately before the pick reveal/new turn is rendered.
+        stopAudioGroup("warning");
         warningCrowdStarted=false;
         activeEvent=null;
         activeUntil=0;
@@ -2570,18 +2581,35 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   }
 
   async function loadSharedSettings(){
-    // Raw main is the source of truth. GitHub Pages can lag behind config.json
-    // while a Pages deployment is rebuilding, which previously made a newly
-    // saved draft appear to revert to the previous draft on reload.
+    // Same-origin config is the most reliable startup path, especially on TV
+    // browsers. Raw GitHub remains a bounded fallback, never a boot dependency.
     const sources=[
-      ["GitHub raw",SHARED_CONFIG_FALLBACK_URL],
-      ["GitHub Pages fallback",SHARED_CONFIG_URL]
+      ["GitHub Pages",SHARED_CONFIG_URL],
+      ["GitHub raw fallback",SHARED_CONFIG_FALLBACK_URL]
     ];
 
     for(const [label,url] of sources){
       try{
         const cfg=await fetchJsonWithTimeout(url);
         applySharedSettings(cfg);
+
+        // Immediately after saving a new draft, Pages may still serve the old
+        // config for a few seconds. Keep the saving browser on the new draft for
+        // this one session; once the shared config catches up, discard the hint.
+        let pending="";
+        try{pending=String(sessionStorage.getItem(PENDING_DRAFT_SESSION_KEY)||"").trim()}catch(_){}
+        if(pending){
+          if(String(cfg?.draftId||"")===pending){
+            try{sessionStorage.removeItem(PENDING_DRAFT_SESSION_KEY)}catch(_){}
+          }else{
+            draftId=pending;
+            broadcastNames={};
+            absentUsernames=new Set();
+            autodraftUsernames=new Set();
+            debugLog("CONFIG",`using just-saved draft ${pending} while ${label} catches up`);
+          }
+        }
+
         debugLog("CONFIG",`loaded from ${label}: draft ${draftId}, ${Object.keys(broadcastNames).length} names, ${absentUsernames.size} absent, ${autodraftUsernames.size} auto`);
         updateSharedConfigSummary();
         return true;
@@ -2634,9 +2662,11 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
       debugLog("CONFIG",`saved shared config: draft ${draftId}, ${Object.keys(broadcastNames).length} names, ${absentUsernames.size} absent, ${autodraftUsernames.size} auto`);
       updateSharedConfigSummary();
       if(reload){
-        // Raw/main updates before the Pages deployment, so reload after a short
-        // commit-settle delay rather than waiting for GitHub Pages to rebuild.
-        setTimeout(()=>location.reload(),1400);
+        // Remember the just-saved draft only for this browser session. This is
+        // not a second configuration source; it simply bridges the Pages deploy
+        // delay after a successful shared-config commit.
+        try{sessionStorage.setItem(PENDING_DRAFT_SESSION_KEY,String(draftId))}catch(_){}
+        setTimeout(()=>location.reload(),700);
       }
       return true;
     }catch(e){
