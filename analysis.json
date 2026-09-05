@@ -1,34 +1,34 @@
 {
   "draftId": "1401760906391601152",
-  "updatedAt": "2026-09-05T01:17:44.348549+00:00",
-  "revision": "1401760906391601152:151:1788571064",
+  "updatedAt": "2026-09-05T01:18:03.502717+00:00",
+  "revision": "1401760906391601152:151:1788571083",
   "round": 13,
   "nextOverallPick": 151,
-  "headline": "Late-round arms race meets receiver room overload",
-  "model": "muse-spark-1.3-contributor",
+  "headline": "DRAFTCENTER DESK",
+  "model": "deterministic",
   "items": [
     {
-      "id": "build:471692236304674816:wrheavy:13",
-      "title": "WR-HEAVY: virmen",
-      "detail": "Through 13 selections: 4 WR and 5 RB. \u2014 Beautiful chaos, fully stocked and feeling fancy",
+      "id": "build:464331840719679488:wrheavy:12",
+      "title": "WR-HEAVY: asotzrocky",
+      "detail": "Through 12 selections: 6 WR and 2 RB.",
       "tone": ""
     },
     {
-      "id": "build:886342178404827136:wrheavy:13",
-      "title": "WR-HEAVY: darrenca",
-      "detail": "Through 13 selections: 4 WR and 4 RB. \u2014 Balance is boring until it wins leagues",
+      "id": "build:485142648391200768:wrheavy:13",
+      "title": "WR-HEAVY: pilikus",
+      "detail": "Through 13 selections: 6 WR and 4 RB.",
       "tone": ""
     },
     {
-      "id": "build:997969350734807040:wrheavy:13",
-      "title": "WR-HEAVY: ojsimpin1804",
-      "detail": "Through 13 selections: 5 WR and 4 RB. \u2014 Someone loves options, and honestly same",
+      "id": "build:711639117267554304:wrheavy:13",
+      "title": "WR-HEAVY: richiesouders",
+      "detail": "Through 13 selections: 6 WR and 2 RB.",
       "tone": ""
     },
     {
-      "id": "round:13:RB",
-      "title": "1 RB in Round 13",
-      "detail": "6 of 12 picks are complete in the round. \u2014 Late value hunting season is officially open",
+      "id": "build:398720124246331392:wrheavy:12",
+      "title": "WR-HEAVY: pranitdas96",
+      "detail": "Through 12 selections: 5 WR and 6 RB.",
       "tone": ""
     }
   ]
