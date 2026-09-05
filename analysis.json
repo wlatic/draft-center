@@ -1,34 +1,34 @@
 {
   "draftId": "1401758025210990592",
-  "updatedAt": "2026-09-05T00:41:35.367322+00:00",
-  "revision": "1401758025210990592:54:1788568895",
+  "updatedAt": "2026-09-05T00:41:52.088242+00:00",
+  "revision": "1401758025210990592:58:1788568912",
   "round": 5,
-  "nextOverallPick": 54,
-  "headline": "WR Heavy Builds Collide With Live Round 5 Action",
+  "nextOverallPick": 58,
+  "headline": "Round 5 fireworks shake the board",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
       "id": "build:409633893885431808:wrheavy:5",
       "title": "WR-HEAVY: streetvulture",
-      "detail": "Through 5 selections: 4 WR and 1 RB. \u2014 Bold beautiful chaos we absolutely love it",
+      "detail": "Through 5 selections: 4 WR and 1 RB. \u2014 Bold beautiful chaos we absolutely love",
       "tone": ""
     },
     {
-      "id": "round:5:WR",
-      "title": "3 WRs in Round 5",
-      "detail": "5 of 12 picks are complete in the round. \u2014 Pass catchers flying and vibes soaring high",
+      "id": "first:TE:22",
+      "title": "FIRST TE: Brock Bowers",
+      "detail": "The first TE came off the board at overall pick 22. \u2014 Finally some spice at tight end",
+      "tone": ""
+    },
+    {
+      "id": "round:5:RB",
+      "title": "3 RBs in Round 5",
+      "detail": "9 of 12 picks are complete in the round. \u2014 Ground game bringing serious attitude now",
       "tone": ""
     },
     {
       "id": "round:5:QB",
       "title": "1 QB in Round 5",
-      "detail": "5 of 12 picks are complete in the round. \u2014 Spicy shakeup nobody saw coming tonight",
-      "tone": ""
-    },
-    {
-      "id": "round:5:RB",
-      "title": "1 RB in Round 5",
-      "detail": "5 of 12 picks are complete in the round. \u2014 Lone wolf grinding through the madness",
+      "detail": "9 of 12 picks are complete in the round. \u2014 Lone signal caller steals the spotlight",
       "tone": ""
     }
   ]
