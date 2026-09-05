@@ -1,34 +1,34 @@
 {
   "draftId": "1401760906391601152",
-  "updatedAt": "2026-09-05T01:18:03.502717+00:00",
-  "revision": "1401760906391601152:151:1788571083",
-  "round": 13,
-  "nextOverallPick": 151,
-  "headline": "DRAFTCENTER DESK",
-  "model": "deterministic",
+  "updatedAt": "2026-09-05T01:18:20.750312+00:00",
+  "revision": "1401760906391601152:166:1788571100",
+  "round": 14,
+  "nextOverallPick": 166,
+  "headline": "Round 14 turns into a running back stampede",
+  "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "build:464331840719679488:wrheavy:12",
-      "title": "WR-HEAVY: asotzrocky",
-      "detail": "Through 12 selections: 6 WR and 2 RB.",
+      "id": "round:14:RB",
+      "title": "5 RBs in Round 14",
+      "detail": "9 of 12 picks are complete in the round. \u2014 Ground and pound, baby, love it",
+      "tone": "hot"
+    },
+    {
+      "id": "round:14:WR",
+      "title": "1 WR in Round 14",
+      "detail": "9 of 12 picks are complete in the round. \u2014 Wideouts left waiting by the phone",
       "tone": ""
     },
     {
-      "id": "build:485142648391200768:wrheavy:13",
-      "title": "WR-HEAVY: pilikus",
-      "detail": "Through 13 selections: 6 WR and 4 RB.",
+      "id": "round:14:QB",
+      "title": "2 QBs in Round 14",
+      "detail": "9 of 12 picks are complete in the round. \u2014 Late quarterback shopping gets spicy",
       "tone": ""
     },
     {
-      "id": "build:711639117267554304:wrheavy:13",
-      "title": "WR-HEAVY: richiesouders",
-      "detail": "Through 13 selections: 6 WR and 2 RB.",
-      "tone": ""
-    },
-    {
-      "id": "build:398720124246331392:wrheavy:12",
-      "title": "WR-HEAVY: pranitdas96",
-      "detail": "Through 12 selections: 5 WR and 6 RB.",
+      "id": "build:854916553202847744:rbheavy:14",
+      "title": "RB-HEAVY: Jakito",
+      "detail": "Through 14 selections: 6 RB and 3 WR. \u2014 Absolute throwback smashmouth energy here",
       "tone": ""
     }
   ]
