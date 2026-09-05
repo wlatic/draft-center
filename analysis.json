@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T03:38:03.577103+00:00",
-  "revision": "1389688986275938305:71:1788579483",
+  "updatedAt": "2026-09-05T03:38:23.318453+00:00",
+  "revision": "1389688986275938305:71:1788579503",
   "round": 6,
   "nextOverallPick": 71,
-  "headline": "Backs flying, builds diverging in Round 6",
+  "headline": "RB Stampede Meets Zero-RB Rebellion",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
       "id": "run:70:RB",
       "title": "RB RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately. \u2014 Grab your guys before the shelf empties",
+      "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly wants ground game glory",
       "tone": "hot"
     },
     {
-      "id": "build:736082966396133376:wrheavy:7",
-      "title": "WR-HEAVY: Jim",
-      "detail": "Through 7 selections: 4 WR and 2 RB. \u2014 Balance with swagger, honestly love it",
-      "tone": ""
+      "id": "build:722634945050247168:zerorb:6",
+      "title": "ZERO-RB WATCH: Kevin",
+      "detail": "Through 6 selections: 5 WR, 0 RB. \u2014 Living dangerously and loving every minute",
+      "tone": "hot"
     },
     {
       "id": "build:469620457826414592:rbheavy:6",
       "title": "RB-HEAVY: Trently",
-      "detail": "Through 6 selections: 4 RB and 0 WR. \u2014 Smashmouth and proudly unapologetic vibes",
+      "detail": "Through 6 selections: 4 RB and 0 WR. \u2014 Old school smashmouth with modern swagger",
       "tone": ""
     },
     {
-      "id": "round:6:TE",
-      "title": "1 TE in Round 6",
-      "detail": "3 of 12 picks are complete in the round. \u2014 Spicy little twist for late rounds",
+      "id": "first:QB:22",
+      "title": "FIRST QB: Josh Allen",
+      "detail": "The first QB came off the board at overall pick 22. \u2014 Finally some fireworks under center",
       "tone": ""
     }
   ]
