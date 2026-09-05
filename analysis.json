@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:05:44.763531+00:00",
-  "revision": "1389688986275938305:110:1788581144",
+  "updatedAt": "2026-09-05T04:06:03.787196+00:00",
+  "revision": "1389688986275938305:110:1788581163",
   "round": 10,
   "nextOverallPick": 110,
-  "headline": "Backs flying, Welshy stacking wideouts late",
+  "headline": "Backs Are Flying While Builds Diverge",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
       "id": "run:109:RB",
       "title": "RB RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately. \u2014 Room cannot resist shiny new backfields",
+      "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly wants ground game glory",
       "tone": "hot"
     },
     {
-      "id": "build:1134235688095932416:wrheavy:9",
-      "title": "WR-HEAVY: Welshy",
-      "detail": "Through 9 selections: 4 WR and 3 RB. \u2014 Welshy living that pass-happy life",
+      "id": "build:736082966396133376:wrheavy:9",
+      "title": "WR-HEAVY: Jim",
+      "detail": "Through 9 selections: 4 WR and 4 RB. \u2014 Jim keeps it spicy and balanced",
       "tone": ""
     },
     {
-      "id": "build:464274355744927744:rbheavy:9",
-      "title": "RB-HEAVY: Bryan",
-      "detail": "Through 9 selections: 4 RB and 3 WR. \u2014 Bryan bulldozing with pure ground force",
+      "id": "build:736092553857843200:rbheavy:9",
+      "title": "RB-HEAVY: Tyke",
+      "detail": "Through 9 selections: 4 RB and 3 WR. \u2014 Tyke is smashing the old school way",
       "tone": ""
     },
     {
-      "id": "build:735268317480226816:wrheavy:9",
-      "title": "WR-HEAVY: Brandwagon",
-      "detail": "Through 9 selections: 4 WR and 2 RB. \u2014 Brandwagon riding vibes all the way",
+      "id": "first:QB:22",
+      "title": "FIRST QB: Josh Allen",
+      "detail": "The first QB came off the board at overall pick 22. \u2014 Finally some fireworks under center",
       "tone": ""
     }
   ]
