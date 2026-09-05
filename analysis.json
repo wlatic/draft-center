@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:52:08.446654+00:00",
-  "revision": "1389688986275938305:175:1788583928",
+  "updatedAt": "2026-09-05T04:52:27.679557+00:00",
+  "revision": "1389688986275938305:175:1788583947",
   "round": 15,
   "nextOverallPick": 175,
-  "headline": "DRAFTCENTER DESK",
-  "model": "deterministic",
+  "headline": "Fresh builds crash the late-round party",
+  "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "build:461715450028355584:wrheavy:15",
-      "title": "WR-HEAVY: Shaylon",
-      "detail": "Through 15 selections: 7 WR and 5 RB.",
+      "id": "build:735268317480226816:wrheavy:15",
+      "title": "WR-HEAVY: Brandwagon",
+      "detail": "Through 15 selections: 6 WR and 4 RB. \u2014 Pure fireworks waiting to explode weekly",
       "tone": ""
     },
     {
-      "id": "build:464274355744927744:wrheavy:15",
-      "title": "WR-HEAVY: Bryan",
-      "detail": "Through 15 selections: 7 WR and 4 RB.",
+      "id": "build:736092553857843200:wrheavy:15",
+      "title": "WR-HEAVY: Tyke",
+      "detail": "Through 15 selections: 5 WR and 5 RB. \u2014 Beautifully balanced with sneaky upside everywhere",
       "tone": ""
     },
     {
-      "id": "build:736089286075621376:wrheavy:14",
-      "title": "WR-HEAVY: O'Hara",
-      "detail": "Through 14 selections: 7 WR and 5 RB.",
+      "id": "build:739329016837890048:rbheavy:14",
+      "title": "RB-HEAVY: Tight End Guy",
+      "detail": "Through 14 selections: 4 RB and 2 WR. \u2014 Old school smashmouth with modern swagger",
       "tone": ""
     },
     {
-      "id": "build:1133150840920875008:wrheavy:15",
-      "title": "WR-HEAVY: Drew",
-      "detail": "Through 15 selections: 6 WR and 5 RB.",
+      "id": "round:15:TE",
+      "title": "2 TEs in Round 15",
+      "detail": "6 of 12 picks are complete in the round. \u2014 Late tight ends stealing the spotlight",
       "tone": ""
     }
   ]
