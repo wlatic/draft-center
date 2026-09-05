@@ -1,28 +1,34 @@
 {
   "draftId": "1401760906391601152",
-  "updatedAt": "2026-09-05T01:03:04.635554+00:00",
-  "revision": "1401760906391601152:61:1788570184",
+  "updatedAt": "2026-09-05T01:03:22.157645+00:00",
+  "revision": "1401760906391601152:64:1788570202",
   "round": 6,
-  "nextOverallPick": 61,
-  "headline": "Room keeps pounding running backs late",
+  "nextOverallPick": 64,
+  "headline": "Wideouts Everywhere As Round Six Takes Shape",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "run:60:RB",
-      "title": "RB RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly wants ground game glory",
-      "tone": "hot"
+      "id": "build:730942645219762176:wrheavy:6",
+      "title": "WR-HEAVY: JPCle216",
+      "detail": "Through 6 selections: 4 WR and 2 RB. \u2014 Pure fireworks, no apologies needed here",
+      "tone": ""
+    },
+    {
+      "id": "round:6:WR",
+      "title": "2 WRs in Round 6",
+      "detail": "3 of 12 picks are complete in the round. \u2014 Pass catchers stealing the spotlight again",
+      "tone": ""
+    },
+    {
+      "id": "round:6:TE",
+      "title": "1 TE in Round 6",
+      "detail": "3 of 12 picks are complete in the round. \u2014 Spicy pick, love the boldness",
+      "tone": ""
     },
     {
       "id": "first:QB:51",
       "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 51. \u2014 Patience finally broke at quarterback",
-      "tone": ""
-    },
-    {
-      "id": "first:TE:21",
-      "title": "FIRST TE: Brock Bowers",
-      "detail": "The first TE came off the board at overall pick 21. \u2014 Early tight end swing still echoing",
+      "detail": "The first QB came off the board at overall pick 51. \u2014 Patience finally paying off beautifully",
       "tone": ""
     }
   ]
