@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:28:14.009528+00:00",
-  "revision": "1389688986275938305:146:1788582494",
+  "updatedAt": "2026-09-05T04:28:46.319972+00:00",
+  "revision": "1389688986275938305:147:1788582526",
   "round": 13,
-  "nextOverallPick": 146,
-  "headline": "Wideouts Everywhere As Round Thirteen Rolls On",
+  "nextOverallPick": 147,
+  "headline": "Bryan goes full air raid as Round 13 ticks off",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "build:464274355744927744:wrheavy:12",
+      "id": "build:464274355744927744:wrheavy:13",
       "title": "WR-HEAVY: Bryan",
-      "detail": "Through 12 selections: 6 WR and 4 RB. \u2014 Pure fireworks and total showtime energy",
+      "detail": "Through 13 selections: 7 WR and 4 RB. \u2014 Pure chaos energy we absolutely love",
       "tone": ""
     },
     {
-      "id": "build:461715450028355584:wrheavy:12",
-      "title": "WR-HEAVY: Shaylon",
-      "detail": "Through 12 selections: 5 WR and 5 RB. \u2014 Balance with swagger, love that vibe",
+      "id": "round:13:WR",
+      "title": "1 WR in Round 13",
+      "detail": "1 of 12 picks are complete in the round. \u2014 Just getting warmed up folks",
       "tone": ""
     },
     {
-      "id": "build:736092553857843200:wrheavy:12",
-      "title": "WR-HEAVY: Tyke",
-      "detail": "Through 12 selections: 4 WR and 4 RB. \u2014 Patient, sneaky, and quietly dangerous",
+      "id": "build:735268317480226816:wrheavy:12",
+      "title": "WR-HEAVY: Brandwagon",
+      "detail": "Through 12 selections: 6 WR and 3 RB. \u2014 Never met a receiver he disliked",
       "tone": ""
     },
     {
-      "id": "build:736089286075621376:wrheavy:13",
-      "title": "WR-HEAVY: O'Hara",
-      "detail": "Through 13 selections: 6 WR and 5 RB. \u2014 Fresh legs stealing the late spotlight",
+      "id": "build:1124837422895935488:wrheavy:12",
+      "title": "WR-HEAVY: Nakye",
+      "detail": "Through 12 selections: 5 WR and 4 RB. \u2014 Vibes are immaculate at this desk",
       "tone": ""
     }
   ]
