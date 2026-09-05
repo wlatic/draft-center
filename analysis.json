@@ -1,9 +1,9 @@
 {
   "draftId": "1401752680711323648",
-  "updatedAt": "2026-09-05T00:21:28.627276+00:00",
-  "revision": "1401752680711323648:92:1788567688",
+  "updatedAt": "2026-09-05T00:21:45.021970+00:00",
+  "revision": "1401752680711323648:93:1788567705",
   "round": 10,
-  "nextOverallPick": 92,
+  "nextOverallPick": 93,
   "headline": "DRAFTCENTER DESK",
   "model": "deterministic",
   "items": [
@@ -11,6 +11,12 @@
       "id": "build:1225093344615464960:wrheavy:9",
       "title": "WR-HEAVY: mikechiarappa",
       "detail": "Through 9 selections: 6 WR and 3 RB.",
+      "tone": ""
+    },
+    {
+      "id": "build:435350285523611648:rbheavy:10",
+      "title": "RB-HEAVY: EDDIE8816",
+      "detail": "Through 10 selections: 5 RB and 3 WR.",
       "tone": ""
     },
     {
@@ -23,12 +29,6 @@
       "id": "build:735563366680084480:wrheavy:9",
       "title": "WR-HEAVY: HoleInOne0327",
       "detail": "Through 9 selections: 5 WR and 3 RB.",
-      "tone": ""
-    },
-    {
-      "id": "build:976672704789032960:rbheavy:9",
-      "title": "RB-HEAVY: FatManBandit",
-      "detail": "Through 9 selections: 5 RB and 2 WR.",
       "tone": ""
     }
   ]
