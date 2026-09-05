@@ -1,34 +1,34 @@
 {
   "draftId": "1401758025210990592",
-  "updatedAt": "2026-09-05T00:36:42.171362+00:00",
-  "revision": "1401758025210990592:27:1788568602",
+  "updatedAt": "2026-09-05T00:37:00.000672+00:00",
+  "revision": "1401758025210990592:29:1788568620",
   "round": 3,
-  "nextOverallPick": 27,
-  "headline": "QBs vanish while Bowers breaks the seal",
+  "nextOverallPick": 29,
+  "headline": "WR Frenzy While QBs Wait in Green Room",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
+      "id": "run:28:WR",
+      "title": "WR RUN: 4 of the last 6",
+      "detail": "The room has been hammering the same position lately. \u2014 Wideouts flying off like hotcakes, folks!",
+      "tone": "hot"
+    },
+    {
       "id": "none:QB:3",
       "title": "NO QB YET",
-      "detail": "No QB has been selected through 26 live picks. \u2014 Seriously, what are we even waiting for",
+      "detail": "No QB has been selected through 28 live picks. \u2014 Patience at quarterback is getting spicy!",
       "tone": "good"
     },
     {
-      "id": "first:TE:22",
-      "title": "FIRST TE: Brock Bowers",
-      "detail": "The first TE came off the board at overall pick 22. \u2014 Finally some spice at tight end",
+      "id": "round:3:WR",
+      "title": "3 WRs in Round 3",
+      "detail": "4 of 12 picks are complete in the round. \u2014 This round loves its pass catchers!",
       "tone": ""
     },
     {
       "id": "round:3:RB",
       "title": "1 RB in Round 3",
-      "detail": "2 of 12 picks are complete in the round. \u2014 Backfield buzz is just getting started",
-      "tone": ""
-    },
-    {
-      "id": "round:3:WR",
-      "title": "1 WR in Round 3",
-      "detail": "2 of 12 picks are complete in the round. \u2014 Pass catchers keeping things perfectly balanced",
+      "detail": "4 of 12 picks are complete in the round. \u2014 Lone wolf backfield energy right now!",
       "tone": ""
     }
   ]
