@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:17:58.485744+00:00",
-  "revision": "1389688986275938305:129:1788581878",
+  "updatedAt": "2026-09-05T04:19:15.827133+00:00",
+  "revision": "1389688986275938305:130:1788581955",
   "round": 11,
-  "nextOverallPick": 129,
-  "headline": "DRAFTCENTER DESK",
-  "model": "deterministic",
+  "nextOverallPick": 130,
+  "headline": "Fresh builds crash the WR party",
+  "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "run:128:RB",
-      "title": "RB RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately.",
-      "tone": "hot"
-    },
-    {
-      "id": "build:1124837422895935488:wrheavy:11",
-      "title": "WR-HEAVY: Nakye",
-      "detail": "Through 11 selections: 5 WR and 4 RB.",
+      "id": "build:736089286075621376:wrheavy:12",
+      "title": "WR-HEAVY: O'Hara",
+      "detail": "Through 12 selections: 5 WR and 5 RB. \u2014 Everyone loves extra spice late",
       "tone": ""
     },
     {
-      "id": "build:1134235688095932416:wrheavy:10",
-      "title": "WR-HEAVY: Welshy",
-      "detail": "Through 10 selections: 5 WR and 3 RB.",
+      "id": "build:464274355744927744:wrheavy:11",
+      "title": "WR-HEAVY: Bryan",
+      "detail": "Through 11 selections: 5 WR and 4 RB. \u2014 Bold beautiful and totally unapologetic",
       "tone": ""
     },
     {
-      "id": "build:461715450028355584:wrheavy:11",
-      "title": "WR-HEAVY: Shaylon",
-      "detail": "Through 11 selections: 5 WR and 5 RB.",
+      "id": "build:735268317480226816:wrheavy:11",
+      "title": "WR-HEAVY: Brandwagon",
+      "detail": "Through 11 selections: 5 WR and 3 RB. \u2014 Pass catchers galore, buckle up",
+      "tone": ""
+    },
+    {
+      "id": "build:736092553857843200:wrheavy:11",
+      "title": "WR-HEAVY: Tyke",
+      "detail": "Through 11 selections: 4 WR and 4 RB. \u2014 Chaos never looked so fun",
       "tone": ""
     }
   ]
