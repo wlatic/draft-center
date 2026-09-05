@@ -1,34 +1,34 @@
 {
   "draftId": "1401758025210990592",
-  "updatedAt": "2026-09-05T00:50:13.943158+00:00",
-  "revision": "1401758025210990592:109:1788569413",
+  "updatedAt": "2026-09-05T00:50:31.029263+00:00",
+  "revision": "1401758025210990592:111:1788569431",
   "round": 10,
-  "nextOverallPick": 109,
-  "headline": "Wideouts everywhere as Round 10 looms",
+  "nextOverallPick": 111,
+  "headline": "Round 10 live, wideouts still running the show",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "build:1391896288479420417:wrheavy:9",
+      "id": "build:1391896288479420417:wrheavy:10",
       "title": "WR-HEAVY: hvpro",
-      "detail": "Through 9 selections: 5 WR and 4 RB. \u2014 Pure fireworks and total commitment to chaos",
+      "detail": "Through 10 selections: 5 WR and 4 RB. \u2014 Five wideouts deep and still feeling fabulous",
       "tone": ""
     },
     {
-      "id": "build:483427149810757632:rbheavy:9",
-      "title": "RB-HEAVY: xainshawty",
-      "detail": "Through 9 selections: 5 RB and 2 WR. \u2014 Old school smash mouth with swagger",
+      "id": "round:10:QB",
+      "title": "1 QB in Round 10",
+      "detail": "2 of 12 picks are complete in the round. \u2014 Quarterback whispers getting louder by the minute",
       "tone": ""
     },
     {
-      "id": "build:595861056119697408:wrheavy:9",
-      "title": "WR-HEAVY: Giantsmm",
-      "detail": "Through 9 selections: 4 WR and 3 RB. \u2014 Silky smooth starters stacked for days",
+      "id": "round:10:WR",
+      "title": "1 WR in Round 10",
+      "detail": "2 of 12 picks are complete in the round. \u2014 Another pass catcher off the board, naturally",
       "tone": ""
     },
     {
-      "id": "build:605969777449598976:wrheavy:9",
-      "title": "WR-HEAVY: tsdrew",
-      "detail": "Through 9 selections: 4 WR and 3 RB. \u2014 Bold beautiful and built for shootouts",
+      "id": "build:988320883141935104:wrheavy:9",
+      "title": "WR-HEAVY: EIijah",
+      "detail": "Through 9 selections: 4 WR and 2 RB. \u2014 Balanced-ish chaos with serious swagger",
       "tone": ""
     }
   ]
