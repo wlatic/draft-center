@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T03:09:49.429861+00:00",
-  "revision": "1389688986275938305:29:1788577789",
+  "updatedAt": "2026-09-05T03:10:06.045238+00:00",
+  "revision": "1389688986275938305:31:1788577806",
   "round": 3,
-  "nextOverallPick": 29,
-  "headline": "RB Frenzy Hits As QBs Wait",
+  "nextOverallPick": 31,
+  "headline": "RB Stampede While QBs Collect Dust",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
-      "id": "run:28:RB",
+      "id": "run:30:RB",
       "title": "RB RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly craves ground game glory",
+      "detail": "The room has been hammering the same position lately. \u2014 Everyone wants ground game glory right now",
       "tone": "hot"
     },
     {
       "id": "none:QB:3",
       "title": "NO QB YET",
-      "detail": "No QB has been selected through 28 live picks. \u2014 Patience at quarterback is getting spicy",
+      "detail": "No QB has been selected through 30 live picks. \u2014 Patience or pure quarterback chaos brewing",
       "tone": "good"
     },
     {
-      "id": "first:TE:22",
-      "title": "FIRST TE: Brock Bowers",
-      "detail": "The first TE came off the board at overall pick 22. \u2014 Finally some love for tight ends",
+      "id": "first:TE:20",
+      "title": "FIRST TE: Trey McBride",
+      "detail": "The first TE came off the board at overall pick 20. \u2014 Early bird gets the touchdown love",
       "tone": ""
     },
     {
       "id": "round:3:RB",
       "title": "1 RB in Round 3",
-      "detail": "1 of 12 picks are complete in the round. \u2014 Round three starting with a bang",
+      "detail": "1 of 12 picks are complete in the round. \u2014 Buckle up, draft drama incoming fast",
       "tone": ""
     }
   ]
