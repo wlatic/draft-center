@@ -1,22 +1,22 @@
 {
   "draftId": "1401758025210990592",
-  "updatedAt": "2026-09-05T00:33:37.381617+00:00",
-  "revision": "1401758025210990592:7:1788568417",
+  "updatedAt": "2026-09-05T00:33:52.887352+00:00",
+  "revision": "1401758025210990592:8:1788568432",
   "round": 1,
-  "nextOverallPick": 7,
-  "headline": "...",
+  "nextOverallPick": 8,
+  "headline": "Round 1 Run Shapes Early Board",
   "model": "muse-spark-1.3-contributor",
   "items": [
     {
       "id": "round:1:RB",
-      "title": "3 RBs in Round 1",
-      "detail": "6 of 12 picks are complete in the round. \u2014 Ground game stealing the early spotlight tonight",
-      "tone": ""
+      "title": "4 RBs in Round 1",
+      "detail": "7 of 12 picks are complete in the round. \u2014 Bellcow fever is sweeping the studio tonight",
+      "tone": "hot"
     },
     {
       "id": "round:1:WR",
       "title": "3 WRs in Round 1",
-      "detail": "6 of 12 picks are complete in the round. \u2014 Pass catchers keeping pace with style",
+      "detail": "7 of 12 picks are complete in the round. \u2014 Pass catchers keeping pace beautifully here",
       "tone": ""
     }
   ]
