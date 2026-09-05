@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:13:07.719310+00:00",
-  "revision": "1389688986275938305:119:1788581587",
-  "round": 10,
-  "nextOverallPick": 119,
-  "headline": "Tyke Pounds Ground While Early QB TE Splashes Linger",
-  "model": "muse-spark-1.3-contributor",
+  "updatedAt": "2026-09-05T04:13:25.785444+00:00",
+  "revision": "1389688986275938305:121:1788581605",
+  "round": 11,
+  "nextOverallPick": 121,
+  "headline": "DRAFTCENTER DESK",
+  "model": "deterministic",
   "items": [
     {
-      "id": "build:736092553857843200:rbheavy:9",
-      "title": "RB-HEAVY: Tyke",
-      "detail": "Through 9 selections: 4 RB and 3 WR. \u2014 Pure bully ball vibes, loving it",
+      "id": "build:1124837422895935488:wrheavy:10",
+      "title": "WR-HEAVY: Nakye",
+      "detail": "Through 10 selections: 5 WR and 3 RB.",
       "tone": ""
     },
     {
-      "id": "first:QB:22",
-      "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 22. \u2014 Patience finally met pure fireworks",
+      "id": "build:1134235688095932416:wrheavy:10",
+      "title": "WR-HEAVY: Welshy",
+      "detail": "Through 10 selections: 5 WR and 3 RB.",
       "tone": ""
     },
     {
-      "id": "first:TE:20",
-      "title": "FIRST TE: Trey McBride",
-      "detail": "The first TE came off the board at overall pick 20. \u2014 Spicy start, fantasy chaos forever",
+      "id": "build:461715450028355584:wrheavy:10",
+      "title": "WR-HEAVY: Shaylon",
+      "detail": "Through 10 selections: 5 WR and 4 RB.",
       "tone": ""
     },
     {
-      "id": "build:736089286075621376:wrheavy:11",
-      "title": "WR-HEAVY: O'Hara",
-      "detail": "Through 11 selections: 4 WR and 5 RB. \u2014 Roster construction theater at its finest",
+      "id": "build:722634945050247168:wrheavy:10",
+      "title": "WR-HEAVY: Kevin",
+      "detail": "Through 10 selections: 5 WR and 3 RB.",
       "tone": ""
     }
   ]
