@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T03:50:08.196872+00:00",
-  "revision": "1389688986275938305:86:1788580208",
+  "updatedAt": "2026-09-05T03:50:27.846255+00:00",
+  "revision": "1389688986275938305:86:1788580227",
   "round": 8,
   "nextOverallPick": 86,
-  "headline": "RB stampede meets Zero-RB resistance",
-  "model": "muse-spark-1.3-contributor",
+  "headline": "DRAFTCENTER DESK",
+  "model": "deterministic",
   "items": [
     {
       "id": "run:85:RB",
       "title": "RB RUN: 4 of the last 6",
-      "detail": "The room has been hammering the same position lately. \u2014 Everyone suddenly thirsty for backfield thunder",
+      "detail": "The room has been hammering the same position lately.",
       "tone": "hot"
     },
     {
       "id": "build:722634945050247168:zerorb:6",
       "title": "ZERO-RB WATCH: Kevin",
-      "detail": "Through 6 selections: 5 WR, 0 RB. \u2014 Living dangerously and loving every minute",
+      "detail": "Through 6 selections: 5 WR, 0 RB.",
       "tone": "hot"
     },
     {
-      "id": "first:QB:22",
-      "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 22. \u2014 Patience finally paid off beautifully there",
+      "id": "build:1124837422895935488:wrheavy:8",
+      "title": "WR-HEAVY: Nakye",
+      "detail": "Through 8 selections: 5 WR and 3 RB.",
       "tone": ""
     },
     {
-      "id": "round:8:WR",
-      "title": "1 WR in Round 8",
-      "detail": "2 of 12 picks are complete in the round. \u2014 Spicy little twist in the script",
+      "id": "build:461715450028355584:wrheavy:7",
+      "title": "WR-HEAVY: Shaylon",
+      "detail": "Through 7 selections: 4 WR and 2 RB.",
       "tone": ""
     }
   ]
