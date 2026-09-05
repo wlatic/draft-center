@@ -1,34 +1,34 @@
 {
   "draftId": "1389688986275938305",
-  "updatedAt": "2026-09-05T04:27:19.027956+00:00",
-  "revision": "1389688986275938305:142:1788582439",
+  "updatedAt": "2026-09-05T04:27:38.359726+00:00",
+  "revision": "1389688986275938305:142:1788582458",
   "round": 12,
   "nextOverallPick": 142,
-  "headline": "Fresh arms and heavy receiver rooms shape the board",
-  "model": "muse-spark-1.3-contributor",
+  "headline": "DRAFTCENTER DESK",
+  "model": "deterministic",
   "items": [
     {
-      "id": "build:464274355744927744:wrheavy:11",
-      "title": "WR-HEAVY: Bryan",
-      "detail": "Through 11 selections: 5 WR and 4 RB. \u2014 Pure chaos, loving every second",
+      "id": "build:735268317480226816:wrheavy:12",
+      "title": "WR-HEAVY: Brandwagon",
+      "detail": "Through 12 selections: 6 WR and 3 RB.",
       "tone": ""
     },
     {
-      "id": "first:QB:22",
-      "title": "FIRST QB: Josh Allen",
-      "detail": "The first QB came off the board at overall pick 22. \u2014 Finally some fireworks under center",
+      "id": "build:736089286075621376:wrheavy:13",
+      "title": "WR-HEAVY: O'Hara",
+      "detail": "Through 13 selections: 6 WR and 5 RB.",
       "tone": ""
     },
     {
-      "id": "first:TE:20",
-      "title": "FIRST TE: Trey McBride",
-      "detail": "The first TE came off the board at overall pick 20. \u2014 Spicy start at tight end",
+      "id": "build:1124837422895935488:wrheavy:12",
+      "title": "WR-HEAVY: Nakye",
+      "detail": "Through 12 selections: 5 WR and 4 RB.",
       "tone": ""
     },
     {
-      "id": "build:469620457826414592:wrheavy:12",
-      "title": "WR-HEAVY: Trently",
-      "detail": "Through 12 selections: 4 WR and 5 RB. \u2014 Bold beautiful bench building brilliance",
+      "id": "build:1134235688095932416:wrheavy:12",
+      "title": "WR-HEAVY: Welshy",
+      "detail": "Through 12 selections: 5 WR and 4 RB.",
       "tone": ""
     }
   ]
