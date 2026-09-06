@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="dark">
-<title>Sleeper Draft Party TV</title>
+<title>DraftCenter Fantasy Draft TV</title>
 <style>
 :root{
   --dash-h:28.5vh;
@@ -338,9 +338,31 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   </div>
 
   <section class="settings-pane active" id="draftPane">
-    <label>Sleeper Draft URL or Draft ID
+    <div class="settings-grid">
+      <label>Fantasy platform
+        <select id="draftProvider">
+          <option value="sleeper">Sleeper</option>
+          <option value="yahoo">Yahoo Fantasy</option>
+        </select>
+      </label>
+      <label id="yahooTimerRow" style="display:none">Yahoo pick timer (seconds)
+        <input id="yahooTimerInput" type="number" min="30" max="600" step="10" value="180">
+      </label>
+    </div>
+    <label id="draftInputLabel">Sleeper Draft URL or Draft ID
       <input id="draftInput" autocomplete="off">
     </label>
+    <div id="yahooAuthBox" style="display:none">
+      <label>Yahoo Client ID (this browser/device only)
+        <input id="yahooClientIdInput" autocomplete="off" placeholder="Yahoo OAuth Consumer Key / Client ID">
+      </label>
+      <div class="people-help">Yahoo leagues use OAuth. Create/approve a Yahoo Fantasy API application as a public client and register this exact callback URL: <strong id="yahooCallbackUrl"></strong>. The Client ID and Yahoo tokens stay only in this browser and are never written to the repo.</div>
+      <div class="settings-actions">
+        <button class="tool" id="connectYahoo" type="button">Connect Yahoo</button>
+        <button class="tool" id="disconnectYahoo" type="button">Disconnect Yahoo</button>
+      </div>
+      <div class="people-help" id="yahooAuthState">Yahoo not connected.</div>
+    </div>
     <label>Admin GitHub token (this browser only)
       <input id="adminTokenInput" type="password" autocomplete="off" placeholder="Fine-grained token for wlatic/draft-center">
     </label>
@@ -364,7 +386,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
 
   <section class="settings-pane" id="peoplePane">
     <div class="people-help">
-      Sleeper identities load automatically. Broadcast name is what DraftCenter says in announcements; the board keeps Sleeper's original identity.
+      Manager identities load automatically from the selected fantasy platform. Broadcast name is what DraftCenter says in announcements; the board keeps the platform identity.
       You can also mark each manager Absent or Auto-draft.
     </div>
     <div class="people-help" id="sharedConfigSummary">Shared config not loaded yet.</div>
@@ -403,7 +425,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
       <button class="tool" id="settingsTestSound" type="button">Test real sounds</button>
     </div>
     <div class="settings-note">
-    DraftCenter follows one saved Sleeper draft configured in the Draft tab.
+    DraftCenter follows one saved Sleeper draft or Yahoo league configured in the Draft tab.
     The People tab controls broadcast names, Absent status and Auto-draft status per Sleeper username.
     Sounds fade out instead of stopping abruptly when a draft moment interrupts them.
   </div>
@@ -430,6 +452,9 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
 
   const DEFAULT_DRAFT_ID = "1401712491624411136";
   const API = "https://api.sleeper.app/v1";
+  const YAHOO_API = "https://fantasysports.yahooapis.com/fantasy/v2";
+  const YAHOO_AUTH_URL = "https://api.login.yahoo.com/oauth2/request_auth";
+  const YAHOO_TOKEN_URL = "https://api.login.yahoo.com/oauth2/get_token";
   const PICKS_MS = 300;
   const DRAFT_MS = 1200;
 
@@ -444,7 +469,16 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   // DraftCenter panels continue to work normally.
   const AI_ANALYSIS_URL = "https://raw.githubusercontent.com/wlatic/draft-center/analysis/analysis.json";
 
+  let draftProvider = "sleeper";
   let draftId = DEFAULT_DRAFT_ID;
+  let yahooLeagueKey = "";
+  let yahooPickTimer = 180;
+  let yahooTeamKeyToUid = {};
+  let yahooTeamKeyToSlot = {};
+  let yahooPlayerCache = {};
+  let yahooLastPicksPollAt = 0;
+  let yahooLastDraftPollAt = 0;
+  let yahooAdpBusy = false;
   let draft = null;
   let picks = [];
   let users = {};
@@ -573,7 +607,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
 
   function updateSharedConfigSummary(){
     const names=Object.keys(broadcastNames||{}).length;
-    const text=`Shared config · draft ${draftId} · ${names} broadcast name${names===1?"":"s"} · ${absentUsernames.size} absent · ${autodraftUsernames.size} auto`;
+    const text=`Shared config · ${draftProvider==="yahoo"?"Yahoo":"Sleeper"} · ${draftProvider==="yahoo"?"league":"draft"} ${draftId} · ${names} broadcast name${names===1?"":"s"} · ${absentUsernames.size} absent · ${autodraftUsernames.size} auto`;
     const people=$("sharedConfigSummary");
     const debug=$("debugSummary");
     if(people)people.textContent=text;
@@ -613,6 +647,10 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   }
 
   async function pollAIAnalysis(){
+    if(draftProvider==="yahoo"){
+      debugLogOnce(`ai-yahoo:${draftId}`,"AI",`Yahoo draft uses local deterministic analysis; Muse feed is disabled until the server worker has Yahoo OAuth.`);
+      return;
+    }
     try{
       const data=await fetchJsonWithTimeout(AI_ANALYSIS_URL,3500);
       if(!data || String(data.draftId||"")!==String(draftId))return;
@@ -675,11 +713,13 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     return "Standard ADP";
   }
 
+  function marketLabel(){ return draftProvider==="yahoo"?"Yahoo ADP":"Sleeper ADP"; }
+
   function marketValue(p){
     if(!marketReady)return null;
     const rank=Number(sleeperAdpById[String(p?.player_id||"")]);
     if(!Number.isFinite(rank) || rank<=0 || rank>=999)return null;
-    return {rank,label:"Sleeper ADP",source:adpScoringLabel()};
+    return {rank,label:marketLabel(),source:draftProvider==="yahoo"?"Yahoo draft analysis":adpScoringLabel()};
   }
 
 
@@ -708,12 +748,411 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     return arr.slice().sort((a,b)=>Number(a.pick_no||0)-Number(b.pick_no||0));
   }
 
+  function yahooCallbackUrl(){
+    return `${location.origin}${location.pathname}`;
+  }
+
+  function yahooClientId(){
+    try{return localStorage.getItem("draftcenterYahooClientId")||""}catch(_){return ""}
+  }
+
+  function rememberYahooClientId(v){
+    try{
+      if(v)localStorage.setItem("draftcenterYahooClientId",v);
+      else localStorage.removeItem("draftcenterYahooClientId");
+    }catch(_){}
+  }
+
+  function yahooTokenState(){
+    try{
+      return {
+        access:localStorage.getItem("draftcenterYahooAccessToken")||"",
+        refresh:localStorage.getItem("draftcenterYahooRefreshToken")||"",
+        expires:Number(localStorage.getItem("draftcenterYahooExpiresAt")||0)
+      };
+    }catch(_){return {access:"",refresh:"",expires:0}}
+  }
+
+  function saveYahooTokens(data){
+    try{
+      const now=Date.now();
+      if(data?.access_token)localStorage.setItem("draftcenterYahooAccessToken",String(data.access_token));
+      if(data?.refresh_token)localStorage.setItem("draftcenterYahooRefreshToken",String(data.refresh_token));
+      if(data?.expires_in)localStorage.setItem("draftcenterYahooExpiresAt",String(now+Math.max(60,Number(data.expires_in)-60)*1000));
+    }catch(_){}
+    updateYahooAuthUI();
+  }
+
+  function clearYahooTokens(){
+    try{
+      ["draftcenterYahooAccessToken","draftcenterYahooRefreshToken","draftcenterYahooExpiresAt"].forEach(k=>localStorage.removeItem(k));
+    }catch(_){}
+    updateYahooAuthUI();
+  }
+
+  function b64url(bytes){
+    let s="";for(const b of bytes)s+=String.fromCharCode(b);
+    return btoa(s).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/g,"");
+  }
+
+  async function sha256url(text){
+    const bytes=new TextEncoder().encode(text);
+    return b64url(new Uint8Array(await crypto.subtle.digest("SHA-256",bytes)));
+  }
+
+  async function startYahooAuth(){
+    const clientId=String($("yahooClientIdInput")?.value||yahooClientId()).trim();
+    if(!clientId){$("yahooAuthState").textContent="Enter your Yahoo Client ID first.";return;}
+    rememberYahooClientId(clientId);
+    const verifier=b64url(crypto.getRandomValues(new Uint8Array(48)));
+    const challenge=await sha256url(verifier);
+    const state=b64url(crypto.getRandomValues(new Uint8Array(24)));
+    try{
+      sessionStorage.setItem("draftcenterYahooPkceVerifier",verifier);
+      sessionStorage.setItem("draftcenterYahooOauthState",state);
+    }catch(_){}
+    const u=new URL(YAHOO_AUTH_URL);
+    u.searchParams.set("client_id",clientId);
+    u.searchParams.set("redirect_uri",yahooCallbackUrl());
+    u.searchParams.set("response_type","code");
+    u.searchParams.set("code_challenge",challenge);
+    u.searchParams.set("code_challenge_method","S256");
+    u.searchParams.set("state",state);
+    location.assign(u.toString());
+  }
+
+  async function yahooTokenRequest(params){
+    const body=new URLSearchParams(params);
+    const r=await fetch(YAHOO_TOKEN_URL,{
+      method:"POST",
+      headers:{"Content-Type":"application/x-www-form-urlencoded","Accept":"application/json"},
+      body,cache:"no-store",credentials:"omit"
+    });
+    const data=await r.json().catch(()=>({}));
+    if(!r.ok)throw new Error(data?.error_description||data?.error||`Yahoo token HTTP ${r.status}`);
+    saveYahooTokens(data);
+    return data;
+  }
+
+  async function processYahooOAuthCallback(){
+    const q=new URLSearchParams(location.search);
+    const code=q.get("code");
+    if(!code)return false;
+    const returnedState=q.get("state")||"";
+    let expected="",verifier="";
+    try{expected=sessionStorage.getItem("draftcenterYahooOauthState")||"";verifier=sessionStorage.getItem("draftcenterYahooPkceVerifier")||""}catch(_){}
+    if(expected && returnedState!==expected)throw new Error("Yahoo OAuth state did not match.");
+    const clientId=yahooClientId();
+    if(!clientId||!verifier)throw new Error("Yahoo OAuth callback is missing its local PKCE session. Connect Yahoo again.");
+    await yahooTokenRequest({client_id:clientId,redirect_uri:yahooCallbackUrl(),code,grant_type:"authorization_code",code_verifier:verifier});
+    try{sessionStorage.removeItem("draftcenterYahooOauthState");sessionStorage.removeItem("draftcenterYahooPkceVerifier")}catch(_){}
+    history.replaceState({},document.title,`${location.pathname}${location.hash||""}`);
+    debugLog("YAHOO","OAuth connected successfully");
+    return true;
+  }
+
+  async function ensureYahooToken(){
+    const t=yahooTokenState();
+    if(t.access && (!t.expires || Date.now()<t.expires))return t.access;
+    if(t.refresh){
+      const clientId=yahooClientId();
+      if(!clientId)throw new Error("Yahoo Client ID missing on this device.");
+      const data=await yahooTokenRequest({client_id:clientId,refresh_token:t.refresh,grant_type:"refresh_token"});
+      return String(data.access_token||"");
+    }
+    throw new Error("Yahoo is not connected on this device. Open Settings → Draft → Connect Yahoo.");
+  }
+
+  async function yahooApiText(path,retry=true){
+    const token=await ensureYahooToken();
+    const sep=path.includes("?")?"&":"?";
+    const r=await fetch(`${YAHOO_API}${path}${sep}_dc=${Date.now()}`,{
+      cache:"no-store",credentials:"omit",
+      headers:{"Authorization":`Bearer ${token}`,"Accept":"application/xml,text/xml;q=0.9,*/*;q=0.8"}
+    });
+    if(r.status===401 && retry){
+      try{localStorage.setItem("draftcenterYahooExpiresAt","0")}catch(_){}
+      return yahooApiText(path,false);
+    }
+    if(!r.ok)throw new Error(`Yahoo Fantasy API ${r.status}`);
+    return r.text();
+  }
+
+  function yahooXml(text){
+    const doc=new DOMParser().parseFromString(text,"application/xml");
+    if(doc.getElementsByTagName("parsererror").length)throw new Error("Yahoo returned invalid XML");
+    return doc;
+  }
+
+  function yText(node,name){
+    const el=node?.getElementsByTagName(name)?.[0];
+    return String(el?.textContent||"").trim();
+  }
+
+  function yDirect(node,name){
+    if(!node)return "";
+    const el=[...node.children].find(x=>x.localName===name);
+    return String(el?.textContent||"").trim();
+  }
+
+  function parseYahooLeagueKey(v){
+    const raw=String(v||"").trim();
+    const exact=raw.match(/((?:nfl|\d+)\.l\.\d+)/i);
+    if(exact)return exact[1].toLowerCase();
+    const f1=raw.match(/(?:football\.)?fantasysports\.yahoo\.com\/(?:[^/]+\/)?f1\/(\d+)/i);
+    if(f1)return `nfl.l.${f1[1]}`;
+    const id=raw.match(/(?:league_id|lid)[=/](\d+)/i)||raw.match(/^\d+$/);
+    if(id)return `nfl.l.${id[1]||id[0]}`;
+    return "";
+  }
+
+  function parseYahooTeams(doc){
+    return [...doc.getElementsByTagName("team")].map((team,i)=>{
+      const teamKey=yDirect(team,"team_key")||yText(team,"team_key");
+      if(!teamKey)return null;
+      const teamId=Number(yDirect(team,"team_id")||yText(team,"team_id")||i+1);
+      const teamName=yDirect(team,"name")||`Team ${teamId}`;
+      const slot=Number(yDirect(team,"draft_position")||yText(team,"draft_position")||teamId);
+      const manager=team.getElementsByTagName("manager")?.[0];
+      const managerName=yDirect(manager,"nickname")||yDirect(manager,"email")||yDirect(manager,"manager_id")||teamName;
+      const managerId=yDirect(manager,"guid")||yDirect(manager,"manager_id")||teamKey;
+      const logoNode=team.getElementsByTagName("team_logo")?.[0];
+      const logo=yText(logoNode,"url")||"";
+      return {teamKey,teamId,teamName,slot,managerName,managerId,logo};
+    }).filter(Boolean).sort((a,b)=>a.slot-b.slot);
+  }
+
+  function installYahooTeams(teams){
+    const order={};
+    const nextUsers={},nextLeagueUsers={};
+    yahooTeamKeyToUid={};
+    yahooTeamKeyToSlot={};
+    for(const t of teams){
+      const uid=`yahoo:${t.teamKey}`;
+      yahooTeamKeyToUid[t.teamKey]=uid;
+      yahooTeamKeyToSlot[t.teamKey]=t.slot;
+      order[uid]=t.slot;
+      nextUsers[uid]={user_id:uid,username:String(t.managerName||t.teamName),display_name:String(t.managerName||t.teamName),avatar:t.logo||null};
+      nextLeagueUsers[uid]={user_id:uid,username:String(t.managerName||t.teamName),display_name:String(t.managerName||t.teamName),avatar:t.logo||null,metadata:{team_name:t.teamName}};
+    }
+    users=nextUsers;leagueUsers=nextLeagueUsers;
+    return order;
+  }
+
+  function parseYahooDraftResults(doc){
+    return [...doc.getElementsByTagName("draft_result")].map(x=>({
+      pick:Number(yDirect(x,"pick")||yText(x,"pick")||0),
+      round:Number(yDirect(x,"round")||yText(x,"round")||0),
+      teamKey:yDirect(x,"team_key")||yText(x,"team_key"),
+      playerKey:yDirect(x,"player_key")||yText(x,"player_key")
+    })).filter(x=>x.pick>0&&x.round>0&&x.teamKey&&x.playerKey).sort((a,b)=>a.pick-b.pick);
+  }
+
+  function parseYahooPlayerElement(player){
+    const key=yDirect(player,"player_key")||yText(player,"player_key");
+    if(!key)return null;
+    const nameNode=player.getElementsByTagName("name")?.[0];
+    const full=yText(nameNode,"full")||key;
+    const first=yText(nameNode,"first")||full.split(/\s+/)[0]||"";
+    const last=yText(nameNode,"last")||full.split(/\s+/).slice(1).join(" ");
+    const pos=yDirect(player,"display_position")||yDirect(player,"primary_position")||yText(player,"display_position")||yText(player,"primary_position")||"";
+    const team=yDirect(player,"editorial_team_abbr")||yText(player,"editorial_team_abbr")||"FA";
+    const headshot=player.getElementsByTagName("headshot")?.[0];
+    const image=yText(headshot,"url")||"";
+    const da=player.getElementsByTagName("draft_analysis")?.[0];
+    const adp=Number(yText(da,"average_pick")||0);
+    return {key,full,first,last,pos,team,image,adp:Number.isFinite(adp)&&adp>0?adp:null};
+  }
+
+  function installYahooPlayers(doc){
+    for(const p of [...doc.getElementsByTagName("player")]){
+      const x=parseYahooPlayerElement(p);
+      if(x)yahooPlayerCache[x.key]=x;
+    }
+  }
+
+  async function yahooEnsurePlayers(keys){
+    const missing=[...new Set(keys.filter(Boolean))].filter(k=>!yahooPlayerCache[k]);
+    for(let i=0;i<missing.length;i+=25){
+      const batch=missing.slice(i,i+25);
+      const xml=await yahooApiText(`/players;player_keys=${batch.map(encodeURIComponent).join(",")};out=draft_analysis`);
+      installYahooPlayers(yahooXml(xml));
+    }
+  }
+
+  function normalizeYahooPicks(raw){
+    return raw.map(x=>{
+      const pl=yahooPlayerCache[x.playerKey]||{full:x.playerKey,first:"",last:"",pos:"",team:"FA",image:""};
+      return {
+        pick_no:x.pick,round:x.round,draft_slot:Number(yahooTeamKeyToSlot[x.teamKey]||0),
+        picked_by:yahooTeamKeyToUid[x.teamKey]||`yahoo:${x.teamKey}`,
+        player_id:x.playerKey,is_keeper:false,
+        metadata:{first_name:pl.first,last_name:pl.last,full_name:pl.full,position:pl.pos,team:pl.team,image_url:pl.image,provider:"yahoo"}
+      };
+    }).filter(p=>p.draft_slot>0);
+  }
+
+  function yahooRoundsFromSettings(doc,raw){
+    let total=0;
+    for(const rp of [...doc.getElementsByTagName("roster_position")]){
+      const pos=(yDirect(rp,"position")||yText(rp,"position")).toUpperCase();
+      const count=Number(yDirect(rp,"count")||yText(rp,"count")||0);
+      if(!["IR","IL","NA"].includes(pos))total+=Math.max(0,count);
+    }
+    const maxRound=raw.reduce((m,x)=>Math.max(m,x.round||0),0);
+    return Math.max(total,maxRound,15);
+  }
+
+  function normalizeYahooDraft(metaDoc,settingsDoc,teams,raw,order,key){
+    const league=metaDoc.getElementsByTagName("league")?.[0];
+    const name=yDirect(league,"name")||`Yahoo League ${key}`;
+    const numTeams=Number(yDirect(league,"num_teams")||teams.length||10);
+    const rawStatus=(yDirect(league,"draft_status")||"").toLowerCase();
+    const settings=settingsDoc.getElementsByTagName("settings")?.[0]||settingsDoc.documentElement;
+    const draftType=(yText(settings,"draft_type")||"standard").toLowerCase();
+    if(/auction|salary/.test(draftType))throw new Error("Yahoo auction/salary-cap drafts are not supported by this DraftCenter board yet.");
+    const rounds=yahooRoundsFromSettings(settingsDoc,raw);
+    const total=numTeams*rounds;
+    let status="pre_draft";
+    if(/post|complete/.test(rawStatus)||raw.length>=total)status="complete";
+    else if(raw.length>0||/drafting|inprogress|in_progress/.test(rawStatus))status="drafting";
+    const scoring=yText(settings,"scoring_type")||"yahoo";
+    return {
+      draft_id:key,league_id:key,type:"snake",status,season:new Date().getFullYear(),draft_order:order,
+      settings:{teams:numTeams,rounds,pick_timer:yahooPickTimer,reversal_round:0},
+      metadata:{name,scoring_type:scoring,provider:"yahoo",draft_status:rawStatus},
+      start_time:Date.now(),last_picked:Number(observedPickAt||0)
+    };
+  }
+
+  async function fetchYahooSnapshot(key){
+    const enc=encodeURIComponent(key);
+    const [metaText,settingsText,teamsText,draftText]=await Promise.all([
+      yahooApiText(`/league/${enc}`),
+      yahooApiText(`/league/${enc}/settings`),
+      yahooApiText(`/league/${enc}/teams`),
+      yahooApiText(`/league/${enc}/draftresults`).catch(e=>{if(String(e.message).includes("404"))return "<fantasy_content/>";throw e;})
+    ]);
+    const metaDoc=yahooXml(metaText),settingsDoc=yahooXml(settingsText),teamsDoc=yahooXml(teamsText),draftDoc=yahooXml(draftText);
+    const teams=parseYahooTeams(teamsDoc);
+    if(!teams.length)throw new Error("Yahoo returned no fantasy teams for that league.");
+    const order=installYahooTeams(teams);
+    const raw=parseYahooDraftResults(draftDoc);
+    await yahooEnsurePlayers(raw.map(x=>x.playerKey));
+    const nextDraft=normalizeYahooDraft(metaDoc,settingsDoc,teams,raw,order,key);
+    const nextPicks=normalizeYahooPicks(raw);
+    return {draft:nextDraft,picks:nextPicks};
+  }
+
+  async function pollYahooDraft(){
+    if(Date.now()-yahooLastDraftPollAt<8000)return;
+    yahooLastDraftPollAt=Date.now();
+    try{
+      const key=yahooLeagueKey||draftId;
+      if(!key)return;
+      const snap=await fetchYahooSnapshot(key);
+      const first=!draft;
+      draft=snap.draft;
+      if(first){picks=snap.picks;lastPickCount=picks.length;turnStartedAt=Date.now();debugLog("YAHOO",`loaded ${key} · ${draft.settings.teams} teams · ${draft.settings.rounds} rounds · ${picks.length} picks`);}
+      renderAll();logNameResolution("Yahoo");
+      if(first)loadSleeperADP();
+    }catch(e){
+      $("status").textContent=e.message;$("status").classList.add("bad");
+      debugLogOnce(`yahoo-draft:${draftId}:${e.message}`,"YAHOO!",e.message);
+      updateYahooAuthUI();
+    }
+  }
+
+  async function pollYahooPicks(){
+    if(Date.now()-yahooLastPicksPollAt<2000)return;
+    if(picksBusy)return;
+    yahooLastPicksPollAt=Date.now();picksBusy=true;
+    try{
+      const key=yahooLeagueKey||draftId;
+      const text=await yahooApiText(`/league/${encodeURIComponent(key)}/draftresults`).catch(e=>{if(String(e.message).includes("404"))return "<fantasy_content/>";throw e;});
+      const raw=parseYahooDraftResults(yahooXml(text));
+      await yahooEnsurePlayers(raw.map(x=>x.playerKey));
+      const next=normalizeYahooPicks(raw);
+      processPickSnapshot(next);
+      if(draft){
+        const total=Number(draft.settings?.teams||10)*Number(draft.settings?.rounds||15);
+        if(next.length>=total)draft.status="complete";else if(next.length>0)draft.status="drafting";
+      }
+    }catch(e){$("status").textContent=e.message;$("status").classList.add("bad");}
+    finally{picksBusy=false;}
+  }
+
+  async function loadYahooADP(){
+    if(yahooAdpBusy||!draft||draftProvider!=="yahoo")return;
+    const attemptKey=`yahoo:${yahooLeagueKey||draftId}`;
+    if(adpAttemptedFor===attemptKey)return;
+    adpAttemptedFor=attemptKey;yahooAdpBusy=true;
+    try{
+      const rowsById={};
+      const addCached=()=>{
+        for(const pl of Object.values(yahooPlayerCache)){
+          if(!pl?.adp)continue;
+          rowsById[pl.key]={player_id:pl.key,adp:Number(pl.adp),full_name:pl.full,fantasy_positions:[pl.pos],team:pl.team};
+        }
+      };
+      addCached();
+      const key=yahooLeagueKey||draftId;
+      for(let start=0;start<150;start+=25){
+        const xml=await yahooApiText(`/league/${encodeURIComponent(key)}/players;status=A;sort=OR;start=${start};count=25;out=draft_analysis`);
+        const doc=yahooXml(xml);
+        const found=[...doc.getElementsByTagName("player")];
+        installYahooPlayers(doc);addCached();
+        if(found.length<25)break;
+      }
+      const rows=Object.values(rowsById).filter(x=>Number.isFinite(x.adp)&&x.adp>0&&x.adp<999).sort((a,b)=>a.adp-b.adp);
+      adpRows=rows;sleeperAdpById=Object.fromEntries(rows.map(x=>[x.player_id,x.adp]));
+      marketReady=rows.length>0;marketSourceLabel=marketReady?"Yahoo ADP":"Yahoo ADP unavailable";
+      debugLog("YAHOO",`Yahoo ADP loaded · ${rows.length} players`);
+      renderAll();
+    }catch(e){
+      marketReady=false;adpRows=[];sleeperAdpById={};marketSourceLabel="Yahoo ADP unavailable";
+      debugLog("YAHOO!",`Yahoo ADP unavailable: ${e.message}`);
+    }finally{yahooAdpBusy=false;}
+  }
+
+  function updateYahooAuthUI(){
+    const box=$("yahooAuthBox"),timerRow=$("yahooTimerRow");
+    const yahoo=draftProvider==="yahoo" || $("draftProvider")?.value==="yahoo";
+    if(box)box.style.display=yahoo?"block":"none";
+    if(timerRow)timerRow.style.display=yahoo?"block":"none";
+    const label=$("draftInputLabel");
+    if(label)label.childNodes[0].nodeValue=yahoo?"Yahoo League URL / League Key / League ID\n      ":"Sleeper Draft URL or Draft ID\n      ";
+    const cbEl=$("yahooCallbackUrl");if(cbEl)cbEl.textContent=yahooCallbackUrl();
+    const cid=$("yahooClientIdInput");if(cid && !cid.value)cid.value=yahooClientId();
+    const st=$("yahooAuthState");if(st){
+      const t=yahooTokenState();
+      st.textContent=t.access?"Yahoo connected on this device.":(t.refresh?"Yahoo refresh token available; connection will renew automatically.":"Yahoo not connected on this device.");
+    }
+  }
+
+  function updateProviderUI(){
+    const sel=$("draftProvider");if(sel)sel.value=draftProvider;
+    if($("yahooTimerInput"))$("yahooTimerInput").value=yahooPickTimer;
+    if($("draftInput")){
+      $("draftInput").value=draftProvider==="yahoo"?(yahooLeagueKey||draftId):`https://sleeper.com/draft/nfl/${draftId}`;
+    }
+    updateYahooAuthUI();
+  }
+
   function pickName(p){
     const m=p?.metadata||{};
     return [m.first_name,m.last_name].filter(Boolean).join(" ").trim() || m.full_name || p?.player_id || "Unknown";
   }
-  function playerImg(p){ return p?.player_id ? `https://sleepercdn.com/content/nfl/players/${encodeURIComponent(p.player_id)}.jpg` : ""; }
-  function avatarImg(a,thumb=false){ return a ? `https://sleepercdn.com/avatars/${thumb?"thumbs/":""}${encodeURIComponent(a)}` : ""; }
+  function playerImg(p){
+    const direct=String(p?.metadata?.image_url||"");
+    if(direct)return direct;
+    return p?.player_id ? `https://sleepercdn.com/content/nfl/players/${encodeURIComponent(p.player_id)}.jpg` : "";
+  }
+  function avatarImg(a,thumb=false){
+    if(!a)return "";
+    if(/^https?:\/\//i.test(String(a)))return String(a);
+    return `https://sleepercdn.com/avatars/${thumb?"thumbs/":""}${encodeURIComponent(a)}`;
+  }
 
   function isForwardRound(round){
     if((draft?.type||"snake")!=="snake") return true;
@@ -2408,11 +2847,11 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     const teams=Number(draft?.settings?.teams||10), rounds=Number(draft?.settings?.rounds||15), timer=Number(draft?.settings?.pick_timer||0);
     $("board-title").textContent=draft?.metadata?.name||`${teams}-team ${draft?.type||"snake"} draft`;
     $("board-subtitle").textContent=`${teams}-team ${draft?.type||"snake"} · ${timer?Math.round(timer/60*10)/10+" min/pick":"no timer"} · ${rounds} rounds`;
-    $("api-state").innerHTML=`<span class="dot"></span><span>${draft.status==="drafting"?"Draft live":String(draft.status||"Synced")}</span>`;
+    $("api-state").innerHTML=`<span class="dot"></span><span>${draft.status==="drafting"?"Draft live":String(draft.status||"Synced")}</span>${draftProvider==="yahoo"?`<span> · <a href="https://football.fantasysports.yahoo.com/" target="_blank" rel="noopener" style="color:inherit">Fantasy data provided by Yahoo Fantasy</a></span>`:""}`;
     const ba=bestAvailable();
     if(ba){
       const slide=(picks.length+1)-Number(ba.adp||0);
-      $("market-watch").innerHTML=`BEST AVAILABLE · <strong>${esc(ba.full_name||"—")}</strong> · Sleeper ADP ${Number(ba.adp).toFixed(1)}${slide>=8?` · ${Math.round(slide)} picks past ADP`:""}`;
+      $("market-watch").innerHTML=`BEST AVAILABLE · <strong>${esc(ba.full_name||"—")}</strong> · ${esc(marketLabel())} ${Number(ba.adp).toFixed(1)}${slide>=8?` · ${Math.round(slide)} picks past ADP`:""}`;
     }else{
       $("market-watch").innerHTML=marketReady
         ? `ADP ENGINE <span class="market-source">${esc(marketSourceLabel)}</span>`
@@ -2426,6 +2865,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
 
 
   async function loadSleeperADP(){
+    if(draftProvider==="yahoo")return loadYahooADP();
     if(!draft)return;
     const season=String(draft.season||"2026");
     const field=adpFieldForDraft();
@@ -2483,6 +2923,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
 
   async function hydrate(){
     if(!draft)return;
+    if(draftProvider==="yahoo"){renderAll();logNameResolution("Yahoo");if($("settings")?.classList.contains("open"))renderPeopleSettings();return;}
     const ids=Object.keys(draft.draft_order||{});
     await Promise.all(ids.map(async uid=>{
       if(users[uid])return;
@@ -2500,6 +2941,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   }
 
   async function pollDraft(){
+    if(draftProvider==="yahoo")return pollYahooDraft();
     if(draftNotFound)return;
     if(draftBusy)return;draftBusy=true;
     try{
@@ -2531,80 +2973,45 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     finally{draftBusy=false;}
   }
 
+  function processPickSnapshot(next){
+    const previousLiveKeys=new Set(picks.filter(p=>!isKeeperPick(p)).map(p=>pickCellKey(p)));
+    const incomingLive=next
+      .filter(p=>!isKeeperPick(p))
+      .filter(p=>!previousLiveKeys.has(pickCellKey(p)));
+
+    if(lastPickCount!==null && incomingLive.length){
+      const now=Date.now();
+      const secondsOnClock=Math.max(0,(now-turnStartedAt)/1000);
+      if(activeEvent && activeEvent.kind==="followup")rememberDeferred(activeEvent);
+      for(const pending of eventQueue){if(pending?.kind==="followup")rememberDeferred(pending);}
+      hidePressure();playPickStinger();stopAudioGroup("warning");warningCrowdStarted=false;
+      activeEvent=null;activeUntil=0;eventQueue.length=0;
+      observedPickAt=now;lastLivePickAt=now;picks=next;insightIndex=0;
+      incomingLive.sort((a,b)=>{
+        const ca=cellForPick(a)?.ordinal||Number(a.pick_no||0);
+        const cb=cellForPick(b)?.ordinal||Number(b.pick_no||0);
+        return ca-cb;
+      }).forEach(p=>{
+        const cell=cellForPick(p);lastLivePickKey=pickCellKey(p);
+        const pickOwner=ownerForPick(p);const mgr=broadcastName(pickOwner);const mv=marketValue(p);
+        const ordinal=Number(cell?.ordinal||p.pick_no||0);const delta=mv?ordinal-Number(mv.rank):null;
+        debugLog("PICK",`${cell?.label||formatCellLabel(p)} · ${pickName(p)} (${p?.metadata?.position||"—"}) · ${mgr}${managerUsername(pickOwner)?` @${managerUsername(pickOwner)}`:""}${mv?` · ${mv.label} ${mv.rank.toFixed(1)} · ${delta>=0?"+":""}${Math.round(delta)}`:""}${isAutodraftManager(pickOwner)?" · AUTO-MARKED":""}`);
+        observedPickTimes.push({pick:Number(cell?.ordinal||p.pick_no||0),seconds:secondsOnClock,manager:mgr});
+        observedPickTimes=observedPickTimes.slice(-80);queueEventsForPick(p,secondsOnClock);
+      });
+      turnStartedAt=now;
+    }else{picks=next;}
+    lastPickCount=next.length;renderAll();
+  }
+
   async function pollPicks(){
+    if(draftProvider==="yahoo")return pollYahooPicks();
     if(draftNotFound)return;
     if(picksBusy)return;picksBusy=true;
     try{
       const arr=await apiGet(`/draft/${draftId}/picks`);
       const next=Array.isArray(arr)?arr.slice().sort((a,b)=>Number(a.pick_no)-Number(b.pick_no)):[];
-      const previousLiveKeys=new Set(picks.filter(p=>!isKeeperPick(p)).map(p=>pickCellKey(p)));
-      const incomingLive=next
-        .filter(p=>!isKeeperPick(p))
-        .filter(p=>!previousLiveKeys.has(pickCellKey(p)));
-
-      if(lastPickCount!==null && incomingLive.length){
-        const now=Date.now();
-        const secondsOnClock=Math.max(0,(now-turnStartedAt)/1000);
-
-        // If analysis is on screen OR waiting behind the current pick reveal,
-        // preserve it for the next lull. A new pick reveal always wins live,
-        // but useful analysis should not simply disappear.
-        if(activeEvent && activeEvent.kind==="followup"){
-          rememberDeferred(activeEvent);
-        }
-
-        for(const pending of eventQueue){
-          if(pending?.kind==="followup") rememberDeferred(pending);
-        }
-
-        hidePressure();
-        playPickStinger();
-        // A selection is never booed. Kill any tail of the 20-second warning
-        // immediately before the pick reveal/new turn is rendered.
-        stopAudioGroup("warning");
-        warningCrowdStarted=false;
-        activeEvent=null;
-        activeUntil=0;
-        eventQueue.length=0;
-
-        observedPickAt=now;
-        lastLivePickAt=now;
-        picks=next;
-        // Fresh draft action can materially change the insight carousel.
-        // Start back at the first slide rather than showing stale context.
-        insightIndex=0;
-
-        // Normally one, but handle batched API updates safely in board order.
-        incomingLive
-          .sort((a,b)=>{
-            const ca=cellForPick(a)?.ordinal||Number(a.pick_no||0);
-            const cb=cellForPick(b)?.ordinal||Number(b.pick_no||0);
-            return ca-cb;
-          })
-          .forEach(p=>{
-            const cell=cellForPick(p);
-            lastLivePickKey=pickCellKey(p);
-            const pickOwner=ownerForPick(p);
-            const mgr=broadcastName(pickOwner);
-            const mv=marketValue(p);
-            const ordinal=Number(cell?.ordinal||p.pick_no||0);
-            const delta=mv?ordinal-Number(mv.rank):null;
-            debugLog("PICK",`${cell?.label||formatCellLabel(p)} · ${pickName(p)} (${p?.metadata?.position||"—"}) · ${mgr}${managerUsername(pickOwner)?` @${managerUsername(pickOwner)}`:""}${mv?` · ADP ${mv.rank.toFixed(1)} · ${delta>=0?"+":""}${Math.round(delta)}`:""}${isAutodraftManager(pickOwner)?" · AUTO-MARKED":""}`);
-            observedPickTimes.push({
-              pick:Number(cell?.ordinal||p.pick_no||0),
-              seconds:secondsOnClock,
-              manager:mgr
-            });
-            observedPickTimes=observedPickTimes.slice(-80);
-            queueEventsForPick(p,secondsOnClock);
-          });
-
-        turnStartedAt=now;
-      }else{
-        picks=next;
-      }
-      lastPickCount=next.length;
-      renderAll();
+      processPickSnapshot(next);
     }catch(e){$("status").textContent=`Picks API error: ${e.message}`;$("status").classList.add("bad");}
     finally{picksBusy=false;}
   }
@@ -2629,6 +3036,38 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   }
 
   async function loadDraft(v){
+    const raw=String(v||"").trim();
+    let provider=$("draftProvider")?.value||draftProvider;
+    if(/yahoo/i.test(raw)||/(?:nfl|\d+)\.l\.\d+/i.test(raw))provider="yahoo";
+    if(provider==="yahoo")return loadYahooLeague(raw);
+    return loadSleeperDraft(raw);
+  }
+
+  async function loadYahooLeague(v){
+    const key=parseYahooLeagueKey(v);
+    if(!key){$("status").textContent="Enter a valid Yahoo Fantasy Football league URL, league key, or league ID.";$("status").classList.add("bad");return;}
+    const timer=Math.max(30,Math.min(600,Number($("yahooTimerInput")?.value||yahooPickTimer||180)));
+    yahooPickTimer=timer;
+    $("status").classList.remove("bad");$("status").textContent=`Checking Yahoo league ${key}…`;
+    let snap;
+    try{snap=await fetchYahooSnapshot(key)}catch(e){
+      $("status").textContent=e.message;$("status").classList.add("bad");debugLog("YAHOO!",e.message);updateYahooAuthUI();return;
+    }
+    const changed=draftProvider!=="yahoo"||String(yahooLeagueKey||draftId)!==String(key);
+    draftProvider="yahoo";yahooLeagueKey=key;draftId=key;
+    if(changed){broadcastNames={};absentUsernames=new Set();autodraftUsernames=new Set();roastDecks.clear();}
+    roastLevel=$("roastLevel").value;
+    const saved=await saveSharedSettings({reload:false});if(!saved)return;
+    stopAudioGroup("warning");hidePressure();draft=snap.draft;picks=snap.picks;lastPickCount=picks.length;
+    observedPickAt=null;const initialLive=picks.filter(p=>!isKeeperPick(p));lastLivePickKey=initialLive.length?pickCellKey(initialLive[initialLive.length-1]):"";
+    currentLiveOrdinal=1;marketReady=false;adpRows=[];sleeperAdpById={};adpAttemptedFor="";aiAnalysis=null;lastAiRevision="";
+    turnStartedAt=Date.now();warningCrowdStarted=false;draftNotFound=false;
+    updateProviderUI();$("settings").classList.remove("open");
+    debugLog("YAHOO",`validated and switched to ${key} · ${draft.settings.teams} teams · ${picks.length} picks`);
+    renderAll();logNameResolution("Yahoo");loadSleeperADP();pollYahooPicks();
+  }
+
+  async function loadSleeperDraft(v){
     const m=String(v||"").match(/(\d{10,})/);
     if(!m){
       $("status").textContent="Enter a valid Sleeper draft URL or draft ID.";
@@ -2652,7 +3091,9 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
       return;
     }
 
-    const draftChanged=nextDraftId!==draftId;
+    const draftChanged=draftProvider!=="sleeper"||nextDraftId!==draftId;
+    draftProvider="sleeper";
+    yahooLeagueKey="";
     draftId=nextDraftId;
     draftNotFound=false;
 
@@ -2704,15 +3145,20 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
 
   function applySharedSettings(cfg){
     if(!cfg||typeof cfg!=="object")return;
-    const id=String(cfg.draftId||"").replace(/\D/g,"");
-    if(id)draftId=id;
+    draftProvider=cfg.provider==="yahoo"?"yahoo":"sleeper";
+    yahooPickTimer=Math.max(30,Math.min(600,Number(cfg.yahooPickTimer||180)));
+    if(draftProvider==="yahoo"){
+      const key=parseYahooLeagueKey(cfg.yahooLeagueKey||cfg.draftId||"");
+      if(key){yahooLeagueKey=key;draftId=key;}
+    }else{
+      const id=String(cfg.draftId||"").replace(/\D/g,"");
+      if(id)draftId=id;
+      yahooLeagueKey="";
+    }
     absentUsernames=new Set((Array.isArray(cfg.absent)?cfg.absent:[]).map(x=>String(x).trim().toLowerCase()).filter(Boolean));
     autodraftUsernames=new Set((Array.isArray(cfg.autodraft)?cfg.autodraft:[]).map(x=>String(x).trim().toLowerCase()).filter(Boolean));
-    broadcastNames=Object.fromEntries(
-      Object.entries((cfg.broadcastNames&&typeof cfg.broadcastNames==="object")?cfg.broadcastNames:{})
-        .map(([k,v])=>[String(k).trim().toLowerCase(),String(v||"").trim()])
-        .filter(([k,v])=>k&&v)
-    );
+    broadcastNames=Object.fromEntries(Object.entries((cfg.broadcastNames&&typeof cfg.broadcastNames==="object")?cfg.broadcastNames:{})
+      .map(([k,v])=>[String(k).trim().toLowerCase(),String(v||"").trim()]).filter(([k,v])=>k&&v));
     roastLevel=["off","light","spicy"].includes(cfg.roastLevel)?cfg.roastLevel:"spicy";
   }
 
@@ -2729,7 +3175,10 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
 
   function sharedPayload(){
     return {
+      provider:draftProvider,
       draftId,
+      yahooLeagueKey:draftProvider==="yahoo"?(yahooLeagueKey||draftId):"",
+      yahooPickTimer:draftProvider==="yahoo"?yahooPickTimer:undefined,
       roastLevel,
       broadcastNames,
       absent:[...absentUsernames],
@@ -2907,7 +3356,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   }
 
   function populateLeagueSettings(){
-    $("draftInput").value=`https://sleeper.com/draft/nfl/${draftId}`;
+    updateProviderUI();
     $("adminTokenInput").value=adminToken();
     $("roastLevel").value=roastLevel;
     $("positionPalette").value=positionPalette;
@@ -2923,6 +3372,14 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   function setMasterVolume(percent){
     masterVolume=Math.max(0,Math.min(100,Number(percent)||0))/100;
   }
+
+  $("draftProvider").addEventListener("change",e=>{
+    draftProvider=e.currentTarget.value==="yahoo"?"yahoo":"sleeper";
+    updateProviderUI();
+  });
+  $("yahooTimerInput").addEventListener("change",e=>{yahooPickTimer=Math.max(30,Math.min(600,Number(e.currentTarget.value)||180));e.currentTarget.value=yahooPickTimer;});
+  $("connectYahoo").addEventListener("click",startYahooAuth);
+  $("disconnectYahoo").addEventListener("click",()=>{clearYahooTokens();debugLog("YAHOO","Yahoo disconnected on this device")});
 
   $("positionPalette").addEventListener("change",e=>{
     positionPalette=e.currentTarget.value==="sleeper"?"sleeper":"tv";
@@ -2982,13 +3439,14 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
 
   async function boot(){
     loadPositionPalette();
+    try{await processYahooOAuthCallback()}catch(e){debugLog("YAHOO!",e.message);$("status").textContent=e.message;$("status").classList.add("bad");}
     // Shared league settings are loaded once per page load. There is deliberately
     // no config polling: refresh another device when you want it to pick up changes.
     $("status").textContent="Loading shared DraftCenter settings…";
     await loadSharedSettings();
-    debugLog("BOOT",`DraftCenter session started for ${draftId}`);
-    $("draftInput").value=`https://sleeper.com/draft/nfl/${draftId}`;
-    $("status").textContent=`Connecting to Sleeper draft ${draftId}…`;
+    updateProviderUI();
+    debugLog("BOOT",`DraftCenter session started for ${draftProvider} ${draftId}`);
+    $("status").textContent=draftProvider==="yahoo"?`Connecting to Yahoo league ${draftId}…`:`Connecting to Sleeper draft ${draftId}…`;
 
     // Start Sleeper immediately after the bounded config read. A slow/blocked
     // config host can no longer leave the whole TV UI stuck on CONNECTING.
@@ -2997,7 +3455,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
 
     setTimeout(()=>{
       if(draft)return;
-      const msg=`Still waiting for Sleeper draft ${draftId}. Open Settings → Debug for the exact startup error.`;
+      const msg=`Still waiting for ${draftProvider==="yahoo"?"Yahoo league":"Sleeper draft"} ${draftId}. Open Settings → Debug for the exact startup error.`;
       $("status").textContent=msg;
       $("status").classList.add("bad");
       $("board-subtitle").textContent=`Unable to load draft ${draftId}`;
