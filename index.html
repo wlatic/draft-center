@@ -298,7 +298,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
       <div class="left">
         <div class="sleeper-mark">S</div>
         <div>
-          <div id="board-title">Sleeper Draft Party</div>
+          <div id="board-title">DraftCenter</div>
           <div id="board-subtitle">Loading draft…</div>
         </div>
       </div>
@@ -391,7 +391,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     </div>
     <div class="people-help" id="sharedConfigSummary">Shared config not loaded yet.</div>
     <div class="people-list" id="peopleList">
-      <div class="people-help">Waiting for Sleeper users…</div>
+      <div class="people-help">Waiting for platform managers…</div>
     </div>
     <div class="settings-actions">
       <button class="tool" id="savePeople" type="button">Save shared people</button>
@@ -426,7 +426,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     </div>
     <div class="settings-note">
     DraftCenter follows one saved Sleeper draft or Yahoo league configured in the Draft tab.
-    The People tab controls broadcast names, Absent status and Auto-draft status per Sleeper username.
+    The People tab controls broadcast names, Absent status and Auto-draft status per platform manager identity.
     Sounds fade out instead of stopping abruptly when a draft moment interrupts them.
   </div>
   </section>
@@ -679,13 +679,13 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
       known.add(username);
       const alias=String(broadcastNames[username]||"").trim();
       if(alias){
-        debugLogOnce(`name:${draftId}:${username}:${alias}`,"NAME",`${username} → ${alias} matched Sleeper slot ${slot} (${source})`);
+        debugLogOnce(`name:${draftId}:${username}:${alias}`,"NAME",`${username} → ${alias} matched ${draftProvider==="yahoo"?"Yahoo":"Sleeper"} slot ${slot} (${source})`);
       }
     }
     for(const [username,alias] of Object.entries(broadcastNames||{})){
       const key=String(username).trim().toLowerCase();
       if(key && !known.has(key)){
-        debugLogOnce(`name-miss:${draftId}:${key}:${alias}`,"NAME?",`${key} → ${alias} has no matching Sleeper username in this draft`);
+        debugLogOnce(`name-miss:${draftId}:${key}:${alias}`,"NAME?",`${key} → ${alias} has no matching manager identity in this ${draftProvider==="yahoo"?"Yahoo league":"Sleeper draft"}`);
       }
     }
     updateSharedConfigSummary();
@@ -853,11 +853,11 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
 
   async function ensureYahooToken(){
     const t=yahooTokenState();
-    if(t.access && (!t.expires || Date.now()<t.expires))return t.access;
+    if(t.access && t.expires && Date.now()<t.expires)return t.access;
     if(t.refresh){
       const clientId=yahooClientId();
       if(!clientId)throw new Error("Yahoo Client ID missing on this device.");
-      const data=await yahooTokenRequest({client_id:clientId,refresh_token:t.refresh,grant_type:"refresh_token"});
+      const data=await yahooTokenRequest({client_id:clientId,redirect_uri:yahooCallbackUrl(),refresh_token:t.refresh,grant_type:"refresh_token"});
       return String(data.access_token||"");
     }
     throw new Error("Yahoo is not connected on this device. Open Settings → Draft → Connect Yahoo.");
@@ -871,10 +871,11 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
       headers:{"Authorization":`Bearer ${token}`,"Accept":"application/xml,text/xml;q=0.9,*/*;q=0.8"}
     });
     if(r.status===401 && retry){
-      try{localStorage.setItem("draftcenterYahooExpiresAt","0")}catch(_){}
+      try{localStorage.removeItem("draftcenterYahooAccessToken");localStorage.setItem("draftcenterYahooExpiresAt","0")}catch(_){}
       return yahooApiText(path,false);
     }
     if(!r.ok)throw new Error(`Yahoo Fantasy API ${r.status}`);
+    lastApiAt=Date.now();
     return r.text();
   }
 
@@ -1000,7 +1001,8 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
       if(!["IR","IL","NA"].includes(pos))total+=Math.max(0,count);
     }
     const maxRound=raw.reduce((m,x)=>Math.max(m,x.round||0),0);
-    return Math.max(total,maxRound,15);
+    const resolved=Math.max(total,maxRound);
+    return resolved>0?resolved:15;
   }
 
   function normalizeYahooDraft(metaDoc,settingsDoc,teams,raw,order,key){
@@ -1045,7 +1047,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
   }
 
   async function pollYahooDraft(){
-    if(Date.now()-yahooLastDraftPollAt<8000)return;
+    if(Date.now()-yahooLastDraftPollAt<30000)return;
     yahooLastDraftPollAt=Date.now();
     try{
       const key=yahooLeagueKey||draftId;
@@ -2857,7 +2859,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
         ? `ADP ENGINE <span class="market-source">${esc(marketSourceLabel)}</span>`
         : `ADP ENGINE <span class="market-source">unavailable — value alerts off</span>`;
     }
-    $("status").textContent=`LIVE · draft ${draftId} · API ${Math.max(0,Date.now()-lastApiAt)} ms ago · ${marketReady?marketSourceLabel:"ADP off"}`;
+    $("status").textContent=`LIVE · ${draftProvider==="yahoo"?"Yahoo league":"Sleeper draft"} ${draftId} · API ${Math.max(0,Date.now()-lastApiAt)} ms ago · ${marketReady?marketSourceLabel:"ADP off"}`;
     $("status").classList.remove("bad");
   }
 
@@ -3329,7 +3331,7 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
         <label class="person-check"><input class="person-absent" type="checkbox" ${absentUsernames.has(key)?"checked":""}>Absent</label>
         <label class="person-check"><input class="person-auto" type="checkbox" ${autodraftUsernames.has(key)?"checked":""}>Auto</label>
       </div>`;
-    }).join(""):`<div class="people-help">Waiting for Sleeper users…</div>`;
+    }).join(""):`<div class="people-help">Waiting for platform managers…</div>`;
   }
 
   async function savePeopleSettings(){
@@ -3373,9 +3375,9 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     masterVolume=Math.max(0,Math.min(100,Number(percent)||0))/100;
   }
 
-  $("draftProvider").addEventListener("change",e=>{
-    draftProvider=e.currentTarget.value==="yahoo"?"yahoo":"sleeper";
-    updateProviderUI();
+  $("draftProvider").addEventListener("change",()=>{
+    // Editing the dropdown must not interrupt the currently running provider.
+    updateYahooAuthUI();
   });
   $("yahooTimerInput").addEventListener("change",e=>{yahooPickTimer=Math.max(30,Math.min(600,Number(e.currentTarget.value)||180));e.currentTarget.value=yahooPickTimer;});
   $("connectYahoo").addEventListener("click",startYahooAuth);
