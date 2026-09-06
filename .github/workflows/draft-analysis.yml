@@ -25,13 +25,27 @@ jobs:
     timeout-minutes: 330
     steps:
       - uses: actions/checkout@v4
+      - name: Check draft provider
+        id: provider
+        run: |
+          PROVIDER=$(python - <<'PY'
+          import json
+          with open('config.json', encoding='utf-8') as f:
+              cfg = json.load(f)
+          print(cfg.get('provider', 'sleeper'))
+          PY
+          )
+          echo "provider=$PROVIDER" >> "$GITHUB_OUTPUT"
+          echo "Draft provider: $PROVIDER"
       - name: Probe Muse API safely
+        if: steps.provider.outputs.provider == 'sleeper'
         env:
           MUSE_API_KEY: ${{ secrets.MUSE }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ANALYSIS_BRANCH: analysis
         run: python scripts/muse_probe.py
       - name: Run live draft analysis watcher
+        if: steps.provider.outputs.provider == 'sleeper'
         env:
           MUSE_API_KEY: ${{ secrets.MUSE }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -39,3 +53,6 @@ jobs:
           POLL_SECONDS: '12'
           MAX_SECONDS: '19800'
         run: python scripts/draft_analysis_v2.py
+      - name: Yahoo analysis note
+        if: steps.provider.outputs.provider == 'yahoo'
+        run: echo "Yahoo draft selected; browser-side deterministic DraftCenter analysis stays active. Muse worker is skipped because Yahoo OAuth tokens are device-local."
