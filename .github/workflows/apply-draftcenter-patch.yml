@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'patch.py'
+      - '.github/workflows/apply-draftcenter-patch.yml'
 
 permissions:
   contents: write
@@ -16,6 +17,17 @@ jobs:
       - name: Apply patch
         run: |
           if [ -f patch.py ]; then
+            # Older patch helpers passed replacement text directly to re.subn,
+            # which makes JavaScript backslashes look like Python replacement
+            # escapes (for example \D). Make replacement strings literal.
+            python - <<'PY'
+          from pathlib import Path
+          p = Path('patch.py')
+          s = p.read_text(encoding='utf-8')
+          s = s.replace('re.subn(pattern, repl, s, count=1, flags=flags)',
+                        're.subn(pattern, lambda _m: repl, s, count=1, flags=flags)')
+          p.write_text(s, encoding='utf-8')
+          PY
             python patch.py
           fi
       - name: Validate inline JavaScript
