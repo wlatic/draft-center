@@ -923,6 +923,19 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
     }).filter(Boolean).sort((a,b)=>a.slot-b.slot);
   }
 
+  function inferYahooDraftSlots(teams,raw){
+    // Yahoo's team collection is not guaranteed to expose draft_position. Once
+    // Round 1 begins, draft_result.pick is the authoritative slot order. Use it
+    // so the TV rows cannot silently follow team_id order instead.
+    const fromResults=new Map();
+    for(const r of raw||[]){
+      if(Number(r.round)!==1)continue;
+      const slot=Number(r.pick||0);
+      if(r.teamKey && slot>0)fromResults.set(String(r.teamKey),slot);
+    }
+    return teams.map(t=>fromResults.has(String(t.teamKey))?{...t,slot:fromResults.get(String(t.teamKey))}:t);
+  }
+
   function installYahooTeams(teams){
     const order={};
     const nextUsers={},nextLeagueUsers={};
@@ -1036,10 +1049,11 @@ linear-gradient(100deg,rgba(2,10,22,.998),rgba(5,25,53,.998))}
       yahooApiText(`/league/${enc}/draftresults`).catch(e=>{if(String(e.message).includes("404"))return "<fantasy_content/>";throw e;})
     ]);
     const metaDoc=yahooXml(metaText),settingsDoc=yahooXml(settingsText),teamsDoc=yahooXml(teamsText),draftDoc=yahooXml(draftText);
-    const teams=parseYahooTeams(teamsDoc);
-    if(!teams.length)throw new Error("Yahoo returned no fantasy teams for that league.");
-    const order=installYahooTeams(teams);
     const raw=parseYahooDraftResults(draftDoc);
+    let teams=parseYahooTeams(teamsDoc);
+    if(!teams.length)throw new Error("Yahoo returned no fantasy teams for that league.");
+    teams=inferYahooDraftSlots(teams,raw);
+    const order=installYahooTeams(teams);
     await yahooEnsurePlayers(raw.map(x=>x.playerKey));
     const nextDraft=normalizeYahooDraft(metaDoc,settingsDoc,teams,raw,order,key);
     const nextPicks=normalizeYahooPicks(raw);
